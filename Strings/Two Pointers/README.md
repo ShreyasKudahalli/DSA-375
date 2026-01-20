@@ -186,3 +186,142 @@ The helper palindrome check runs at most once.
 - Greedy decision on first mismatch
 - No extra space required
 - Frequently asked interview problem
+
+
+---
+
+
+## 4️⃣ Longest Palindromic Substring
+
+### 🧩 Problem Statement
+
+Given a string `s`, return the **longest palindromic substring** in `s`.
+
+#### ✔️ Notes
+- A palindrome reads the same forward and backward
+- If multiple answers exist, return **any one**
+- Both **odd** and **even** length palindromes must be considered
+
+---
+
+### 💡 Approach: Expand Around Center
+
+Every palindrome expands from a **center**.
+
+#### Possible Centers:
+1. **Odd-length palindromes** → center at `(i, i)`
+2. **Even-length palindromes** → center at `(i, i + 1)`
+
+At each expansion:
+- Compare characters on both sides
+- Track the maximum length found
+- Update the starting index accordingly
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Initialize:
+   - `start = 0` → starting index of longest palindrome
+   - `size = 1` → length of longest palindrome
+2. Define a helper function `expand(l, r)`:
+   - Expand outward while characters match
+   - Update `start` and `size` if a longer palindrome is found
+3. Iterate through each index `i`:
+   - Expand around `(i, i)` for odd-length palindromes
+   - Expand around `(i, i + 1)` for even-length palindromes
+4. Return the substring using `start` and `size`
+
+---
+
+### 🧪 Example
+
+#### Input
+    "babad"
+
+#### Output
+    "bab" (or `"aba"` — both are valid)
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n^2)  |
+| Space Complexity | O(1)  |
+
+---
+
+### 📌 Key Takeaways
+- Expand Around Center avoids extra memory
+- Handles both odd and even palindromes
+- Cleaner than DP for interviews
+- Commonly asked FAANG problem
+
+
+---
+
+
+## 5️⃣ Palindromic Substrings 
+
+### 🧩 Problem Statement
+
+Given a string `s`, return the **total number of palindromic substrings** in the string.
+
+#### ✔️ Notes
+- Substrings with different start or end indices are considered different
+- Single characters are valid palindromes
+- Both **odd** and **even** length palindromes must be counted
+
+---
+
+### 💡 Approach: Expand Around Center
+
+Each palindrome expands outward from its **center**.
+
+#### Two Types of Centers:
+1. **Odd-length palindromes**  
+   - Single character center `(i, i)`
+2. **Even-length palindromes**  
+   - Two character center `(i, i + 1)`
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Initialize a counter `count = 0`
+2. Define a helper function `expand(l, r)`:
+   - Expand outward while characters match
+   - Increment `count` for each valid palindrome
+3. For every index `i` in the string:
+   - Expand around `(i, i)` for odd-length palindromes
+   - Expand around `(i, i + 1)` for even-length palindromes
+4. Return the final count
+
+---
+
+### 🧪 Example
+
+#### Input
+    "aaa"
+
+#### Output
+    6
+
+#### Explanation
+    Palindromic substrings are:
+    "a", "a", "a", "aa", "aa", "aaa"
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n^2)  |
+| Space Complexity | O(1)  |
+
+---
+
+### 📌 Key Takeaways
+
+- Expand Around Center is optimal for palindrome counting
+- Covers both odd and even length cases
+- No extra space required
+- Cleaner than DP for interview use
+
