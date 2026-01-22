@@ -52,7 +52,7 @@ We maintain a **fixed-size sliding window** of length `len(p)` over string `s`.
 #### Output
     [0, 6]
 
-### Explanation
+#### Explanation
 Anagrams of `"abc"` start at indices:
 - `"cba"` → index 0
 - `"bac"` → index 6
@@ -200,10 +200,8 @@ We maintain a **dynamic sliding window** that expands and contracts to find the 
 | Space Complexity | O(k)  |
 
 Where:
-
-n = length of string s
-
-k = number of unique characters in t
+- n = length of string s
+- k = number of unique characters in t
 
 ### 📌 Key Takeaways
 
@@ -211,5 +209,227 @@ k = number of unique characters in t
 - Hash maps efficiently track character frequencies
 - Window expansion + contraction finds optimal solution
 - One of the most important interview problems
+
+
+---
+
+
+## 4️⃣ Longest Substring with At Most K Distinct Characters
+
+### 🧩 Problem Statement
+
+Given a string `s` and an integer `k`, find the **longest substring** that contains **at most `k` distinct characters**.
+
+If `k = 0`, return an empty result.
+
+---
+
+### 💡 Approach: Sliding Window + Frequency Map
+
+We maintain a **dynamic sliding window** that expands and shrinks based on the number of distinct characters in the current window.
+
+### Key Idea
+- Use a hash map (`freq`) to track character frequencies in the window
+- Expand the window by moving the right pointer
+- Shrink the window when the number of distinct characters exceeds `k`
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Handle edge case:
+   - If `k == 0`, return an empty result
+2. Initialize:
+   - `l = 0` → left pointer
+   - `freq` → frequency map of characters
+   - `start` and `size` → track longest valid window
+3. Move the right pointer `r` through the string:
+   - Add `s[r]` to the frequency map
+4. While the number of distinct characters exceeds `k`:
+   - Remove characters from the left
+   - Delete character from map if its count becomes zero
+5. Update the longest substring whenever a larger valid window is found
+6. Return the longest substring
+
+---
+
+### 🧪 Example
+
+#### Input
+      s = "eceba"
+      k = 2
+
+#### Output
+      "ece"
+
+#### Explanation
+The substring `"ece"` contains at most 2 distinct characters (`e` and `c`) and has the maximum length.
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(k)  |
+
+
+Where:
+- n = length of the string
+- k = maximum number of distinct characters allowed
+
+### 📌 Key Takeaways
+
+- Sliding window avoids recalculating substrings
+- Frequency map tracks distinct characters efficiently
+- Works well for constraint-based substring problems
+- Classic interview question pattern
+
+
+---
+
+
+## 5️⃣ Permutation in String 
+
+### 🧩 Problem Statement
+
+Given two strings `s1` and `s2`, return `True` if **any permutation of `s1`** is a substring of `s2`.  
+Otherwise, return `False`.
+
+---
+
+### 💡 Approach: Sliding Window with Fixed-Size Frequency Arrays
+
+We maintain a **fixed-size sliding window** of length `len(s1)` over string `s2`.
+
+#### Key Idea
+- Use two arrays of size 26:
+  - `s1Count` → frequency of characters in `s1`
+  - `s2Count` → frequency of characters in the current window of `s2`
+- Slide the window one character at a time and compare the frequency arrays
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Handle edge cases:
+   - If `s1` is longer than `s2`, return `False`
+2. Initialize two frequency arrays of size 26 with zeros
+3. Populate `s1Count` with character frequencies from `s1`
+4. Use two pointers `l` and `r` to represent the window in `s2`
+5. For each character at index `r`:
+   - Add it to `s2Count`
+6. When the window size equals `len(s1)`:
+   - Compare `s1Count` and `s2Count`
+   - If equal, a permutation exists → return `True`
+   - Otherwise, remove the left character and slide the window
+7. If no permutation is found, return `False`
+
+---
+
+### 🧪 Example
+
+#### Input
+      s1 = "ab"
+      s2 = "eidbaooo"
+
+#### Output
+      True
+
+#### Explanation
+The substring `"ba"` is a permutation of `"ab"`.
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(1)  |
+
+Frequency arrays are fixed at size 26.
+
+---
+
+### 📌 Key Takeaways
+
+- Fixed-size sliding window ensures linear time
+- Frequency arrays are faster than hash maps
+- Ideal for lowercase alphabet problems
+- Common LeetCode sliding window pattern
+
+
+---
+
+
+## 6️⃣ Subarrays with K Distinct Integers
+
+### 🧩 Problem Statement
+
+Given an integer array `nums` and an integer `k`, return the number of **subarrays that contain exactly `k` distinct integers**.
+
+---
+
+### 💡 Approach: At Most K Distinct → Exactly K Distinct
+
+Instead of directly counting subarrays with **exactly `k`** distinct elements, we use a key observation:
+
+> **Exactly K = At Most K − At Most (K − 1)**
+
+#### Why this works
+- `atMost(K)` counts subarrays with **≤ K** distinct elements
+- `atMost(K−1)` counts subarrays with **≤ K−1** distinct elements
+- Their difference gives subarrays with **exactly K** distinct elements
+
+---
+
+### 🧠 Algorithm Steps
+
+#### Helper Function: `atMost(k)`
+1. Use a sliding window with two pointers `l` and `r`
+2. Maintain a frequency map to track elements in the window
+3. Expand the window by moving `r`
+4. Shrink the window when distinct elements exceed `k`
+5. At each step, add `r - l + 1` to the count (all subarrays ending at `r`)
+6. Return the total count
+
+#### Final Answer
+atMost(k) - atMost(k - 1)
+
+---
+
+### 🧪 Example
+
+#### Input
+      nums = [1,2,1,2,3]
+      k = 2
+
+#### Output
+      7
+
+#### Explanation
+Subarrays with exactly 2 distinct integers are:
+[1,2], [2,1], [1,2], [2,3],
+[1,2,1], [2,1,2], [1,2,1,2]
+
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(k)  |
+
+Where:
+- n = length of the array
+- k = number of distinct elements allowed in the window
+
+---
+
+### 📌 Key Takeaways
+
+- Directly counting exactly K is hard
+- AtMost(K) trick simplifies the problem
+- Sliding window ensures linear performance
+- Extremely important interview pattern
 
 
