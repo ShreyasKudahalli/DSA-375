@@ -157,3 +157,170 @@ m = maximum bananas in a pile
 - Search space is numeric, not index-based
 - Efficient for large inputs
 - Frequently asked interview problem
+
+
+---
+
+
+## 3️⃣ Capacity To Ship Packages Within D Days
+
+### 📌 Problem Statement
+
+You are given an array `weights` where `weights[i]` represents the weight of the `i-th` package.  
+You are also given an integer `days`, representing the number of days within which all packages must be shipped.
+
+Each day, the ship can carry packages **in order** with a total weight **not exceeding its capacity**.
+
+Return the **minimum ship capacity** required to ship all packages within `days`.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This is a classic **Binary Search on Answer** problem.
+
+#### Search Space:
+- **Minimum capacity** = `max(weights)`  
+  (a ship must at least carry the heaviest package)
+- **Maximum capacity** = `sum(weights)`  
+  (carry all packages in one day)
+
+For a given ship capacity, we check whether it is possible to ship all packages within the given number of days.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+   - `low = max(weights)`
+   - `high = sum(weights)`
+2. Define a helper function `possible(capacity)`:
+   - Simulate shipping packages day by day
+   - Start a new day if current load exceeds capacity
+   - Count total days required
+   - Return `True` if days required ≤ `days`
+3. Apply binary search:
+   - If capacity is sufficient, try a smaller capacity
+   - Otherwise, increase the capacity
+4. Return `low` as the minimum valid capacity
+
+---
+
+### 🧪 Example
+
+#### Input
+      weights = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],  days = 5
+
+#### Output
+      15
+
+#### Explanation
+Minimum capacity to ship all packages in 5 days is 15
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log S)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of packages
+
+S = sum of all weights
+
+---
+
+### ✅ Key Notes
+
+- Packages must be shipped in order
+- Capacity is minimized using binary search
+- Greedy check ensures feasibility
+- Very common interview problem
+
+
+---
+
+
+## 4️⃣ Minimum Speed to Arrive on Time
+
+### 📌 Problem Statement
+
+You are given an array `dist` where `dist[i]` represents the distance of the `i-th` train ride.  
+You are also given a floating-point number `hour` representing the total time available.
+
+You must choose a **constant integer speed** such that you can travel all distances **in order** and arrive within `hour`.
+
+- For all rides except the last one, travel time is **rounded up** to the nearest integer.
+- The last ride can take **fractional time**.
+
+Return the **minimum speed** required to arrive on time.  
+If it is not possible, return **`-1`**.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This is a classic **Binary Search on Answer** problem.
+
+#### Search Space:
+- **Minimum speed** = `1`
+- **Maximum speed** = `10⁷` (given by constraints)
+
+For a given speed, we check whether the total travel time is within the allowed `hour`.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+   - `low = 1`
+   - `high = 10^7`
+   - `ans = -1`
+2. Define a helper function `possible(speed)`:
+   - For each segment except the last, add `ceil(dist[i] / speed)`
+   - For the last segment, add exact division
+   - Check if total time ≤ `hour`
+3. Apply binary search:
+   - If current speed is sufficient, update answer and try a smaller speed
+   - Otherwise, increase the speed
+4. Return `ans`
+
+---
+
+### 🧪 Example
+
+#### Input
+      dist = [1, 3, 2],  hour = 2.7
+
+#### Output
+      3
+
+#### Explanation
+At speed 3, total travel time = ceil(1/3) + ceil(3/3) + (2/3)
+= 1 + 1 + 0.67 = 2.67 ≤ 2.7
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log M)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of distances
+
+M = maximum possible speed (10^7)
+
+---
+
+### ✅ Key Notes
+
+- Uses Binary Search on Answer
+- Rounding rule applies only to intermediate segments
+- Speed must be an integer
+- If no valid speed exists, return -1
