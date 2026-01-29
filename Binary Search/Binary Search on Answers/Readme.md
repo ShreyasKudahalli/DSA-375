@@ -324,3 +324,426 @@ M = maximum possible speed (10^7)
 - Rounding rule applies only to intermediate segments
 - Speed must be an integer
 - If no valid speed exists, return -1
+
+
+---
+
+
+## 5️⃣ Median of a Row-wise Sorted Matrix
+
+### 📌 Problem Statement
+
+Given a matrix `mat` of size `n x m` where **each row is sorted in non-decreasing order**, find the **median** of the matrix.
+
+- The total number of elements (`n * m`) is **odd**
+- The median is the element that has exactly half of the elements less than or equal to it
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+Instead of flattening and sorting the matrix (which is inefficient), we apply **Binary Search on the value range** of the matrix.
+
+For any guessed value `x`, we count how many elements in the matrix are **strictly less than `x`**.  
+Based on this count, we adjust our search range.
+
+---
+
+#### 🧠 Key Observations
+
+- Each row is already sorted → we can use **binary search (upper bound)** on each row
+- Minimum possible median = smallest element in the matrix
+- Maximum possible median = largest element in the matrix
+- If count of elements `< x` is `<= (n*m)//2`, then `x` can be a valid median candidate
+
+---
+
+### 🧩 Algorithm
+
+1. Set search range:
+   - `low = min(first element of each row)`
+   - `high = max(last element of each row)`
+2. For each `mid`:
+   - Count elements less than `mid` using upper bound in each row
+3. If count `<= (n*m)//2`, move right
+4. Else, move left
+5. Final `low` gives the median
+
+---
+
+### 🧪 Example
+
+#### Input
+      mat = [
+      [1, 3, 5],
+      [2, 6, 9],
+      [3, 6, 9]
+      ]
+
+#### Output
+      5
+
+#### Explanation
+Sorted elements → [1,2,3,3,5,6,6,9,9]
+
+Median → 5
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log m log V)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of rows
+
+m = number of columns
+
+V = range of matrix values
+
+---
+
+### ✅ Key Takeaways
+
+- Efficient use of Binary Search on Answer
+- Leverages row-wise sorted property
+- Avoids extra space and full sorting
+- Common interview & competitive programming problem
+
+
+---
+
+
+## 6️⃣ Aggressive Cows
+
+### 📌 Problem Statement
+
+You are given an array `stalls` representing the positions of stalls along a line and an integer `k` representing the number of cows.
+
+You need to place **`k` cows in the stalls** such that the **minimum distance between any two cows is maximized**.
+
+Return the **largest minimum distance** possible.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This problem is a classic example of **Binary Search on Answer**.
+
+#### Key Idea:
+- The answer lies between `0` and `max(stalls) - min(stalls)`
+- For a given distance `d`, check whether it is possible to place all cows such that the minimum distance between them is at least `d`
+- Use binary search to find the maximum feasible distance
+
+---
+
+### 🧠 Algorithm
+
+1. Sort the stall positions.
+2. Initialize:
+   - `low = 0`
+   - `high = stalls[-1] - stalls[0]`
+3. Define a helper function `possible(dist)`:
+   - Place the first cow in the first stall
+   - Place remaining cows in the next possible stalls maintaining at least `dist` distance
+   - Return `True` if all cows can be placed, otherwise `False`
+4. Apply binary search:
+   - If placement is possible, try a larger distance
+   - Otherwise, reduce the distance
+5. Return the maximum valid distance
+
+---
+
+### 🧪 Example
+
+#### Input
+      stalls = [1, 2, 4, 8, 9]
+      k = 3
+
+#### Output
+      3
+
+#### Explanation
+Cows can be placed at positions 1, 4, and 8
+Minimum distance = 3 (maximum possible)
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log D)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of stalls
+
+D = distance between the first and last stall
+
+--
+
+### ✅ Key Notes
+
+- Stalls must be sorted
+- Uses greedy placement with binary search
+- Maximizes the minimum distance
+- Very popular interview problem
+
+
+---
+
+
+## 7️⃣ Minimum Days to Make `m` Bouquets
+
+### 📌 Problem Statement
+
+You are given an integer array `bloomDay`, where `bloomDay[i]` represents the day the `iᵗʰ` flower blooms.  
+To make **one bouquet**, you need **`k` adjacent flowers** that have all bloomed.  
+Find the **minimum number of days** required to make **`m` bouquets**.
+
+If it is **not possible**, return `-1`.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This problem uses **Binary Search on Answers**, where we search over the range of days instead of indices.  
+For a given day, we check whether it is possible to form at least `m` bouquets.
+
+---
+
+#### 🧠 Key Observations
+
+- If `len(bloomDay) < m * k`, it is impossible to form `m` bouquets
+- Minimum possible day → `min(bloomDay)`
+- Maximum possible day → `max(bloomDay)`
+- For a chosen day:
+  - Count consecutive flowers bloomed on or before that day
+  - Every `k` consecutive flowers form one bouquet
+
+---
+
+### 🧩 Algorithm
+
+1. Check if total flowers are sufficient; if not, return `-1`
+2. Set binary search range from minimum to maximum bloom day
+3. For each mid-day:
+   - Count how many bouquets can be formed
+4. If bouquets ≥ `m`, try earlier days
+5. Otherwise, increase the day range
+6. Return the minimum valid day
+
+---
+
+### 🧪 Example
+
+#### Input
+      bloomDay = [1, 10, 3, 10, 2]
+      m = 3
+      k = 1
+
+#### Output
+      3
+
+#### Explanation
+By day 3, three flowers have bloomed, allowing the formation of 3 bouquets.
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log D)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of flowers
+
+D = range of bloom days
+
+---
+
+### ✅ Key Takeaways
+
+- Classic Binary Search on Answer problem
+- Efficient for large inputs
+- Uses greedy counting with feasibility check
+- Frequently asked in coding interviews
+
+
+---
+
+
+## 8️⃣ Magnetic Force Between Two Balls
+
+### 📌 Problem Statement
+
+You are given an array `position` representing the positions of baskets on a number line and an integer `m` representing the number of balls to place.  
+Place the balls in the baskets such that the **minimum distance between any two balls is maximized**.
+
+Return the **maximum possible minimum distance**.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This problem is a classic example of **Binary Search on Answers** combined with a **greedy feasibility check**.
+
+Instead of trying all distances, we binary search on the possible distance values and check whether it is feasible to place all `m` balls while maintaining at least that distance.
+
+---
+
+#### 🧠 Key Observations
+
+- Positions must be **sorted** to apply greedy placement
+- Minimum possible distance → `0`
+- Maximum possible distance → `max(position) - min(position)`
+- If we can place `m` balls with distance `d`, then we can also place them with any smaller distance
+
+---
+
+### 🧩 Algorithm
+
+1. Sort the `position` array
+2. Set binary search range:
+   - `low = 0`
+   - `high = position[-1] - position[0]`
+3. For each `mid` distance:
+   - Try placing balls greedily from left to right
+4. If placement is possible, try a larger distance
+5. Otherwise, reduce the distance
+6. Return the largest feasible distance
+
+---
+
+### 🧪 Example
+
+#### Input
+      position = [1, 2, 3, 4, 7]
+      m = 3
+
+#### Output
+      3
+
+#### Explanation
+Place balls at positions 1, 4, and 7
+
+Minimum distance = 3
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log D)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of baskets
+
+D = range of distances
+
+---
+
+### ✅ Key Takeaways
+
+- Uses Binary Search on Answer
+- Greedy placement ensures feasibility
+- Efficient for large inputs
+- Commonly asked interview problem
+
+
+---
+
+
+## 9️⃣ Allocate Minimum Number of Pages
+
+### 📌 Problem Statement
+
+You are given an array `arr` where each element represents the number of pages in a book.  
+There are `k` students, and the books must be allocated **contiguously** to students.
+
+Your task is to allocate the books such that the **maximum number of pages assigned to any student is minimized**.
+
+If it is not possible to allocate books to all students, return `-1`.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+This is a classic **Binary Search on Answers** problem where we search for the minimum possible value of the maximum pages a student can get.
+
+For a chosen value `pages`, we check whether it is possible to allocate the books among `k` students without exceeding this limit.
+
+---
+
+#### 🧠 Key Observations
+
+- Each student must get **at least one book**
+- If number of books `< k`, allocation is impossible
+- Minimum possible pages = `max(arr)`
+- Maximum possible pages = `sum(arr)`
+- If allocation is possible with `X` pages, it is also possible with any value greater than `X`
+
+---
+
+### 🧩 Algorithm
+
+1. If `len(arr) < k`, return `-1`
+2. Set binary search range:
+   - `low = max(arr)`
+   - `high = sum(arr)`
+3. For each `mid`:
+   - Try assigning books sequentially
+   - If pages exceed `mid`, assign books to next student
+4. If number of students used ≤ `k`, try a smaller value
+5. Otherwise, increase the value
+6. Return the minimum valid number of pages
+
+---
+
+### 🧪 Example
+
+#### Input
+      arr = [12, 34, 67, 90]
+      k = 2
+
+#### Output
+      113
+
+#### Explanation
+
+Student 1 → [12, 34, 67] → 113 pages
+
+Student 2 → [90] → 90 pages
+
+Maximum pages minimized to 113
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n log S)  |
+| Space Complexity | O(1)  |
+
+Where:
+
+n = number of books
+
+S = sum of pages
+
+---
+
+### ✅ Key Takeaways
+
+- Classic Binary Search on Answer problem
+- Greedy allocation with feasibility check
+- Contiguous allocation is mandatory
+- Frequently asked in interviews and exams
