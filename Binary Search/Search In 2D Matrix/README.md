@@ -213,3 +213,148 @@ If the count is **at least `k`**, then `mid` could be the answer.
 - This is a classic Binary Search on Answer problem
 - No extra space required
 - Works well when value range is manageable
+
+
+---
+
+
+## 4️⃣ Median of a Row-Wise Sorted Matrix
+
+### 📌 Problem Statement
+
+You are given a matrix where **each row is sorted in ascending order**.  
+The task is to find the **median** of the matrix.
+
+> The total number of elements is always odd, so the median is the middle element when all elements are sorted.
+
+---
+
+### 💡 Approach: Binary Search on Answer
+
+Instead of flattening the matrix and sorting it, we apply **binary search on the value range**.
+
+#### Key Observations
+
+- Minimum possible value = smallest element in the matrix
+- Maximum possible value = largest element in the matrix
+- The median is the element for which **at least half of the elements are smaller or equal**
+
+---
+
+### 🧠 Algorithm
+
+1. Compute the required position of the median  
+- required = (n × m) // 2 + 1
+2. Set `low` to the minimum element and `high` to the maximum element
+3. For a given value `mid`, count how many elements are `≤ mid`
+- Use `bisect_right` since rows are already sorted
+4. If count ≥ required, move left to find a smaller candidate
+5. Otherwise, move right
+6. Return `low` as the median
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n × log m × log(max - min))  |
+| Space Complexity | O(1)  |
+
+---
+
+### 🧪 Example
+
+#### Input:
+        mat = [
+        [1, 3, 5],
+        [2, 6, 9],
+        [3, 6, 9]
+        ]
+
+#### Output:
+        5
+
+---
+
+### ✅ Key Takeaways
+
+- This is a classic Binary Search on Answer problem
+- Uses the sorted property of rows effectively
+- Avoids extra space and full sorting
+- Frequently asked in interviews and coding contests
+
+
+---
+
+
+## 5️⃣ Count Elements Less Than or Equal to K in a Sorted Matrix
+
+### 📌 Problem Statement
+
+You are given a 2D matrix where:
+
+- Each row is sorted in **ascending order**
+- Each column is sorted in **ascending order**
+
+Given an integer `k`, return the **count of elements less than or equal to `k`** in the matrix.
+
+---
+
+### 💡 Approach: Staircase Traversal
+
+This method starts from the **top-right corner** of the matrix and eliminates a row or a column at each step.
+
+#### Why Top-Right?
+- Moving **left** → smaller values
+- Moving **down** → larger values
+
+This allows counting in linear time.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+   - `row = 0`
+   - `col = n - 1`
+   - `count = 0`
+2. While within matrix bounds:
+   - If `matrix[row][col] ≤ k`  
+     → All elements to the left of `col` in this row are also ≤ `k`  
+     → Add `(col + 1)` to count and move **down**
+   - Else  
+     → Move **left**
+3. Return `count`
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(m + n)  |
+| Space Complexity | O(1)  |
+
+---
+
+### 🧪 Example
+
+#### Input:
+        matrix = [      k = 5
+        [1, 4, 7],
+        [2, 5, 8],
+        [3, 6, 9]
+        ]
+
+#### Output:
+        5
+
+---
+
+### ✅ Key Takeaways
+
+- Extremely efficient for row + column sorted matrices0
+- No extra space required
+- Common helper function in:
+
+        Kth smallest element problems
+
+        Median in matrix problems
+- Frequently used in Binary Search on Answer
