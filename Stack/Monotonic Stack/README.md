@@ -226,3 +226,156 @@ Each index is pushed and popped at most once.
 - Stack stores indices, not values
 - Left-to-right traversal fits naturally here
 
+
+---
+
+
+## 4️⃣ Stock Span Problem
+
+### 📌 Problem Statement
+
+Design a class `StockSpanner` that collects **daily stock prices** and returns the **stock span** for each new price.
+
+The **stock span** of today’s price is defined as the maximum number of consecutive days (including today) for which the price was **less than or equal to today’s price**.
+
+---
+
+### 📝 Example
+
+#### Input:
+    Prices: [100, 80, 60, 70, 60, 75, 85]
+
+#### Output:
+    Spans: [1, 1, 1, 2, 1, 4, 6]
+
+---
+
+### 💡 Intuition
+
+For each new price, we need to look back and count how many **previous consecutive prices** were smaller or equal.
+
+A **monotonic decreasing stack** helps by:
+- Removing irrelevant smaller prices
+- Jumping directly to the previous greater price
+- Achieving optimal performance
+
+---
+
+### 🚀 Approach (Monotonic Stack)
+
+- Maintain a stack storing **(price, index)**
+- Stack is always in **decreasing order of price**
+- For each new price:
+  - Pop all prices smaller than or equal to current
+  - Span = current index − index of previous greater price
+  - If stack is empty → span = index + 1
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Initialize:
+   - Empty stack
+   - Index = -1
+2. For each `next(price)` call:
+   - Increment index
+   - Pop all elements with price ≤ current price
+   - If stack is not empty:
+     - Span = current index − stack top index
+   - Else:
+     - Span = current index + 1
+   - Push `(price, index)` onto stack
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(1) amortized  |
+| Space Complexity | O(n)  |
+
+Each price is pushed and popped at most once.
+
+---
+
+### ✅ Key Takeaways
+
+- Classic monotonic stack application
+- Stack stores both value and index
+- Efficient handling of consecutive elements
+
+
+---
+
+
+## 5️⃣ Largest Rectangle in Histogram
+
+### 📌 Problem Statement
+
+You are given an array `heights` where  
+`heights[i]` represents the height of a histogram bar with width `1`.
+
+Find the **area of the largest rectangle** that can be formed within the histogram.
+
+---
+
+### 📝 Example
+
+#### Input
+    heights = [2, 1, 5, 6, 2, 3]
+
+#### Output
+    10
+
+The largest rectangle is formed by bars of height `5` and `6`.
+
+---
+
+### 💡 Intuition
+
+For each bar, consider it as the **minimum height** of a rectangle and try to expand:
+- Left until a smaller bar appears (PSE – Previous Smaller Element)
+- Right until a smaller bar appears (NSE – Next Smaller Element)
+
+A **monotonic increasing stack** helps find these boundaries efficiently.
+
+---
+
+### 🚀 Approach (Monotonic Increasing Stack)
+
+- Maintain a stack of indices with **increasing heights**
+- When a smaller height is found:
+  - Pop elements from stack
+  - Calculate area using the popped bar as the smallest height
+- After traversal, process remaining bars in the stack
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Traverse all bars from left to right
+2. While stack top height is greater than current:
+   - Pop index `ele`
+   - Set `nse = current index`
+   - Set `pse = stack top or -1`
+   - Calculate area:  
+     `height[ele] * (nse - pse - 1)`
+3. Push current index onto stack
+4. After loop, repeat area calculation for remaining stack elements with `nse = n`
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Each bar is pushed and popped once.
+
+---
+
+### ✅ Key Takeaways
+
+- Use Previous Smaller Element (PSE) and Next Smaller Element (NSE)
+- Monotonic stack converts brute force O(n²) → O(n)
+- Fundamental problem for advanced stack patterns
+
