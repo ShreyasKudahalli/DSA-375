@@ -379,3 +379,169 @@ Each bar is pushed and popped once.
 - Monotonic stack converts brute force O(n²) → O(n)
 - Fundamental problem for advanced stack patterns
 
+
+---
+
+
+## 6️⃣ Maximal Rectangle (Binary Matrix)
+
+### 📌 Problem Statement
+
+You are given a **binary matrix** filled with `'0'`s and `'1'`s.  
+Find the **largest rectangle containing only `1`s** and return its area.
+
+---
+
+### 📝 Example
+
+#### Input:
+    matrix = [
+    ["1","0","1","0","0"],
+    ["1","0","1","1","1"],
+    ["1","1","1","1","1"],
+    ["1","0","0","1","0"]
+    ]
+
+#### Output:
+    6
+
+The maximal rectangle has area **6**.
+
+---
+
+### 💡 Intuition
+
+This problem is an extension of the **Largest Rectangle in Histogram**.
+
+For each row:
+- Treat the row as the **base of a histogram**
+- Build heights by counting consecutive `1`s vertically
+- Compute the largest rectangle area for that histogram
+
+The maximum over all rows is the answer.
+
+---
+
+### 🚀 Approach (Histogram + Monotonic Stack)
+
+#### Step 1: Build Height Matrix
+- Convert matrix values to integers
+- For each column, accumulate heights of consecutive `1`s
+
+#### Step 2: Largest Rectangle in Histogram
+- For each row (histogram):
+  - Use a **monotonic increasing stack**
+  - Find Previous Smaller Element (PSE) and Next Smaller Element (NSE)
+  - Compute maximum rectangle area
+
+---
+
+### 🧠 Algorithm Steps
+
+1. Convert binary matrix to integer matrix
+2. Build prefix heights column-wise
+3. For each row:
+   - Apply Largest Rectangle in Histogram algorithm
+4. Track the global maximum area
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(m*n)  |
+| Space Complexity | O(n)  |
+
+Where:
+
+m = number of rows
+
+n = number of columns
+
+---
+
+### ✅ Key Takeaways
+
+- Powerful combination of 2D → 1D transformation
+- Reuses Largest Rectangle in Histogram
+- Monotonic stack enables optimal performance
+
+
+---
+
+
+## 7️⃣ Asteroid Collision
+
+### 📌 Problem Statement
+
+You are given an array `asteroids` where:
+- Each value represents the **size** of an asteroid
+- The **sign** represents the direction  
+  - Positive → moving right  
+  - Negative → moving left  
+
+When two asteroids collide:
+- The **smaller one explodes**
+- If both are the same size, **both explode**
+- Asteroids moving in the same direction never collide
+
+Return the state of the asteroids after all collisions.
+
+---
+
+### 📝 Example
+
+#### Input:
+    asteroids = [5, 10, -5]
+
+#### Output:
+    [5, 10]
+
+---
+
+### 💡 Intuition
+
+Collisions only happen when:
+- A **right-moving asteroid** meets a **left-moving asteroid**
+
+A **stack** is ideal to simulate collisions because:
+- It keeps track of active asteroids
+- The most recent asteroid is the first to collide
+
+---
+
+### 🚀 Approach (Stack Simulation)
+
+1. Traverse each asteroid:
+   - If moving right (`> 0`), push onto stack
+   - If moving left (`< 0`), resolve collisions:
+     - Pop smaller right-moving asteroids
+     - If equal size → both explode
+     - If stack is empty or top is moving left → push current asteroid
+
+---
+
+### 🧠 Algorithm Steps
+
+- Initialize an empty stack
+- For each asteroid `x`:
+  - While stack top is positive and smaller than `|x|`, pop
+  - If stack top equals `|x|`, pop and discard current
+  - Else if no collision possible, push `x`
+- Return the stack
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Each asteroid is pushed and popped at most once.
+
+---
+
+### ✅ Key Takeaways
+
+- Stack perfectly models real-time collisions
+- Only right vs left asteroids interact
+- Clean simulation avoids nested loops
