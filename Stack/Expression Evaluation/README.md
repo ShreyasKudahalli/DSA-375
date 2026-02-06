@@ -345,3 +345,153 @@ Where n is the length of the string.
 - Handle multi-digit repeat counts carefully
 
 
+---
+
+
+## 5️⃣ Infix to Prefix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given an **infix expression** (e.g. `A+B`, `(A-B/C)*(A/K-L)`), convert it into its **prefix expression** using a stack.
+
+Prefix notation places the operator **before** its operands and removes the need for parentheses.
+
+---
+
+### 🧠 Key Idea
+
+To convert **Infix → Prefix**, we use a clever transformation:
+1. Reverse the infix expression
+2. Swap opening and closing parentheses
+3. Convert the modified expression to **postfix**
+4. Reverse the postfix result → this becomes **prefix**
+
+This approach avoids writing a separate algorithm from scratch.
+
+---
+
+### 🚀 Algorithm Steps
+
+1. Reverse the infix string  
+2. Replace:
+   - `'('` with `')'`
+   - `')'` with `'('`
+3. Traverse the modified string:
+   - If operand → add to result
+   - If `'('` → push to stack
+   - If `')'` → pop until `'('`
+   - If operator:
+     - Pop higher (or equal for `^`) precedence operators
+     - Push current operator
+4. Pop remaining operators from stack
+5. Reverse the result → **Prefix expression**
+
+---
+
+### 📐 Operator Precedence
+| Operator | Precedence |
+|--------|------------|
+| `^`    | 3 |
+| `* /`  | 2 |
+| `+ -`  | 1 |
+
+---
+
+### 📝 Example
+#### Input
+    (A-B/C)*(A/K-L)
+#### Output
+    *-A/BC-/AKL
+
+---
+
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Stack helps manage operators and precedence
+- Reversal trick simplifies infix → prefix conversion
+- Works for multi-operator and parenthesized expressions
+- Clean and interview-friendly approach
+
+
+---
+
+
+## 6️⃣ Infix to Postfix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given an **infix expression** (e.g. `A+B`, `(A-B/C)*(A/K-L)`), convert it into a **postfix expression** (also known as Reverse Polish Notation).
+
+In postfix notation, operators appear **after** their operands, and parentheses are no longer required.
+
+---
+
+### 🧠 Intuition
+
+Infix expressions are easy for humans to read but hard for machines to evaluate directly because of:
+- Operator precedence
+- Parentheses
+
+A **stack** helps us:
+- Temporarily store operators
+- Ensure correct precedence and associativity
+- Output a valid postfix expression in one pass
+
+---
+
+### 🚀 Approach (Stack-Based)
+
+#### Rules to follow:
+- **Operands (letters/digits)** → add directly to result
+- **`(`** → push to stack
+- **`)`** → pop from stack until `(` is found
+- **Operators (`+ - * / ^`)**:
+  - Pop operators from stack with **higher precedence**
+  - For equal precedence:
+    - Pop if operator is **left associative**
+    - Do NOT pop if operator is `^` (right associative)
+  - Push current operator to stack
+
+---
+
+### 📐 Operator Precedence
+| Operator | Precedence | Associativity |
+|--------|------------|---------------|
+| `^`    | 3 | Right |
+| `* /`  | 2 | Left |
+| `+ -`  | 1 | Left |
+
+---
+
+### 📝 Example
+#### Input
+    (A-B/C)*(A/K-L)
+#### Output
+    ABC/-AK/L-*
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Stack efficiently handles precedence and parentheses
+- Right associativity of ^ needs special handling
+- Postfix expressions are easier to evaluate programmatically
+- Commonly asked in DSA and compiler design interviews
+
