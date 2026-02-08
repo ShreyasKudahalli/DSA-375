@@ -495,3 +495,314 @@ Where n is the length of the expression.
 - Postfix expressions are easier to evaluate programmatically
 - Commonly asked in DSA and compiler design interviews
 
+
+---
+
+
+## 7️⃣ Postfix to Infix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given a **postfix expression** (Reverse Polish Notation), convert it into an **infix expression**.
+
+In postfix notation, operators come **after** their operands, whereas in infix notation, operators are placed **between** operands and may require parentheses to preserve evaluation order.
+
+---
+
+### 🧠 Intuition
+
+Postfix expressions remove the need for parentheses and precedence rules, making them easy to evaluate.  
+To reconstruct an infix expression:
+
+- Operands can be used directly
+- When an operator appears, it must combine the **two most recent operands**
+- Parentheses are required to preserve the original evaluation order
+
+A **stack** is perfect for this pattern.
+
+---
+
+### 🚀 Approach (Stack-Based)
+
+#### Rules:
+- **Operand (alphanumeric)** → push onto stack
+- **Operator**:
+  1. Pop two elements from stack  
+     - First pop → right operand  
+     - Second pop → left operand
+  2. Combine them as `(left operator right)`
+  3. Push the new expression back onto the stack
+
+At the end, the stack contains a single valid infix expression.
+
+---
+
+### Example
+
+#### Input
+    ab+c*
+
+#### Output
+    ((a+b)*c)
+
+#### Steps
+- a → push
+- b → push
+- + → (a+b)
+- c → push
+- * → ((a+b)*c)
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the postfix expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Stack helps rebuild expression structure
+- Parentheses ensure correct evaluation order
+- Operands are pushed, operators combine expressions
+- Fundamental expression conversion problem in DSA
+
+
+---
+
+
+## 8️⃣ Prefix to Infix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given a **prefix expression**, convert it into an **infix expression**.
+
+In prefix notation, operators appear **before** their operands, while in infix notation, operators are placed **between** operands and usually require parentheses to preserve evaluation order.
+
+---
+
+### 🧠 Intuition
+
+Prefix expressions are evaluated from **right to left**.  
+To convert prefix to infix:
+
+- Operands can be used directly
+- When an operator is encountered, it must combine the **next two operands**
+- Parentheses are required to maintain correct precedence
+
+A **stack** helps manage operands and intermediate expressions efficiently.
+
+---
+
+### 🚀 Approach (Stack-Based)
+
+#### Rules:
+- Traverse the prefix expression **from right to left**
+- **Operand (alphanumeric)** → push onto stack
+- **Operator**:
+  1. Pop two elements from stack  
+     - First pop → left operand  
+     - Second pop → right operand
+  2. Form a new expression: `(left operator right)`
+  3. Push it back onto the stack
+
+At the end, the stack will contain one valid infix expression.
+
+---
+
+### 📝 Example
+
+#### Input
+    *+ab-cd
+
+#### Output
+    ((a+b)*(c-d))
+
+#### Steps
+- Traverse from right to left
+- d, c → operands
+- - → (c-d)
+- b, a → operands
+- + → (a+b)
+- * → ((a+b)*(c-d))
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the prefix expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Prefix expressions are processed right to left
+- Stack stores operands and partial infix expressions
+- Parentheses preserve operator precedence
+- Classic stack-based expression conversion problem
+
+
+---
+
+
+## 9️⃣ Postfix to Prefix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given a **postfix expression** (Reverse Polish Notation), convert it into a **prefix expression**.
+
+- **Postfix**: operator comes **after** operands  
+- **Prefix**: operator comes **before** operands  
+
+The goal is to transform the expression while preserving the correct order of evaluation.
+
+---
+
+### 🧠 Intuition
+
+Postfix expressions are evaluated **left to right**.  
+Whenever we encounter an operator, it applies to the **two most recent operands**.
+
+To convert postfix → prefix:
+- Operands are pushed directly
+- Operators combine the last two operands into a new prefix expression
+
+A **stack** naturally supports this behavior.
+
+---
+
+### 🚀 Approach (Stack-Based)
+
+#### Rules:
+- Traverse the postfix expression from **left to right**
+- **Operand (alphanumeric)** → push onto stack
+- **Operator**:
+  1. Pop two elements from the stack  
+     - First pop → right operand  
+     - Second pop → left operand
+  2. Form prefix expression:  
+     `operator + left + right`
+  3. Push the new expression back onto the stack
+
+At the end, the stack contains a single valid prefix expression.
+
+---
+
+### 📝 Example
+
+#### Input
+    ab+c*
+
+#### Output
+    *+abc
+
+#### Steps
+- a, b → push
+- + → +ab
+- c → push
+- * → *+abc
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the postfix expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Stack stores operands and intermediate expressions
+- Operators combine two most recent operands
+- Order matters: operator + left + right
+- Clean and efficient expression conversion technique
+
+
+---
+
+
+## 1️⃣0️⃣ Prefix to Postfix Conversion (Using Stack)
+
+### 📌 Problem Statement
+Given a **prefix expression**, convert it into a **postfix expression**.
+
+- **Prefix**: operator comes **before** operands  
+- **Postfix**: operator comes **after** operands  
+
+The conversion must preserve the correct order of evaluation.
+
+---
+
+### 🧠 Intuition
+
+Prefix expressions are evaluated **right to left**.  
+When an operator is encountered, it applies to the **next two operands**.
+
+To convert prefix → postfix:
+- Operands are pushed directly
+- Operators combine the two most recent operands into a new postfix expression
+
+A **stack** makes this conversion clean and efficient.
+
+---
+
+### 🚀 Approach (Stack-Based)
+
+#### Rules:
+- Traverse the prefix expression **from right to left**
+- **Operand (alphanumeric)** → push onto stack
+- **Operator**:
+  1. Pop two elements from stack  
+     - First pop → left operand  
+     - Second pop → right operand
+  2. Form postfix expression:  
+     `left + right + operator`
+  3. Push the new expression back onto the stack
+
+At the end, the stack contains one valid postfix expression.
+
+---
+
+### 📝 Example
+
+#### Input
+    *+ab-cd
+
+#### Output
+    ab+cd-*
+
+#### Steps
+- Traverse from right to left
+- d, c → operands
+- - → cd-
+- b, a → operands
+- + → ab+
+- * → ab+cd-*
+
+---
+### ⏱️ Complexity Analysis
+| Metric            | Value |
+|------------------|-------|
+| Time Complexity  | O(n)  |
+| Space Complexity | O(n)  |
+
+Where n is the length of the prefix expression.
+
+---
+
+### ✅ Key Takeaways
+
+- Prefix expressions are processed right to left
+- Stack stores operands and intermediate postfix expressions
+- Operator placement is always at the end
+- Fundamental expression conversion problem in DSA
+
+
+
+
