@@ -9,3 +9,4 @@ class Solution:
                     stack.pop()
             return ''.join(stack)
         return build(s)==build(t)
+    
