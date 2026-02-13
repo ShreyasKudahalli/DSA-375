@@ -243,3 +243,250 @@ Overall space complexity: O(n)
 - If top > max, it is encoded
 - Recover previous max using:
     - previous_max = 2*current_max - encoded_value
+
+
+---
+
+
+## 3️⃣ Implement Queue Using Two Stacks (MyQueue)
+
+### 📌 Problem Statement
+
+Design a **Queue (FIFO – First In First Out)** using only stack operations.  
+
+Implement the following methods:
+
+- `push(x)` → Insert element at the back of the queue  
+- `pop()` → Remove the front element  
+- `peek()` → Get the front element  
+- `empty()` → Check whether the queue is empty  
+
+---
+
+### 🧠 Approach
+
+We use **two stacks**:
+
+- `inputStack` → Used for push operations  
+- `outputStack` → Used for pop and peek operations  
+
+#### 🔁 Key Idea
+
+- When pushing → Always push into `inputStack`.
+- When popping/peeking:
+  - If `outputStack` is empty, transfer all elements from `inputStack` to `outputStack`.
+  - This reversal ensures FIFO behavior.
+- `outputStack` always contains elements in correct queue order.
+
+This technique is called **amortized stack transfer**.
+
+---
+
+### 📊 How It Works
+**Example Operations**
+
+| Operation | inputStack | outputStack | Result |
+|------------|------------|-------------|--------|
+| push(1) | [1] | [] | — |
+| push(2) | [1,2] | [] | — |
+| peek() | [] | [2,1] | 1 |
+| pop() | [] | [2] | 1 |
+| empty() | — | — | False |
+
+---
+
+### ⏱️ Complexity Analysis
+| Operation | Time Complexity | Space Complexity |
+|------------|----------------|------------------|
+| push | O(1) | O(n) |
+| pop | O(1) amortized | O(n) |
+| peek | O(1) amortized | O(n) |
+| empty | O(1) | O(1) |
+
+
+---
+
+### 🔎 Why Amortized O(1)?
+Each element is moved at most once from inputStack to outputStack.
+So even though transfer looks O(n), overall cost per operation averages to O(1).
+
+---
+
+### 🎯 Key Takeaways
+
+- Stack reversal enables queue behavior.
+- Two stacks simulate FIFO efficiently.
+- Common interview question (LeetCode – Implement Queue using Stacks).
+- Demonstrates understanding of data structure transformation.
+
+
+---
+
+
+## 4️⃣ Implement Stack Using Queue (MyStack)
+
+### 📌 Problem Statement
+
+Design a **Stack (LIFO – Last In First Out)** using only queue operations.
+
+Implement the following methods:
+
+- `push(x)` → Push element onto stack  
+- `pop()` → Remove the top element  
+- `top()` → Get the top element  
+- `empty()` → Check whether the stack is empty  
+
+---
+
+### 🧠 Approach
+
+We use **one queue (deque)** to simulate stack behavior.
+
+#### 🔁 Key Idea
+
+- When pushing an element:
+  1. Add it to the queue.
+  2. Rotate the previous elements behind it.
+- This ensures the **newly added element always stays at the front** of the queue.
+- So:
+  - `pop()` → Simply remove from front.
+  - `top()` → Return front element.
+
+This makes the queue behave like a stack.
+
+---
+### 📊 How It Works
+**Example Operations**
+
+| Operation | Queue State | Stack View |
+|------------|------------|------------|
+| push(1) | [1] | [1] |
+| push(2) | [2,1] | [1,2] |
+| push(3) | [3,2,1] | [1,2,3] |
+| pop() | [2,1] | [1,2] |
+| top() | — | 2 |
+
+👉 The **front of the queue** always represents the **top of the stack**.
+
+---
+
+### ⏱️ Complexity Analysis
+
+| Operation | Time Complexity | Space Complexity |
+|------------|----------------|------------------|
+| push | O(n) | O(n) |
+| pop | O(1) | O(1) |
+| top | O(1) | O(1) |
+| empty | O(1) | O(1) |
+
+---
+
+### 🔎 Why O(n) for Push?
+Each push requires rotating all existing elements to maintain LIFO order.
+
+---
+
+### 🎯 Key Takeaways
+
+- Queue rotation helps simulate stack behavior.
+- Only one queue is sufficient.
+- Good example of data structure transformation.
+- Frequently asked in coding interviews.
+
+
+---
+
+
+## 5️⃣ Custom Stack with Increment Operation
+
+### 📌 Problem Statement
+
+Design a stack that supports the following operations:
+
+- `push(x)` → Push element onto stack (only if stack size < maxSize)  
+- `pop()` → Remove and return the top element  
+- `increment(k, val)` → Increment the bottom `k` elements by `val`  
+
+If:
+- The stack is full → `push` does nothing  
+- The stack is empty → `pop` returns `-1`
+
+---
+
+### 🧠 Approach
+
+We maintain:
+
+- `maxSize` → Maximum capacity of stack  
+- `curSize` → Current number of elements  
+- `Stack` → List to store elements  
+
+#### 🔹 Push Logic
+- Only insert if `curSize < maxSize`
+- Increase `curSize` after successful insertion
+
+#### 🔹 Pop Logic
+- Remove top element if stack is not empty
+- Decrease `curSize`
+- Return popped value
+- Return `-1` if stack is empty
+
+#### 🔹 Increment Logic
+- Find `n = min(k, curSize)`
+- Increment the first `n` (bottom) elements by `val`
+
+---
+### 📊 Example Walkthrough
+**Operations**
+- CustomStack(3)
+- push(1)
+- push(2)
+- pop()
+- push(2)
+- push(3)
+- push(4)
+- increment(5, 100)
+- pop()
+- pop()
+- pop()
+- pop()
+
+
+**Execution Table**
+| Operation | Stack State | Output |
+|------------|------------|--------|
+| push(1) | [1] | — |
+| push(2) | [1,2] | — |
+| pop() | [1] | 2 |
+| push(2) | [1,2] | — |
+| push(3) | [1,2,3] | — |
+| push(4) | [1,2,3] | (ignored, full) |
+| increment(5,100) | [101,102,103] | — |
+| pop() | [101,102] | 103 |
+| pop() | [101] | 102 |
+| pop() | [] | 101 |
+| pop() | [] | -1 |
+
+---
+
+### ⏱️ Complexity Analysis
+| Operation | Time Complexity | Space Complexity |
+|------------|----------------|------------------|
+| push | O(1) | O(n) |
+| pop | O(1) | O(1) |
+| increment | O(k) | O(1) |
+
+Where:
+- n = stack size
+- k = number of elements to increment
+
+---
+
+### 🎯 Key Takeaways
+
+- Enforces stack capacity constraint
+- Supports bottom-element modification
+- Demonstrates stack manipulation beyond basic operations
+- Frequently asked in coding interviews (LeetCode – Design a Stack With Increment Operation)
+
+
