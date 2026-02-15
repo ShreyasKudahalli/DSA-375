@@ -1,7 +1,6 @@
 # Linked List Basic Operations
 Linked List Basic Operations involve fundamental manipulations such as insertion (at beginning, end, or position), deletion, traversal, and searching within a dynamically connected sequence of nodes. Unlike arrays, linked lists use pointers to connect elements, allowing efficient memory utilization and flexible data management, making them essential for understanding dynamic data structures and building more advanced structures like stacks, queues, and graphs.
 
-
 ## 1️⃣ Search Key in Singly Linked List
 
 ### 📌 Problem Statement
