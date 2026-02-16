@@ -1,221 +1,302 @@
-**Two Pointer Technique**
 
+# Two Pointer Technique
 
+The **Two Pointer Technique** is commonly used to solve array and linked list problems efficiently, especially when the input is sorted or when we need in-place modifications.
 
-1. Move Zeroes (Two Pointers)
+---
 
-🧩 Problem Statement :
+# 1️⃣ Move Zeroes
 
--> Given an integer array nums, move all 0s to the end of the array while maintaining the relative order of the non-zero elements.
--> The operation must be done in-place0
--> Do not create a copy of the array
+## 🧩 Problem Statement
 
+* Given an integer array `nums`, move all `0`s to the end while maintaining the relative order of the non-zero elements.
+* The operation must be done **in-place**.
+* Do not create a copy of the array.
 
-💡 Approach: Two Pointers
+---
+
+## 💡 Approach: Two Pointers
 
 We use two pointers:
-    l → points to the position where the next non-zero element should be placed
-    r → iterates through the array
 
+* `l` → Points to the position where the next non-zero element should be placed
+* `r` → Iterates through the array
 
-Algorithm:
+---
 
->> Initialize both pointers l and r to 0
->> Traverse the array using r
->> If nums[r] is non-zero:
-        Swap nums[l] and nums[r]
-        Increment l
->> Always increment r
-This ensures:
-    All non-zero elements are shifted to the front
-    All zeroes move to the end
-    Relative order of non-zero elements is preserved
+## 🔁 Algorithm
 
-Time : O(N)
-Space : O(1)
+1. Initialize both pointers `l = 0` and `r = 0`.
+2. Traverse the array using `r`.
+3. If `nums[r]` is non-zero:
 
+   * Swap `nums[l]` and `nums[r]`
+   * Increment `l`
+4. Always increment `r`.
 
+### ✅ This ensures:
 
+* All non-zero elements move to the front.
+* All zeroes shift to the end.
+* The relative order of non-zero elements is preserved.
 
-2. Two Sum II – Input Array Is Sorted
+**Time Complexity:** O(N)
+**Space Complexity:** O(1)
 
-🧩 Problem Statement
+---
 
--> Given a 1-indexed, sorted array of integers numbers and an integer target, find two numbers such that they add up to target.
--> Return the indices (1-based) of the two numbers.
+# 2️⃣ Two Sum II – Input Array Is Sorted
 
+## 🧩 Problem Statement
 
-Constraints :
--> Exactly one valid solution exists
--> You may not use the same element twice
--> The input array is sorted in non-decreasing order
+* Given a **1-indexed, sorted array** `numbers` and an integer `target`, find two numbers such that they add up to `target`.
+* Return their indices (1-based).
 
+### Constraints
 
-💡 Approach: Two Pointers
+* Exactly one valid solution exists.
+* You may not use the same element twice.
+* The array is sorted in non-decreasing order.
 
-Since the array is already sorted, we can efficiently solve this using the two pointers technique.
+---
 
-Pointer Strategy:
-    left starts at the beginning of the array
-    right starts at the end of the array
+## 💡 Approach: Two Pointers
 
+Since the array is sorted, we can use two pointers efficiently.
 
-Algorithm:
+### Pointer Strategy
 
->> Calculate current_sum = numbers[left] + numbers[right]
->> If current_sum > target, move right leftward
->> If current_sum < target, move left rightward
->> If current_sum == target, return the indices (1-based)
+* `left` → Start of the array
+* `right` → End of the array
 
-This avoids using extra space and ensures optimal performance.
+---
 
-Time : O(N)
-Space : O(1)
+## 🔁 Algorithm
 
+1. While `left < right`:
 
+   * Compute `current_sum = numbers[left] + numbers[right]`
+   * If `current_sum > target` → move `right` leftward.
+   * If `current_sum < target` → move `left` rightward.
+   * If `current_sum == target` → return `[left + 1, right + 1]`.
 
+This avoids extra space and ensures optimal performance.
 
-3. 3Sum
+**Time Complexity:** O(N)
+**Space Complexity:** O(1)
 
-🧩 Problem Statement :
+---
 
--> Given an integer array nums, return all unique triplets [nums[i], nums[j], nums[k]] such that:
-        i != j, i != k, and j != k
--> nums[i] + nums[j] + nums[k] == 0
--> The solution set must not contain duplicate triplets
+# 3️⃣ 3Sum
 
+## 🧩 Problem Statement
 
-💡 Approach: Sorting + Two Pointers
+* Given an integer array `nums`, return all unique triplets `[nums[i], nums[j], nums[k]]` such that:
 
-This problem is efficiently solved using sorting combined with the two pointers technique.
+  * `i != j`, `i != k`, and `j != k`
+  * `nums[i] + nums[j] + nums[k] == 0`
+* The solution set must not contain duplicate triplets.
 
-Why Sorting?
-    Helps avoid duplicate triplets
-    Allows controlled pointer movement based on sum comparison
+---
 
+## 💡 Approach: Sorting + Two Pointers
 
-🧠 Algorithm:
+### Why Sorting?
 
->> Sort the input array
->> Iterate through the array using index i
-        Skip duplicate values for i
->> For each i, use two pointers:
-        left = i + 1
-        right = len(nums) - 1
->> Compute the sum of nums[i] + nums[left] + nums[right]
-        If sum == 0 → store the triplet
-        If sum < 0 → move left forward
-        If sum > 0 → move right backward
->> Skip duplicate values for left and right to avoid repeated triplets
->> Continue until all valid triplets are found
+* Helps skip duplicates.
+* Enables controlled pointer movement based on sum comparison.
 
-Time : O(N^2)
-Space : O(1) ("Without result Array")
+---
 
+## 🔁 Algorithm
 
+1. Sort the array.
+2. Iterate through the array using index `i`.
 
+   * Skip duplicate values of `nums[i]`.
+3. For each `i`, set:
 
-4. Sort Colors (Dutch National Flag Problem)
+   * `left = i + 1`
+   * `right = len(nums) - 1`
+4. While `left < right`:
 
-🧩 Problem Statement :
+   * Compute the sum.
+   * If sum == 0 → store the triplet.
+   * If sum < 0 → move `left` forward.
+   * If sum > 0 → move `right` backward.
+   * Skip duplicates for `left` and `right`.
 
--> Given an array nums with n objects colored red (0), white (1), or blue (2), sort them in-place so that objects of the same color are adjacent, in the order red → white → blue.
--> Do not use the library’s sort function
--> Must be done in-place with constant space
+**Time Complexity:** O(N²)
+**Space Complexity:** O(1) (excluding result storage)
 
+---
 
-💡 Approach: Dutch National Flag / Three Pointers
+# 4️⃣ Sort Colors (Dutch National Flag Problem)
 
-We use three pointers to partition the array into three sections:
-    left → boundary of 0s (reds)
-    mid → current element being checked
-    right → boundary of 2s (blues)
+## 🧩 Problem Statement
 
+* Given an array `nums` with values:
 
-Algorithm :
+  * `0` → Red
+  * `1` → White
+  * `2` → Blue
+* Sort them in-place in the order: **Red → White → Blue**.
+* Do not use the built-in sort function.
+* Must use constant extra space.
 
->> Initialize left = 0, mid = 0, right = len(nums) - 1
->> While mid <= right:
-        If nums[mid] == 0 → swap with nums[left], move left and mid forward
-        If nums[mid] == 1 → just move mid forward
-        If nums[mid] == 2 → swap with nums[right], move right backward
->> Continue until mid > right
-This ensures all 0s are at the beginning, 2s at the end, and 1s in the middle.
+---
 
-Time : O(N)
-Space : O(1)
+## 💡 Approach: Three Pointers
 
+We divide the array into three sections:
 
+* `left` → Boundary of 0s
+* `mid` → Current element
+* `right` → Boundary of 2s
 
+---
 
-5. Container With Most Water
+## 🔁 Algorithm
 
-🧩 Problem Statement :
+1. Initialize:
 
--> Given an array height of n non-negative integers, where each integer represents the height of a vertical line on the x-axis, find two lines that together with the x-axis form a container, such that the container contains the most water.
--> Return the maximum area of water the container can store.
-    You may not slant the container
-    The area of water is determined by width × min(height[left], height[right])
+   * `left = 0`
+   * `mid = 0`
+   * `right = len(nums) - 1`
+2. While `mid <= right`:
 
+   * If `nums[mid] == 0`:
 
-💡 Approach: Two Pointers
+     * Swap with `nums[left]`
+     * Increment both `left` and `mid`
+   * If `nums[mid] == 1`:
 
-We can solve this efficiently using the two pointers technique:
-Pointer Strategy:
-    l → start of the array
-    r → end of the array
+     * Increment `mid`
+   * If `nums[mid] == 2`:
 
+     * Swap with `nums[right]`
+     * Decrement `right`
 
-Algorithm:
+This partitions the array in a single pass.
 
->> Initialize res = 0 to track the maximum area
->> While l < r:
-        Calculate current_area = (r - l) * min(height[l], height[r])
-        Update res = max(res, current_area)
-        Move the pointer pointing to the shorter line inward (l or r)
-         (because moving the taller line cannot increase area)
->> Return res after scanning the array
+**Time Complexity:** O(N)
+**Space Complexity:** O(1)
 
-Time : O(N)
-Space : O(1)
+---
 
+# 5️⃣ Container With Most Water
 
+## 🧩 Problem Statement
 
+* Given an array `height`, where each element represents a vertical line.
+* Find two lines that form a container holding the maximum water.
+* You cannot tilt the container.
 
-6. Trapping Rain Water
+Area formula:
 
-🧩 Problem Statement :
+```
+Area = (right - left) × min(height[left], height[right])
+```
 
--> Given n non-negative integers representing the elevation map where the width of each bar is 1, compute how much water it can trap after raining
--> Water is trapped between the bars based on the min height of surrounding bars.
+---
 
+## 💡 Approach: Two Pointers
 
-💡 Approach: Two Pointers
+### Pointer Strategy
 
-We use two pointers and two variables to track the maximum heights from both sides:
-Variables:
-    l → left pointer
-    r → right pointer
-    lmax → maximum height from the left
-    rmax → maximum height from the right
-    total → total trapped water
+* `l` → Start of the array
+* `r` → End of the array
 
+---
 
-Algorithm:
+## 🔁 Algorithm
 
->> Initialize l = 1, r = len(height)-2, lmax = height[0], rmax = height[-1]
->> While l <= r:
-        If lmax < rmax:
-            If height[l] >= lmax, update lmax
-            Else, add lmax - height[l] to total
-            Move l forward
-        Else:
-            If height[r] >= rmax, update rmax
-            Else, add rmax - height[r] to total
-            Move r backward
->> Return total after processing all bars
+1. Initialize `res = 0`.
+2. While `l < r`:
 
-This works because the trapped water at a position is determined by the smaller of the maximum heights to its left and right.
+   * Compute:
 
-Time : O(N)
-Space : O(1)
+     ```
+     area = (r - l) × min(height[l], height[r])
+     ```
+   * Update `res = max(res, area)`
+   * Move the pointer pointing to the shorter height inward.
+3. Return `res`.
+
+### Why Move the Shorter Line?
+
+Because the area is limited by the smaller height. Moving the taller line cannot increase the area.
+
+**Time Complexity:** O(N)
+**Space Complexity:** O(1)
+
+---
+
+# 6️⃣ Trapping Rain Water
+
+## 🧩 Problem Statement
+
+* Given an elevation map `height`, compute how much water it can trap after raining.
+
+Water trapped at position `i`:
+
+```
+min(max height to left, max height to right) - height[i]
+```
+
+---
+
+## 💡 Approach: Two Pointers
+
+### Variables
+
+* `l` → Left pointer
+* `r` → Right pointer
+* `lmax` → Maximum height from the left
+* `rmax` → Maximum height from the right
+* `total` → Total trapped water
+
+---
+
+## 🔁 Algorithm
+
+1. Initialize:
+
+   * `l = 0`
+   * `r = len(height) - 1`
+   * `lmax = 0`
+   * `rmax = 0`
+   * `total = 0`
+2. While `l < r`:
+
+   * If `height[l] < height[r]`:
+
+     * If `height[l] >= lmax`, update `lmax`
+     * Else add `lmax - height[l]` to `total`
+     * Move `l` forward
+   * Else:
+
+     * If `height[r] >= rmax`, update `rmax`
+     * Else add `rmax - height[r]` to `total`
+     * Move `r` backward
+3. Return `total`.
+
+**Time Complexity:** O(N)
+**Space Complexity:** O(1)
+
+---
+
+# 🎯 Summary of Two Pointer Problems
+
+| Problem                   | Time Complexity | Space Complexity |
+| ------------------------- | --------------- | ---------------- |
+| Move Zeroes               | O(N)            | O(1)             |
+| Two Sum II                | O(N)            | O(1)             |
+| 3Sum                      | O(N²)           | O(1)             |
+| Sort Colors               | O(N)            | O(1)             |
+| Container With Most Water | O(N)            | O(1)             |
+| Trapping Rain Water       | O(N)            | O(1)             |
+
+*Excluding result storage.
+
+---
