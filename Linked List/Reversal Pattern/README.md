@@ -256,3 +256,327 @@ All values match ✅ → Palindrome
 
 
 ---
+
+
+## 4️⃣ Reverse Nodes in k-Group
+
+### 🧩 Problem Statement
+
+Given the head of a **singly linked list** and an integer `k`, reverse the nodes of the list **k at a time** and return the modified list.
+
+* Nodes that remain fewer than `k` at the end should stay as they are.
+* You must reverse the **nodes**, not just the values.
+* The solution should use **constant extra space**.
+
+---
+
+### 💡 Approach: Group Detection + In-Place Reversal
+
+#### 🔑 Core Idea
+
+1. Traverse the list in chunks of size `k`.
+2. Check if a full group of `k` nodes exists.
+3. If yes:
+
+   * Temporarily disconnect the group.
+   * Reverse it.
+   * Reconnect it with the previous part.
+4. If fewer than `k` nodes remain → leave them unchanged.
+
+---
+
+### 🔍 Step-by-Step Example
+
+#### Input:
+
+```
+1 → 2 → 3 → 4 → 5 → 6
+k = 2
+```
+
+#### Group 1: (1,2)
+
+→ Reverse → `2 → 1`
+
+#### Group 2: (3,4)
+
+→ Reverse → `4 → 3`
+
+#### Group 3: (5,6)
+
+→ Reverse → `6 → 5`
+
+#### Output:
+
+```
+2 → 1 → 4 → 3 → 6 → 5
+```
+
+---
+
+#### Another Example
+
+#### Input:
+
+```
+1 → 2 → 3 → 4 → 5
+k = 3
+```
+
+Reverse first 3:
+
+```
+3 → 2 → 1 → 4 → 5
+```
+
+Last two nodes remain unchanged.
+
+---
+
+### 🎯 Important Concepts Used
+
+* In-place linked list reversal
+* Helper function for kth node detection
+* Breaking and reconnecting sublists
+* Careful pointer management
+
+---
+
+### ⏱️ Complexity Analysis
+
+| Metric           | Value |
+| ---------------- | ----- |
+| Time Complexity  | O(N)  |
+| Space Complexity | O(1)  |
+
+* Each node is visited at most twice → `O(N)`
+* No extra data structures used → `O(1)`
+
+---
+
+### 🚀 Why This Approach Works
+
+* Ensures reversal only when a full group of `k` exists
+* Maintains correct connections between reversed groups
+* Handles edge cases like:
+
+  * `k = 1`
+  * `k > length`
+  * Last group smaller than `k`
+
+---
+
+### 🏁 Summary
+
+✔ Efficient and optimal solution
+✔ Reverses only complete k-groups
+✔ Constant extra space
+✔ Very common advanced linked list interview problem
+
+
+
+---
+
+
+
+## 5️⃣ Swap Nodes in Pairs
+
+### 🧩 Problem Statement
+
+Given the head of a **singly linked list**, swap every two adjacent nodes and return the modified list.
+
+* You must swap the **nodes**, not just their values.
+* The solution must be done **in-place**.
+
+---
+
+### 💡 Approach: Dummy Node + Pointer Manipulation
+
+To swap nodes safely (especially when the head changes), we use a **dummy node**.
+
+#### 🛠 Key Idea
+
+For every pair:
+
+```
+prev → first → second → nextPair
+```
+
+We rearrange pointers to:
+
+```
+prev → second → first → nextPair
+```
+
+Then move `prev` forward to continue the process.
+
+---
+
+### 🔍 Step-by-Step Example
+
+#### Input:
+
+```
+1 → 2 → 3 → 4
+```
+
+#### Step 1: Swap (1,2)
+
+```
+2 → 1 → 3 → 4
+```
+
+#### Step 2: Swap (3,4)
+
+```
+2 → 1 → 4 → 3
+```
+
+#### Output:
+
+```
+2 → 1 → 4 → 3
+```
+
+---
+
+### 🎯 Why Use a Dummy Node?
+
+* Handles edge case when swapping includes the head
+* Prevents losing reference to the new head
+* Makes pointer updates cleaner and safer
+
+---
+
+### ⏱️ Complexity Analysis
+
+| Metric           | Value |
+| ---------------- | ----- |
+| Time Complexity  | O(N)  |
+| Space Complexity | O(1)  |
+
+* **Time:** Each node is visited once → `O(N)`
+* **Space:** No extra data structures → `O(1)`
+
+---
+
+### 🚀 Key Concepts Used
+
+* Dummy node technique
+* Pointer re-linking
+* Iterative traversal
+* In-place swapping
+
+---
+
+### 🏁 Summary
+
+✔ Swaps nodes without modifying values
+✔ Efficient and optimal solution
+✔ Handles odd-length lists correctly
+✔ Common linked list interview problem
+
+
+---
+
+
+## 6️⃣ Rotate Linked List
+
+### 🧩 Problem Statement
+
+Given the head of a **singly linked list** and an integer `k`, rotate the list to the right by `k` places.
+
+Rotation means moving the last `k` nodes to the front of the list.
+
+---
+
+### 💡 Approach: Convert to Circular List
+
+Instead of rotating step by step (which would be inefficient), we:
+
+1. Compute the **length** of the list.
+2. Connect the tail to the head → form a **circular linked list**.
+3. Find the new tail position.
+4. Break the circle at the correct position.
+
+---
+
+### 🔍 Step-by-Step Example
+
+#### Input:
+
+```
+1 → 2 → 3 → 4 → 5
+k = 2
+```
+
+#### Step 1: Length = 5
+
+#### Step 2: k = 2 % 5 = 2
+
+Make it circular:
+
+```
+1 → 2 → 3 → 4 → 5
+↑                 ↓
+← ← ← ← ← ← ← ← ←
+```
+
+New tail position = `5 - 2 = 3`
+
+Break after node `3`
+
+#### Output:
+
+```
+4 → 5 → 1 → 2 → 3
+```
+
+---
+
+### 🎯 Why Use Modulo (`k % length`)?
+
+If `k` is larger than the list length:
+
+Example:
+
+```
+length = 5, k = 12
+12 % 5 = 2
+```
+
+Rotating 12 times is same as rotating 2 times.
+
+---
+
+### ⏱️ Complexity Analysis
+
+| Metric           | Value |
+| ---------------- | ----- |
+| Time Complexity  | O(N)  |
+| Space Complexity | O(1)  |
+
+* **Time:** One pass to calculate length + one pass to find new tail → `O(N)`
+* **Space:** No extra memory used → `O(1)`
+
+---
+
+### 🚀 Key Concepts Used
+
+* Circular linked list technique
+* Modulo optimization
+* Pointer manipulation
+* Edge case handling
+
+---
+
+### 🏁 Summary
+
+✔ Efficient single-pass solution
+✔ Handles large `k` values
+✔ In-place rotation
+✔ Common interview question
+
+
+
+---
