@@ -213,3 +213,232 @@ Use a dummy node to simplify pointer handling and merge both sorted halves.
 
 
 ---
+
+
+## 3️⃣ Remove Duplicates from Sorted Linked List
+
+### 📌 Problem Statement
+
+Given the head of a **sorted singly linked list**, delete all duplicate elements such that each element appears only once.
+Return the head of the modified list.
+
+> ⚠️ The linked list is already sorted, which makes duplicate detection straightforward.
+
+---
+
+### 🧠 Approach
+
+Since the list is sorted, duplicate elements will always appear **next to each other**.
+This allows us to solve the problem in a single traversal.
+
+---
+
+### 🔹 Algorithm Steps
+
+1️⃣ **Handle Edge Case**
+
+If the list is empty or contains only one node:
+
+```python
+if not head or not head.next:
+    return head
+```
+
+It is already free of duplicates.
+
+---
+
+2️⃣ **Traverse the List**
+
+* Use a pointer `temp` starting from `head`.
+* While `temp.next` exists:
+
+  * If `temp.val == temp.next.val`
+
+    * Skip the duplicate node by updating:
+
+      ```python
+      temp.next = temp.next.next
+      ```
+  * Otherwise, move `temp` forward.
+
+---
+
+3️⃣ **Return Head**
+
+Return the modified linked list.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+1 → 1 → 2 → 3 → 3
+```
+
+#### Output
+
+```
+1 → 2 → 3
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+* We traverse the list only once.
+* No extra memory is used (in-place modification).
+
+---
+
+### 📚 Key Concepts Used
+
+* Singly Linked List
+* Pointer Manipulation
+* In-place Node Deletion
+* Sorted List Property Utilization
+
+---
+
+### 🚀 Why This Works Efficiently
+
+Because the list is sorted:
+
+* Duplicates are adjacent.
+* No need for extra data structures like sets or hash maps.
+* A simple linear scan is enough.
+
+
+---
+
+
+## 4️⃣ Reorder Linked List
+
+### 📌 Problem Statement
+
+Given the head of a singly linked list, reorder the list in-place to follow this pattern:
+
+```
+L0 → L1 → L2 → ... → Ln-1 → Ln
+```
+
+Reorder it to:
+
+```
+L0 → Ln → L1 → Ln-1 → L2 → Ln-2 → ...
+```
+
+⚠️ You must **modify the list in-place** and not return a new list.
+
+---
+
+### 🧠 Approach Overview
+
+This problem can be solved efficiently in **three major steps**:
+
+1️⃣ **Find the Middle of the List**
+2️⃣ **Reverse the Second Half**
+3️⃣ **Merge the Two Halves Alternately**
+
+This ensures an optimal time complexity of **O(n)** and space complexity of **O(1)**.
+
+---
+
+### 🔹 Step 1: Find the Middle (Slow & Fast Pointers)
+
+* `slow` moves one step at a time.
+* `fast` moves two steps at a time.
+* When `fast` reaches the end, `slow` will be at the middle.
+
+Then split the list into two halves.
+
+---
+
+### 🔹 Step 2: Reverse the Second Half
+
+Reverse the second half of the list using standard linked list reversal logic.
+
+Example:
+
+```
+Original second half: 4 → 5 → 6
+Reversed:             6 → 5 → 4
+```
+
+---
+
+### 🔹 Step 3: Merge Alternately
+
+Merge nodes from:
+
+* First half
+* Reversed second half
+
+By alternating between them:
+
+```
+1 → 2 → 3
+6 → 5 → 4
+
+Result:
+1 → 6 → 2 → 5 → 3 → 4
+```
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+1 → 2 → 3 → 4 → 5
+```
+
+#### Output
+
+```
+1 → 5 → 2 → 4 → 3
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+* One pass to find middle
+* One pass to reverse
+* One pass to merge
+* No extra data structures used
+
+---
+
+### 📚 Key Concepts Used
+
+* Fast & Slow Pointer Technique
+* Linked List Reversal
+* In-place Modification
+* Two-Pointer Merging
+* Pointer Manipulation
+
+---
+
+### 🚀 Why This Approach is Optimal
+
+* Avoids using extra space (like arrays or stacks)
+* Uses only pointer manipulation
+* Runs in linear time
+* Commonly asked in interviews
+
+
+---
