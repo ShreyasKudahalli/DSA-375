@@ -442,3 +442,119 @@ Result:
 
 
 ---
+
+
+## 5️⃣ Merge K Sorted Linked Lists (Min-Heap Approach)
+
+### 📌 Problem Statement
+
+Given an array of `k` sorted singly linked lists, merge them into one sorted linked list and return its head.
+
+* Each linked list is sorted in ascending order.
+* The final merged list must also be sorted.
+
+---
+
+### 🧠 Approach — Min Heap (Priority Queue)
+
+Merging two lists can be done using the two-pointer technique.
+However, when merging **K lists**, a better and more efficient approach is to use a **Min Heap (Priority Queue)**.
+
+#### 🔹 Why Use a Heap?
+
+* At any moment, we only need the **smallest current node** among all K lists.
+* A Min Heap allows us to retrieve the smallest element in **O(log k)** time.
+* This keeps the overall time complexity optimal.
+
+---
+
+### 🔹 Algorithm Steps
+
+#### 1️⃣ Initialize Heap
+
+* Traverse all input lists.
+* Push the first node of each non-empty list into the heap.
+* Store elements as a tuple:
+
+```python
+(val, index, node)
+```
+
+* `val` → for sorting
+* `index` → to avoid comparison issues if values are equal
+* `node` → actual linked list node
+
+---
+
+#### 2️⃣ Build Result List
+
+* Create a `dummy` node to simplify pointer handling.
+* Maintain a `current` pointer for building the merged list.
+
+---
+
+#### 3️⃣ Process Heap
+
+While the heap is not empty:
+
+1. Pop the smallest node.
+2. Attach it to the result list.
+3. If the popped node has a `next`, push it into the heap.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```text
+[
+  1 → 4 → 5,
+  1 → 3 → 4,
+  2 → 6
+]
+```
+
+#### Output
+
+```text
+1 → 1 → 2 → 3 → 4 → 4 → 5 → 6
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value      |
+| ---------- | ---------- |
+| Time       | O(N log k) |
+| Space      | O(k)       |
+
+* `N` = total number of nodes across all lists
+* `k` = number of linked lists
+
+Each node is pushed and popped from the heap once → `log k` cost each time.
+
+---
+
+### 📚 Key Concepts Used
+
+* Min Heap (Priority Queue)
+* Linked List Manipulation
+* Dummy Node Technique
+* Efficient Multi-way Merge
+* Greedy Selection Strategy
+
+---
+
+### 🚀 Why This Approach is Optimal
+
+* Much faster than merging lists one by one.
+* Scales efficiently when `k` is large.
+* Commonly used in:
+
+  * External sorting
+  * Merge operations in databases
+  * Distributed data processing
+
+---
