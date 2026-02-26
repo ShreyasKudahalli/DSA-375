@@ -213,3 +213,251 @@ In a doubly linked list:
 * Ensures correct forward and backward traversal.
 
 ---
+
+## 3️⃣ Delete Node at Given Position in Doubly Linked List
+
+### 📌 Problem Statement
+
+Given the head of a **Doubly Linked List (DLL)** and a position `x` (1-based index), delete the node at position `x` and return the updated head of the list.
+
+* If the list is empty, return `None`.
+* If the position is invalid (greater than list length), return the original list unchanged.
+
+---
+
+### 🧠 Approach
+
+To delete a node from a DLL, we must carefully update both:
+
+* `next` pointer of the previous node
+* `prev` pointer of the next node
+
+Since it’s a doubly linked list, pointer updates must maintain **bidirectional integrity**.
+
+---
+
+### 🔹 Algorithm Steps
+
+#### 1️⃣ Handle Empty List
+
+If `head` is `None`, return `None`.
+
+---
+
+#### 2️⃣ Deleting the First Node (x = 1)
+
+* Move `head` to `head.next`
+* Set `head.prev = None` (if head exists)
+
+This removes the first node safely.
+
+---
+
+#### 3️⃣ Traverse to Position `x`
+
+* Use a counter starting from 1
+* Move forward until reaching position `x`
+
+If position exceeds list length, return original head.
+
+---
+
+#### 4️⃣ Adjust Pointers
+
+For node `temp` at position `x`:
+
+* If `temp.next` exists →
+  `temp.next.prev = temp.prev`
+
+* If `temp.prev` exists →
+  `temp.prev.next = temp.next`
+
+This disconnects the node from both sides.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```text
+List: 1 ⇄ 2 ⇄ 3 ⇄ 4 ⇄ 5
+x = 3
+```
+
+#### Output
+
+```text
+1 ⇄ 2 ⇄ 4 ⇄ 5
+```
+
+Node with value `3` is removed.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+* We traverse the list once.
+* No extra memory is used.
+
+---
+
+### 📚 Key Concepts Used
+
+* Doubly Linked List
+* Pointer Reassignment
+* Edge Case Handling
+* Position-Based Deletion
+* Bidirectional Link Maintenance
+
+---
+
+### ⚠️ Edge Cases Covered
+
+* Empty list
+* Deleting the first node
+* Deleting the last node
+* Invalid position
+* Single-node list
+
+---
+
+### 🚀 Why Proper Pointer Handling is Important
+
+In a doubly linked list:
+
+* Both `prev` and `next` must be updated.
+* Missing one update can break traversal.
+* Ensures consistent forward and backward movement.
+
+
+---
+
+
+## 4️⃣ Reverse a Doubly Linked List
+
+### 📌 Problem Statement
+
+Given the head of a **Doubly Linked List (DLL)**, reverse the list and return the new head.
+
+After reversing:
+
+* The `next` pointers should point backward.
+* The `prev` pointers should point forward.
+* The last node becomes the new head.
+
+---
+
+### 🧠 Approach
+
+Unlike a singly linked list, a DLL contains both:
+
+* `next` pointer
+* `prev` pointer
+
+To reverse the list, we simply **swap the `next` and `prev` pointers for each node**.
+
+---
+
+### 🔹 Algorithm Steps
+
+#### 1️⃣ Handle Edge Case
+
+If the list is empty:
+
+```python
+if not head:
+    return None
+```
+
+---
+
+#### 2️⃣ Traverse and Swap Pointers
+
+For each node:
+
+* Store `current.prev` temporarily
+* Swap:
+
+  ```python
+  current.prev = current.next
+  current.next = temp
+  ```
+* Move to the next node (which is `current.prev` after swapping)
+
+---
+
+#### 3️⃣ Update Head
+
+After the loop ends:
+
+* `temp` will be pointing to the previous node reference
+* Set new head using:
+
+  ```python
+  head = temp.prev
+  ```
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+NULL ← 1 ⇄ 2 ⇄ 3 ⇄ 4 → NULL
+```
+
+#### Output
+
+```
+NULL ← 4 ⇄ 3 ⇄ 2 ⇄ 1 → NULL
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+* We traverse the list once.
+* No extra data structures are used.
+
+---
+
+### 📚 Key Concepts Used
+
+* Doubly Linked List
+* Pointer Swapping
+* In-place Reversal
+* Bidirectional Traversal
+
+---
+
+### ⚠️ Important Insight
+
+After swapping `prev` and `next`:
+
+* The traversal direction changes.
+* That’s why we move using `current = current.prev`.
+
+This is the key trick in reversing a doubly linked list efficiently.
+
+---
+
+### 🚀 Why This Approach is Efficient
+
+* Single traversal
+* No extra memory usage
+* Clean pointer manipulation
+* Interview-friendly solution
+
+---
