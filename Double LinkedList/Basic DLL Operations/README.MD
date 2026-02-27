@@ -461,3 +461,150 @@ This is the key trick in reversing a doubly linked list efficiently.
 * Interview-friendly solution
 
 ---
+
+
+## 5️⃣ LRU Cache Implementation (HashMap + Doubly Linked List)
+
+### 📌 Problem Statement
+
+Design and implement a **Least Recently Used (LRU) Cache** with the following operations:
+
+* `get(key)` → Return the value of the key if it exists, otherwise return `-1`.
+* `put(key, value)` → Insert or update the key-value pair.
+* When the cache exceeds its capacity, remove the **least recently used** item.
+
+#### ⚡ Constraint:
+
+Both operations must run in **O(1)** time complexity.
+
+---
+
+### 🧠 Approach — HashMap + Doubly Linked List
+
+To achieve **O(1)** time for both operations, we combine:
+
+#### 1️⃣ HashMap (`dict`)
+
+* Maps `key → node`
+* Provides O(1) lookup.
+
+#### 2️⃣ Doubly Linked List (DLL)
+
+* Maintains usage order.
+* Most Recently Used (MRU) → near right.
+* Least Recently Used (LRU) → near left.
+* Allows O(1) insertion & deletion.
+
+---
+
+### 🏗 Design Structure
+
+We use two dummy nodes:
+
+```text
+LEFT <-> ... <-> RIGHT
+```
+
+* `left` → LRU boundary
+* `right` → MRU boundary
+* Real nodes are inserted between them.
+
+This avoids edge-case checks when inserting/removing nodes.
+
+---
+
+### 🔹 Key Helper Functions
+
+#### ✅ remove(node)
+
+Removes a node from the doubly linked list.
+
+```python
+prev.next = next
+next.prev = prev
+```
+
+---
+
+#### ✅ insert(node)
+
+Inserts a node at MRU position (just before `right`).
+
+```python
+prev = right.prev
+prev.next = node
+node.prev = prev
+node.next = right
+right.prev = node
+```
+
+---
+
+### 🔍 Example
+
+```python
+obj = LRUCache(2)
+
+obj.put(1, 10)
+obj.put(2, 20)
+obj.get(1)       # returns 10
+obj.put(3, 30)   # evicts key 2
+obj.get(2)       # returns -1
+```
+
+#### Explanation:
+
+* Capacity = 2
+* After inserting 1 and 2 → cache full
+* Access 1 → becomes MRU
+* Insert 3 → evict LRU (key 2)
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Operation | Time |
+| --------- | ---- |
+| get()     | O(1) |
+| put()     | O(1) |
+
+| Space | O(capacity) |
+
+* HashMap stores at most `capacity` elements.
+* DLL stores the same nodes.
+
+---
+
+### 📚 Key Concepts Used
+
+* Doubly Linked List
+* HashMap (Dictionary)
+* O(1) Deletion & Insertion
+* Cache Eviction Policy
+* System Design Fundamentals
+
+---
+
+### 🚀 Why This Design is Optimal
+
+* HashMap gives instant access to nodes.
+* DLL maintains order of usage.
+* Dummy nodes eliminate edge-case checks.
+* Industry-standard approach used in:
+
+  * Browser caching
+  * Database buffering
+  * Memory management systems
+
+---
+
+### 🏁 Summary
+
+This LRU Cache implementation achieves:
+
+* Constant time operations
+* Clean pointer manipulation
+* Efficient eviction strategy
+* Interview-ready optimized solution
+
+---
