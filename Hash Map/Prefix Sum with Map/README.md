@@ -262,3 +262,153 @@ It appears in many advanced variations like:
 
 
 ---
+
+
+## 3️⃣ Subarrays Divisible by K
+
+### 📌 Problem Statement
+
+Given an integer array `nums` and an integer `k`, return the **total number of continuous subarrays** whose sum is divisible by `k`.
+
+A subarray must be:
+
+* Continuous
+* Have sum such that
+
+  ```
+  sum % k == 0
+  ```
+
+---
+
+### 🧠 Approach — Prefix Sum + Remainder Frequency Map
+
+#### 🔹 Key Insight
+
+If two prefix sums have the **same remainder when divided by `k`**, then the subarray between them has a sum divisible by `k`.
+
+Why?
+
+If:
+
+```
+prefix_sum[i] % k == prefix_sum[j] % k
+```
+
+Then:
+
+```
+(prefix_sum[i] - prefix_sum[j]) % k == 0
+```
+
+So the subarray between `j+1` and `i` is divisible by `k`.
+
+---
+
+### 🚀 Strategy
+
+- 1️⃣ Maintain a running sum (`total`).
+- 2️⃣ Compute remainder:
+
+```
+remainder = total % k
+```
+
+- 3️⃣ Use a dictionary to count how many times each remainder appears.
+- 4️⃣ If the same remainder appears again, it means we found new valid subarrays.
+
+---
+
+## 🔹 Why Initialize `{0: 1}`?
+
+```python
+count = {0: 1}
+```
+
+This handles cases where:
+
+* A prefix sum itself is divisible by `k`.
+* Subarray starting from index `0` is valid.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+nums = [4, 5, 0, -2, -3, 1]
+k = 5
+```
+
+#### Output
+
+```
+7
+```
+
+There are 7 subarrays whose sum is divisible by 5.
+
+---
+
+### 🧩 How Counting Works
+
+If a remainder `r` appears `f` times, then it contributes:
+
+```
+fC2 = f * (f - 1) / 2
+```
+
+valid subarrays.
+
+Our code dynamically counts these combinations while iterating.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(k)  |
+
+* Each element is processed once.
+* Dictionary stores at most `k` different remainders.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Prefix Sum
+* Modulo Arithmetic
+* Hash Map (Frequency Counting)
+* Subarray Properties
+* Mathematical Observation
+
+---
+
+### ⚠️ Important Note (Negative Numbers)
+
+In some languages, negative modulo may give negative remainder.
+In Python, `%` already returns a non-negative remainder.
+
+In other languages, you may need:
+
+```python
+remainder = (total % k + k) % k
+```
+
+---
+
+### 🔥 Why This Pattern is Important
+
+This is a very common and powerful interview pattern used in:
+
+* Subarray Sum Equals K
+* Continuous Subarray Sum
+* Count Subarrays with Given Condition
+* Equal 0s and 1s
+* Longest Subarray with Constraint
+
+
+---
