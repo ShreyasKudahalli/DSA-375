@@ -118,3 +118,134 @@ Each character is visited at most twice.
 
 ---
 
+
+## 2️⃣ Fruits Into Baskets
+
+### 📌 Problem Statement
+
+You are given an integer array `fruits` where `fruits[i]` represents the type of fruit on the `iᵗʰ` tree.
+
+You have **two baskets**, and each basket can hold **only one type of fruit**, but **unlimited quantity** of that type.
+
+Starting from any tree, you must pick exactly **one fruit from each tree moving to the right**, and you must stop when you encounter a fruit that cannot fit into your baskets.
+
+Return the **maximum number of fruits you can collect**.
+
+---
+
+### 🧠 Approach — Sliding Window + Hash Map
+
+This problem is equivalent to finding the **longest subarray containing at most 2 distinct numbers**.
+
+We use a **sliding window technique** with a **hash map** to keep track of fruit counts inside the current window.
+
+#### 🔹 Key Idea
+
+* Use two pointers:
+
+  * `l` → left boundary of window
+  * `r` → right boundary of window
+* Maintain a dictionary `basket` to track how many fruits of each type exist in the window.
+* If the number of fruit types exceeds **2**, shrink the window from the left.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Initialize:
+
+* `l = 0`
+* `res = 0`
+* `basket = {}`
+
+2️⃣ Expand the window using `r`.
+
+3️⃣ Add fruit to the basket (increase count).
+
+4️⃣ If basket contains **more than 2 fruit types**:
+
+* Shrink window from the left
+* Reduce count
+* Remove fruit type when count becomes `0`.
+
+5️⃣ Update maximum window size.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+fruits = [1,2,1]
+```
+
+#### Output
+
+```
+3
+```
+
+Explanation:
+
+You can pick fruits `[1,2,1]` using two baskets.
+
+---
+
+#### Another Example
+
+Input
+
+```
+fruits = [1,2,3,2,2]
+```
+
+Output
+
+```
+4
+```
+
+Subarray:
+
+```
+[2,3,2,2]
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+* Each element is processed at most **twice**.
+* Basket holds at most **2 fruit types**.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Sliding Window
+* Two Pointer Technique
+* Hash Map (Frequency Counting)
+* Longest Subarray with K Distinct Elements
+
+---
+
+### 🔥 Pattern Recognition
+
+This problem is a classic example of:
+
+**Longest Subarray with At Most K Distinct Elements**
+
+Where:
+
+```
+K = 2
+```
+
+---
+
