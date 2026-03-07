@@ -249,3 +249,111 @@ K = 2
 
 ---
 
+
+## 3️⃣ Find All Anagrams in a String
+
+### 📌 Problem Statement
+
+Given two strings `s` and `p`, return a list of **all starting indices of `p`'s anagrams in `s`**.
+
+An **anagram** is a word or phrase formed by rearranging the letters of another word using **all the original letters exactly once**.
+
+---
+
+### 🧠 Approach — Sliding Window + Frequency Map
+
+To efficiently find all anagrams of `p` in `s`, we use:
+
+* **Sliding Window Technique**
+* **Hash Map (Frequency Counting)**
+
+#### 🔹 Key Idea
+
+* Maintain a window of size equal to `len(p)`.
+* Track character frequencies in:
+
+  * `p_count` → frequency of characters in `p`
+  * `window_count` → frequency of characters in the current window of `s`
+* If the two frequency maps match, the current window forms an **anagram**.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ If `p` is longer than `s`, return an empty list.
+
+2️⃣ Build a frequency map for string `p`.
+
+3️⃣ Use a sliding window over `s`:
+
+* Expand the window by moving `right`.
+* Update frequency of the current character.
+
+4️⃣ If window size exceeds `len(p)`:
+
+* Remove the leftmost character from the window.
+
+5️⃣ Compare frequency maps:
+
+* If equal → record the starting index.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+s = "cbaebabacd"
+p = "abc"
+```
+
+#### Output
+
+```
+[0, 6]
+```
+
+#### Explanation
+
+Substrings of `s` that are anagrams of `"abc"`:
+
+| Index | Substring | Reason                   |
+| ----- | --------- | ------------------------ |
+| 0     | `"cba"`   | Rearrangement of `"abc"` |
+| 6     | `"bac"`   | Rearrangement of `"abc"` |
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(1)  |
+
+Where:
+
+* `n` = length of string `s`
+
+Space is **O(1)** because the frequency map stores characters from a fixed alphabet (at most 26 lowercase letters).
+
+---
+
+### 🎯 Key Concepts Used
+
+* Sliding Window
+* Two Pointer Technique
+* Hash Map / Frequency Counting
+* String Anagram Detection
+
+---
+
+### 🔥 Why Sliding Window Works Here
+
+Instead of checking every substring (which would take **O(n × m)** time), we maintain a **moving window** of size `len(p)` and update counts dynamically.
+
+This reduces the time complexity to **linear time**.
+
+
+---
