@@ -357,3 +357,113 @@ This reduces the time complexity to **linear time**.
 
 
 ---
+
+
+## 4️⃣ Minimum Window Substring
+
+### 📌 Problem Statement
+
+Given two strings `s` and `t`, return the **minimum window substring of `s`** such that every character in `t` (including duplicates) is included in the window.
+
+If no such substring exists, return an **empty string**.
+
+---
+
+### 🧠 Approach — Sliding Window + Hash Map
+
+This problem is solved efficiently using the **Sliding Window technique** combined with **frequency maps**.
+
+#### 🔹 Key Idea
+
+We maintain a dynamic window `[l, r]` that expands and shrinks while tracking whether it contains all characters required from `t`.
+
+Two dictionaries are used:
+
+* `tCount` → Frequency of characters in `t`
+* `windowCount` → Frequency of characters in the current window
+
+We also track:
+
+* `have` → Number of characters matched so far
+* `len(t)` → Total characters required
+
+When `have == len(t)`, the window contains all required characters and we try to **shrink it to find the minimum window**.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Handle edge cases:
+
+* If `t` is empty or `s` is shorter than `t`, return `""`.
+
+2️⃣ Build frequency map `tCount`.
+
+3️⃣ Use two pointers:
+
+* `l` → left boundary
+* `r` → right boundary
+
+4️⃣ Expand the window by moving `r`.
+
+5️⃣ When the window contains all required characters:
+
+* Try shrinking from the left to minimize the window.
+
+6️⃣ Update the minimum window length.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+s = "ADOBECODEBANC"
+t = "ABC"
+```
+
+#### Output
+
+```
+"BANC"
+```
+
+#### Explanation
+
+The substring `"BANC"` is the **smallest substring** in `s` that contains all characters of `"ABC"`.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value |
+| ---------- | ----- |
+| Time       | O(n)  |
+| Space      | O(m)  |
+
+Where:
+
+* `n` = length of `s`
+* `m` = number of unique characters in `t`
+
+Each pointer (`l` and `r`) moves at most `n` times.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Sliding Window
+* Two Pointers
+* Hash Map / Frequency Counting
+* Dynamic Window Shrinking
+* Greedy Optimization
+
+---
+
+### 🔥 Why This Approach Works
+
+Instead of checking all substrings (which would take **O(n²)** time), the sliding window technique dynamically adjusts the window size while maintaining character counts.
+
+This allows us to find the minimum valid window in **linear time**.
+
