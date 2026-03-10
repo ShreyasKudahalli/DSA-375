@@ -221,3 +221,224 @@ This makes the solution scalable for large inputs.
 
 
 ---
+
+
+## 3️⃣ Kth Largest Element in an Array
+
+### 📌 Problem Statement
+
+Given an integer array `nums` and an integer `k`, return the **kth largest element** in the array.
+
+> Note: It is the **kth largest element in the sorted order**, not the kth distinct element.
+
+---
+
+### 🧠 Approach — Min Heap (Priority Queue)
+
+To efficiently find the **kth largest element**, we use a **Min Heap** of size `k`.
+
+#### 🔹 Key Idea
+
+* Maintain a heap that stores **only the k largest elements seen so far**.
+* The smallest element in this heap will represent the **kth largest element** in the array.
+
+Steps:
+
+1. Iterate through the array.
+2. Push each element into the heap.
+3. If heap size becomes greater than `k`, remove the smallest element.
+4. After processing all elements, the root of the heap is the **kth largest element**.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Initialize an empty heap.
+
+2️⃣ Traverse each number in the array.
+
+3️⃣ Insert the number into the heap.
+
+4️⃣ If heap size exceeds `k`, remove the smallest element.
+
+5️⃣ Return the root of the heap (`heap[0]`).
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+nums = [3,2,1,5,6,4]
+k = 2
+```
+
+#### Heap Process
+
+| Step   | Heap                  |
+| ------ | --------------------- |
+| Push 3 | [3]                   |
+| Push 2 | [2,3]                 |
+| Push 1 | [1,3,2] → pop → [2,3] |
+| Push 5 | [2,3,5] → pop → [3,5] |
+| Push 6 | [3,5,6] → pop → [5,6] |
+| Push 4 | [4,6,5] → pop → [5,6] |
+
+#### Output
+
+```
+5
+```
+
+The **2nd largest element** is `5`.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value      |
+| ---------- | ---------- |
+| Time       | O(n log k) |
+| Space      | O(k)       |
+
+Where:
+
+* `n` = number of elements in the array.
+
+Heap size is always limited to `k`.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Heap (Priority Queue)
+* Min Heap Optimization
+* Top K Pattern
+* Efficient Element Selection
+
+---
+
+### 🔥 Why This Approach Works
+
+Instead of sorting the entire array (**O(n log n)**), we maintain a heap of size `k`.
+
+This ensures:
+
+* Faster performance
+* Lower memory usage
+* Efficient extraction of the kth largest element
+
+
+---
+
+
+## 4️⃣ Top K Frequent Elements
+
+### 📌 Problem Statement
+
+Given an integer array `nums` and an integer `k`, return the **k most frequent elements**.
+
+You may return the answer in **any order**.
+
+---
+
+### 🧠 Approach — Frequency Map + Min Heap
+
+To efficiently find the **k most frequent elements**, we use:
+
+* **Frequency Map (`Counter`)** to count occurrences of each number.
+* **Min Heap (Priority Queue)** to maintain the top `k` frequent elements.
+
+#### 🔹 Key Idea
+
+Instead of storing all elements in a heap, we maintain a **min heap of size `k`**.
+
+Steps:
+
+1. Count the frequency of each number.
+2. Push `(frequency, number)` into the heap.
+3. If heap size exceeds `k`, remove the smallest frequency.
+4. At the end, the heap contains the **k most frequent elements**.
+
+This keeps the heap size limited and improves efficiency.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Compute frequency using `Counter`.
+
+2️⃣ Iterate through each `(number, frequency)` pair.
+
+3️⃣ Push `(frequency, number)` into the heap.
+
+4️⃣ If heap size becomes greater than `k`, remove the smallest element.
+
+5️⃣ Extract numbers from the heap.
+
+---
+### 🔍 Example
+
+#### Input
+
+```
+nums = [1,1,1,2,2,3]
+k = 2
+```
+
+#### Frequency Count
+
+| Number | Frequency |
+| ------ | --------- |
+| 1      | 3         |
+| 2      | 2         |
+| 3      | 1         |
+
+#### Output
+
+```
+[1,2]
+```
+
+Explanation:
+
+The two most frequent elements are **1** and **2**.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value      |
+| ---------- | ---------- |
+| Time       | O(n log k) |
+| Space      | O(n)       |
+
+Where:
+
+* `n` = number of elements in the array.
+
+The heap size is maintained at **k**, making operations efficient.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Hash Map / Frequency Counting
+* Heap (Priority Queue)
+* Min Heap Optimization
+* Top K Pattern
+
+---
+
+### 🔥 Why Use a Min Heap of Size K?
+
+Instead of storing all elements in a heap:
+
+* We maintain **only the top k elements**
+* The smallest frequency stays at the root
+* If a larger frequency appears, it replaces the smallest
+
+This keeps the heap small and improves performance.
+
+---
