@@ -441,4 +441,136 @@ Instead of storing all elements in a heap:
 
 This keeps the heap small and improves performance.
 
+
+---
+
+
+## 5️⃣ Find Median from Data Stream
+
+### 📌 Problem Statement
+
+Design a data structure that supports the following operations efficiently:
+
+* **addNum(num)** → Add a number to the data stream.
+* **findMedian()** → Return the median of all elements added so far.
+
+The **median** is:
+
+* The middle element in a sorted list if the number of elements is odd.
+* The average of the two middle elements if the number of elements is even.
+
+---
+
+### 🧠 Approach — Two Heaps (Max Heap + Min Heap)
+
+To efficiently maintain the median while numbers are continuously added, we use **two heaps**:
+
+| Heap                   | Purpose                            |
+| ---------------------- | ---------------------------------- |
+| **Max Heap (`small`)** | Stores the smaller half of numbers |
+| **Min Heap (`large`)** | Stores the larger half of numbers  |
+
+Since Python only supports **min heap**, we simulate a **max heap** by pushing **negative values**.
+
+---
+
+### 🔹 Key Idea
+
+We maintain two important properties:
+
+1️⃣ **Order Property**
+
+```
+max(small) <= min(large)
+```
+
+All elements in `small` must be less than or equal to elements in `large`.
+
+2️⃣ **Size Property**
+
+The heaps should have sizes:
+
+```
+len(small) == len(large)
+or
+len(small) == len(large) + 1
+```
+
+This ensures the median can be calculated easily.
+
+---
+
+### 🚀 Algorithm
+
+#### addNum(num)
+
+1. Push the number into the **max heap (`small`)**.
+2. If the largest value in `small` is greater than the smallest value in `large`, move it to `large`.
+3. Balance the heap sizes:
+
+   * If `small` has more than one extra element → move one to `large`.
+   * If `large` has more elements → move one to `small`.
+
+#### findMedian()
+
+* If `small` has more elements → median is the top of `small`.
+* If both heaps have equal size → median is the average of the two tops.
+
+---
+
+### 🔍 Example
+
+#### Operations
+
+```
+addNum(1)
+addNum(2)
+findMedian() → 1.5
+addNum(3)
+findMedian() → 2
+```
+
+#### Heap State
+
+| Step  | small (max heap) | large (min heap) | Median |
+| ----- | ---------------- | ---------------- | ------ |
+| add 1 | [1]              | []               | 1      |
+| add 2 | [1]              | [2]              | 1.5    |
+| add 3 | [2,1]            | [3]              | 2      |
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Operation  | Complexity |
+| ---------- | ---------- |
+| addNum     | O(log n)   |
+| findMedian | O(1)       |
+| Space      | O(n)       |
+
+Where `n` is the number of elements added.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Heap (Priority Queue)
+* Max Heap Simulation using Negative Values
+* Min Heap
+* Balanced Data Structures
+* Streaming Data Processing
+
+---
+
+### 🔥 Why Two Heaps Work
+
+Using two heaps allows us to:
+
+* Maintain sorted order **implicitly**
+* Access middle values **in constant time**
+* Insert numbers efficiently
+
+This makes the solution ideal for **real-time streaming data**.
+
+
 ---
