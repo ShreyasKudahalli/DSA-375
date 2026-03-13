@@ -123,3 +123,146 @@ This significantly improves performance for large values of `K`.
 
 
 ---
+
+
+## 2️⃣ K Pairs with Smallest Sums
+
+### 📌 Problem Statement
+
+You are given two **sorted arrays** `nums1` and `nums2`, and an integer `k`.
+
+A pair `(u, v)` consists of:
+
+* `u` from `nums1`
+* `v` from `nums2`
+
+Return the **k pairs with the smallest sums**.
+
+Each pair should be returned in the form:
+
+```
+[u, v]
+```
+
+---
+
+### 🧠 Approach — Min Heap (Priority Queue)
+
+Since both arrays are **sorted**, we can efficiently find the smallest pair sums using a **Min Heap**.
+
+#### 🔹 Key Idea
+
+* The smallest possible pair will always involve **smaller elements from the arrays**.
+* Start by pairing the **first element of `nums2`** with the **first `k` elements of `nums1`**.
+* Store these pairs in a **min heap based on their sum**.
+
+Each heap element stores:
+
+```
+(sum, i, j)
+```
+
+Where:
+
+* `sum = nums1[i] + nums2[j]`
+* `i` → index in `nums1`
+* `j` → index in `nums2`
+
+When we remove the smallest pair from the heap, we then push the **next pair from the same row** (`j + 1`).
+
+This ensures we always explore the **next possible smallest pair**.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ If either array is empty, return an empty list.
+
+2️⃣ Initialize a **min heap**.
+
+3️⃣ Push the first `k` pairs:
+
+```
+(nums1[i] + nums2[0], i, 0)
+```
+
+for `i` in `0 → min(k, len(nums1))`.
+
+4️⃣ While the heap is not empty and we haven't found `k` pairs:
+
+* Pop the smallest pair.
+* Add `[nums1[i], nums2[j]]` to the result.
+* Push the next pair `(i, j+1)` into the heap if it exists.
+
+5️⃣ Return the result list.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```
+nums1 = [1,7,11]
+nums2 = [2,4,6]
+k = 3
+```
+
+#### Pair Sums
+
+```
+(1,2) = 3
+(1,4) = 5
+(1,6) = 7
+(7,2) = 9
+(7,4) = 11
+(11,2) = 13
+```
+
+#### Output
+
+```
+[[1,2], [1,4], [1,6]]
+```
+
+These are the **3 pairs with the smallest sums**.
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value      |
+| ---------- | ---------- |
+| Time       | O(k log k) |
+| Space      | O(k)       |
+
+Where:
+
+* `k` = number of pairs required.
+
+The heap never grows larger than **k elements**.
+
+---
+
+### 🎯 Key Concepts Used
+
+* Min Heap (Priority Queue)
+* K-Way Merge Pattern
+* Efficient Pair Generation
+* Greedy Expansion Strategy
+
+---
+
+### 🔥 Why This Approach is Efficient
+
+The brute force approach would generate **all possible pairs**:
+
+```
+O(n * m)
+```
+
+Then sort them.
+
+Instead, using a **min heap**, we only explore the **next smallest candidates**, reducing the complexity significantly.
+
+---
