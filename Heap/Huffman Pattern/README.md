@@ -294,4 +294,160 @@ n = 4
 
 Since `3 > 2.5`, a valid arrangement **does not exist**.
 
+
+---
+
+
+## 3️⃣ Minimum Cost to Connect All Points
+
+### 📌 Problem Statement
+
+You are given an array `points` where each element represents the **coordinates of a point on a 2D plane**:
+
+```text
+points[i] = [xi, yi]
+```
+
+The cost of connecting two points is the **Manhattan Distance** between them:
+
+```text
+|x1 - x2| + |y1 - y2|
+```
+
+Your task is to **connect all points such that the total cost is minimized**.
+
+* Every point must be connected.
+* There must be **exactly one path between any two points**.
+
+This is essentially finding a **Minimum Spanning Tree (MST)** for the graph formed by the points.
+
+---
+
+### 🧠 Approach — Prim’s Algorithm (Minimum Spanning Tree)
+
+This problem can be solved using **Prim’s Algorithm**, which builds a **Minimum Spanning Tree** by always selecting the **minimum cost edge that connects a visited node to an unvisited node**.
+
+We use a **Min Heap (Priority Queue)** to always choose the edge with the **lowest cost**.
+
+#### Key Idea
+
+1. Start from any point (here index `0`).
+2. Add it to the **visited set**.
+3. Push all edges from this point to other points into a **min heap**.
+4. Always pick the **minimum cost edge** that connects to an **unvisited point**.
+5. Repeat until all points are connected.
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Let `n` be the number of points.
+
+2️⃣ Maintain:
+
+* `visited` → set of visited nodes
+* `minHeap` → stores `(cost, node)`
+* `result` → total minimum cost
+
+3️⃣ Start with:
+
+```python
+minHeap = [(0, 0)]
+```
+
+Meaning:
+
+* cost = 0
+* start from node 0
+
+4️⃣ While not all nodes are visited:
+
+* Pop the smallest edge from the heap.
+* Skip if the node is already visited.
+* Add the node to the visited set.
+* Add the cost to the total result.
+* Push distances from this node to all unvisited nodes.
+
+5️⃣ Continue until **all nodes are connected**.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```text
+points = [[0,0],[2,2],[3,10],[5,2],[7,0]]
+```
+
+#### Manhattan Distance Formula
+
+```text
+|x1 - x2| + |y1 - y2|
+```
+
+Example:
+
+```text
+distance between (0,0) and (2,2)
+= |0-2| + |0-2|
+= 4
+```
+
+#### Minimum Spanning Tree Connections
+
+```
+(0,0) → (2,2)  cost = 4
+(2,2) → (5,2)  cost = 3
+(5,2) → (7,0)  cost = 4
+(2,2) → (3,10) cost = 9
+```
+
+#### Total Cost
+
+```text
+4 + 3 + 4 + 9 = 20
+```
+
+#### Output
+
+```text
+20
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value           |
+| ---------- | --------------- |
+| Time       | **O(n² log n)** |
+| Space      | **O(n²)**       |
+
+Explanation:
+
+* For every node, we compute distances to all other nodes.
+* Heap operations take **log n** time.
+
+---
+
+### 🔑 Key Concepts Used
+
+* Minimum Spanning Tree (MST)
+* Prim’s Algorithm
+* Min Heap (Priority Queue)
+* Greedy Algorithm
+* Graph Representation
+
+---
+
+### ⚠️ Important Insight
+
+We don't explicitly build the graph.
+
+Instead, we **compute Manhattan distances on the fly**, which saves memory and simplifies the implementation.
+
+This approach efficiently finds the **minimum cost required to connect all points**.
+
+
 ---
