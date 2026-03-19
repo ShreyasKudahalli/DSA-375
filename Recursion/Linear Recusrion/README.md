@@ -255,3 +255,120 @@ s = ["a","b","c","d"]
 * Although the logic is optimal, recursion uses extra stack space.
 
 ---
+
+
+## 3️⃣ Factorial of a Number (Recursion)
+
+### 📌 Problem Statement
+
+Given an integer `n`, return the **factorial of n**.
+
+The factorial of a number is defined as:
+
+```text
+n! = n × (n-1) × (n-2) × ... × 1
+```
+
+#### Examples
+
+```text
+Input:  n = 5
+Output: 120
+```
+
+```text
+Input:  n = 3
+Output: 6
+```
+
+---
+
+### 🧠 Approach — Linear Recursion
+
+This solution uses **linear recursion**, where each function call reduces the problem size by **1** until it reaches the base case.
+
+#### 🔹 Key Idea
+
+* The factorial of `n` depends on the factorial of `n-1`:
+
+```text
+n! = n × (n-1)!
+```
+
+* Keep calling the function recursively until we reach:
+
+```text
+1! = 1
+```
+
+---
+
+### 🚀 Algorithm Steps
+
+1️⃣ Base Case:
+
+```python
+if n == 1:
+    return 1
+```
+
+2️⃣ Recursive Case:
+
+```python
+return n * factorial(n - 1)
+```
+
+3️⃣ Repeat until base case is reached.
+
+---
+
+### 🔍 Example
+
+#### Input
+
+```text
+n = 4
+```
+
+#### Execution Flow
+
+```text
+factorial(4)
+= 4 × factorial(3)
+= 4 × 3 × factorial(2)
+= 4 × 3 × 2 × factorial(1)
+= 4 × 3 × 2 × 1
+= 24
+```
+
+#### Output
+
+```text
+24
+```
+
+---
+
+### ⏱ Time & Space Complexity
+
+| Complexity | Value    |
+| ---------- | -------- |
+| Time       | **O(n)** |
+| Space      | **O(n)** |
+
+#### Why Space is O(n)?
+
+* Each recursive call adds a **stack frame**.
+* Total recursive calls = `n`
+
+---
+
+### 🔑 Key Concepts Used
+
+* Recursion
+* Linear Recursion
+* Mathematical Recurrence
+* Call Stack
+
+
+---
