@@ -5,7 +5,7 @@ class Solution:
                 return -1
             
             mid = (low + high) // 2
-            
+
             if nums[mid] == target:
                 return mid
             elif nums[mid] < target:

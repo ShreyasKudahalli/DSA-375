@@ -3,8 +3,6 @@
 Divide and Conquer is a powerful problem-solving technique where a problem is broken down into smaller subproblems, each solved independently, and then combined to form the final result. In this solution, the exponentiation problem is divided by repeatedly halving the power (`n // 2`), solving the smaller subproblem recursively, and combining the results through multiplication. This approach significantly improves efficiency by reducing redundant computations, achieving a time complexity of **O(log n)** instead of **O(n)**.
 
 
-Here’s a clean and professional **README.md** for your **Recursive Binary Search** implementation 👇
-
 ---
 
 ## 1️⃣ Recursive Binary Search
