@@ -372,3 +372,93 @@ factorial(4)
 
 
 ---
+
+
+Here’s a clean and professional **README.md** for your `myPow` implementation 👇
+
+---
+
+## 4️⃣ Power Function (xⁿ)
+
+### 📌 Problem Statement
+
+Implement a function to calculate:
+
+[
+x^n
+]
+
+Where:
+
+* `x` is a floating-point number
+* `n` is an integer (can be negative)
+
+---
+
+### 🚀 Approach: Fast Exponentiation (Binary Exponentiation)
+
+Instead of multiplying `x` repeatedly `n` times (which takes **O(n)** time), we use a more efficient approach:
+
+* Divide the power into halves
+* Recursively compute:
+
+  * ( x^n = (x^{n/2})^2 ) when `n` is even
+  * ( x^n = x \cdot (x^{n/2})^2 ) when `n` is odd
+
+This reduces the time complexity to **O(log n)**.
+
+---
+
+### 🧠 Algorithm
+
+1. Handle edge cases:
+
+   * If `x == 0`, return `0`
+   * If `n == 0`, return `1`
+
+2. Recursively compute:
+
+   * Call function for `n // 2`
+   * Square the result
+
+3. If `n` is odd:
+
+   * Multiply one extra `x`
+
+4. Handle negative powers:
+
+   * Convert `n` to positive using `abs(n)`
+   * Return reciprocal if `n < 0`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                          |
+| ---------------- | ----------------------------------- |
+| Time Complexity  | O(log n)                            |
+| Space Complexity | O(log n) *(due to recursion stack)* |
+
+---
+
+### 📎 Example
+
+```text
+Input:  x = 2.0, n = 10
+Output: 1024.0
+```
+
+```text
+Input:  x = 2.0, n = -2
+Output: 0.25
+```
+
+---
+
+### ✅ Key Points
+
+* Efficient compared to brute-force multiplication
+* Handles both positive and negative powers
+* Uses recursion and divide-and-conquer strategy
+
+---
