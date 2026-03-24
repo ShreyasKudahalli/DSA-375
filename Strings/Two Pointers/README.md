@@ -65,7 +65,7 @@ Which is a palindrome.
 ---
 
 
-##  2️⃣ Reverse String 
+## 2️⃣ Reverse String 
 
 ### 🧩 Problem Statement
 
