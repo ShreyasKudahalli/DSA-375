@@ -887,4 +887,119 @@ Reached leaf → matches target → return True
 
 This DFS-based recursive approach efficiently checks whether a valid root-to-leaf path exists that matches the target sum. It explores all paths while maintaining optimal **O(n)** time complexity.
 
+
+---
+
+
+## 8️⃣ Minimum Depth of Binary Tree (DFS / Recursion)
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return its **minimum depth**.
+
+👉 The **minimum depth** is the number of nodes along the shortest path from the root node down to the nearest **leaf node**.
+
+> ⚠️ A leaf node is a node with **no left and no right child**.
+
+---
+
+### 🚀 Approach: Depth-First Search (DFS)
+
+We use **DFS (recursion)** to compute the minimum depth:
+
+* Traverse the tree recursively
+* Carefully handle cases where one child is missing
+* Only consider valid root-to-leaf paths
+
+---
+
+### 🧠 Algorithm
+
+1. Define a recursive function `find(root)`
+
+2. Base case:
+
+   * If `root` is `None` → return `0`
+
+3. If left child is missing:
+
+   * Return `1 + find(root.right)`
+
+4. If right child is missing:
+
+   * Return `1 + find(root.left)`
+
+5. If both children exist:
+
+   * Return:
+
+     ```
+     1 + min(find(root.left), find(root.right))
+     ```
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                                   |
+| ---------------- | -------------------------------------------- |
+| Time Complexity  | O(n)                                         |
+| Space Complexity | O(h) *(recursion stack, h = height of tree)* |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [3,9,20,null,null,15,7]  
+Output: 2  
+Explanation: The shortest path is 3 → 9
+```
+
+```text id="ex2"
+Input: root = [2,null,3,null,4,null,5,null,6]  
+Output: 5  
+Explanation: Only one path exists
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Tree:
+    1
+   /
+  2
+
+Only left child exists:
+minDepth = 1 + depth(left)
+= 1 + 1 = 2
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS recursion**
+* Handles **single-child nodes carefully**
+* Avoids incorrect min calculation when one subtree is missing
+* Ensures only **valid leaf paths** are considered
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree → depth = 0
+* Single node → depth = 1
+* Skewed tree → depth = n
+* Nodes with only one child
+
+---
+
+### 🏁 Conclusion
+
+This recursive DFS approach correctly computes the minimum depth by considering only valid root-to-leaf paths and carefully handling edge cases where nodes have a single child, achieving optimal **O(n)** time complexity.
+
+
 ---
