@@ -1003,3 +1003,132 @@ This recursive DFS approach correctly computes the minimum depth by considering 
 
 
 ---
+
+
+Here’s a clean and professional **README.md** for your **Cousins in Binary Tree (DFS / Recursion)** implementation 👇
+
+---
+
+## Cousins in Binary Tree (DFS / Recursion)
+
+### 📌 Problem Statement
+
+Given the root of a binary tree with unique values and two nodes `x` and `y`, return **true** if they are **cousins**, otherwise return **false**.
+
+👉 Two nodes are considered **cousins** if:
+
+* They are at the **same depth**
+* They have **different parents**
+
+---
+
+### 🚀 Approach: Depth-First Search (DFS)
+
+We use **DFS (recursion)** to traverse the tree and store:
+
+* The **parent** of each node
+* The **depth** (level) of each node
+
+Then, we compare the information of nodes `x` and `y`.
+
+---
+
+### 🧠 Algorithm
+
+1. Create a dictionary `info`:
+
+   * Key → node value
+   * Value → `(parent, depth)`
+
+2. Perform DFS traversal:
+
+   * Store `(parent, depth)` for each node
+
+3. After traversal:
+
+   * Extract:
+
+     * `(px, dx)` for node `x`
+     * `(py, dy)` for node `y`
+
+4. Check:
+
+   * `dx == dy` → same depth
+   * `px != py` → different parents
+
+5. Return:
+
+   * `True` if both conditions are satisfied, else `False`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                                       |
+| ---------------- | ------------------------------------------------ |
+| Time Complexity  | O(n)                                             |
+| Space Complexity | O(n) *(for storing node info + recursion stack)* |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [1,2,3,4], x = 4, y = 3  
+Output: False  
+Explanation: Different depths
+```
+
+```text id="ex2"
+Input: root = [1,2,3,null,4,null,5], x = 5, y = 4  
+Output: True  
+Explanation: Same depth, different parents
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Tree:
+      1
+     / \
+    2   3
+     \   \
+      4   5
+
+Node 4 → parent = 2, depth = 2  
+Node 5 → parent = 3, depth = 2  
+
+Same depth ✔️  
+Different parents ✔️  
+
+Result → True
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS traversal**
+* Tracks both **parent** and **depth**
+* Simple and efficient lookup using dictionary
+* Works for all binary tree structures
+
+---
+
+### ⚠️ Edge Cases
+
+* Nodes not present (guaranteed valid in problem constraints)
+* Root node involved
+* Skewed tree
+* Nodes with same parent (siblings → not cousins)
+
+---
+
+### 🏁 Conclusion
+
+This DFS-based approach efficiently determines whether two nodes are cousins by tracking structural information during traversal, achieving optimal **O(n)** time complexity.
+
+
+---
