@@ -1005,10 +1005,6 @@ This recursive DFS approach correctly computes the minimum depth by considering 
 ---
 
 
-Here’s a clean and professional **README.md** for your **Cousins in Binary Tree (DFS / Recursion)** implementation 👇
-
----
-
 ## Cousins in Binary Tree (DFS / Recursion)
 
 ### 📌 Problem Statement
