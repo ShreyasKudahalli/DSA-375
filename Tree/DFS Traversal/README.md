@@ -1128,3 +1128,261 @@ This DFS-based approach efficiently determines whether two nodes are cousins by 
 
 
 ---
+
+
+##  Binary Tree Maximum Path Sum (DFS / Recursion)
+
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return the **maximum path sum**.
+
+👉 A **path** is any sequence of nodes where:
+
+* Each pair of adjacent nodes has an edge connecting them
+* A node can appear **only once** in the path
+* The path **does not need to pass through the root**
+
+---
+
+### 🚀 Approach: Depth-First Search (DFS)
+
+We use **DFS (post-order traversal)** to compute the maximum contribution from each node.
+
+#### 💡 Key Idea:
+
+At each node:
+
+* Compute the maximum sum from the **left subtree**
+* Compute the maximum sum from the **right subtree**
+* Ignore negative contributions (use `max(0, value)`)
+
+The path passing through a node is:
+
+[
+\text{left} + \text{right} + \text{node.val}
+]
+
+Update the global maximum (`ans`) accordingly.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `ans = -∞`
+
+2. Define recursive function `maxSum(node)`:
+
+   * If node is `None` → return `0`
+
+3. Compute:
+
+   * `left = max(0, maxSum(node.left))`
+   * `right = max(0, maxSum(node.right))`
+
+4. Update global maximum:
+
+   * `ans = max(ans, left + right + node.val)`
+
+5. Return contribution to parent:
+
+   * `return node.val + max(left, right)`
+
+6. Call function on root and return `ans`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                                   |
+| ---------------- | -------------------------------------------- |
+| Time Complexity  | O(n)                                         |
+| Space Complexity | O(h) *(recursion stack, h = height of tree)* |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [1,2,3]  
+Output: 6  
+Explanation: Path 2 → 1 → 3
+```
+
+```text id="ex2"
+Input: root = [-10,9,20,null,null,15,7]  
+Output: 42  
+Explanation: Path 15 → 20 → 7
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+For node 20:
+left = 15
+right = 7
+path sum = 15 + 7 + 20 = 42 ✔️
+
+Global max updated to 42
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS with post-order traversal**
+* Ignores negative paths using `max(0, ...)`
+* Maintains a **global maximum**
+* Path can start and end at any node
+
+---
+
+### ⚠️ Edge Cases
+
+* All negative values → return maximum single node
+* Single node tree
+* Skewed tree
+* Mixed positive and negative values
+
+---
+
+### 🏁 Conclusion
+
+This DFS-based approach efficiently computes the maximum path sum by evaluating all possible paths through each node while avoiding unnecessary negative contributions, achieving optimal **O(n)** time complexity.
+
+
+---
+
+
+## Vertical Order Traversal of Binary Tree (DFS + Sorting)
+
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return its **vertical order traversal**.
+
+👉 For each node at position `(row, col)`:
+
+* Left child → `(row + 1, col - 1)`
+* Right child → `(row + 1, col + 1)`
+
+#### 📍 Traversal Rules:
+
+* Nodes are grouped by **column (col)**
+* Within the same column:
+
+  * Sort by **row (top to bottom)**
+  * If same row → sort by **node value**
+
+---
+
+### 🚀 Approach: DFS + Sorting
+
+We use **DFS traversal** to record each node’s position and then **sort** the nodes based on:
+
+1. Column (`col`)
+2. Row (`row`)
+3. Value (`val`)
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize an empty list `nodes`
+
+2. Perform DFS:
+
+   * Store each node as `(col, row, value)`
+   * Traverse:
+
+     * Left → `(row+1, col-1)`
+     * Right → `(row+1, col+1)`
+
+3. Sort the list:
+
+   ```python
+   nodes.sort()
+   ```
+
+4. Group nodes by column:
+
+   * If column changes → start a new list
+   * Append values to the current column group
+
+5. Return the result
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                    |
+| ---------------- | ----------------------------- |
+| Time Complexity  | O(n log n) *(due to sorting)* |
+| Space Complexity | O(n)                          |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [3,9,20,null,null,15,7]  
+Output: [[9],[3,15],[20],[7]]
+```
+
+```text id="ex2"
+Input: root = [1,2,3,4,5,6,7]  
+Output: [[4],[2],[1,5,6],[3],[7]]
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Nodes stored as (col, row, val):
+
+(0,0,3)
+(-1,1,9)
+(1,1,20)
+(0,2,15)
+(2,2,7)
+
+After sorting:
+Grouped by column →
+
+[-1] → [9]  
+[0]  → [3,15]  
+[1]  → [20]  
+[2]  → [7]
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS traversal** to assign coordinates
+* Sorting ensures correct order (col → row → value)
+* Efficient grouping using column tracking
+* Clean and intuitive approach
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree → return `[]`
+* Single node → `[[node]]`
+* Multiple nodes in same position → sorted by value
+* Skewed trees
+
+---
+
+### 🏁 Conclusion
+
+This approach efficiently performs vertical traversal by combining DFS-based coordinate mapping with sorting, ensuring correct ordering across columns and rows with optimal **O(n log n)** time complexity.
+
+
+---
