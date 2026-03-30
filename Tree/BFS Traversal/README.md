@@ -230,3 +230,352 @@ This BFS-based approach efficiently captures the right side view of a binary tre
 
 
 ---
+
+
+## 3️⃣ Binary Tree Zigzag Level Order Traversal (BFS)
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return its **zigzag level order traversal**.
+
+👉 Zigzag traversal means:
+
+* Level 1 → Left to Right
+* Level 2 → Right to Left
+* Level 3 → Left to Right
+* … and so on
+
+---
+
+### 🚀 Approach: Breadth-First Search (BFS)
+
+We use **level order traversal (BFS)** with a twist:
+
+* Traverse the tree level by level using a queue
+* Reverse the order of nodes for every alternate level
+
+---
+
+### 🧠 Algorithm
+
+1. If `root` is `None` → return empty list
+
+2. Initialize:
+
+   * Queue `q` with root
+   * Result list `res = []`
+   * Level counter `count = 1`
+
+3. While queue is not empty:
+
+   * Create empty list `level`
+
+4. Process current level:
+
+   * Pop all nodes in queue
+   * Append their values to `level`
+   * Push their children into queue
+
+5. If level is even (`count % 2 == 0`):
+
+   * Reverse the level list
+
+6. Increment level counter and append to result
+
+7. Return `res`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [3,9,20,null,null,15,7]  
+Output: [[3],[20,9],[15,7]]
+```
+
+```text id="ex2"
+Input: root = [1]  
+Output: [[1]]
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Tree:
+    3
+   / \
+  9   20
+     /  \
+    15   7
+
+Level 1 → [3]        (L → R)
+Level 2 → [9,20] → [20,9] (R → L)
+Level 3 → [15,7]     (L → R)
+
+Result → [[3],[20,9],[15,7]]
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **BFS traversal**
+* Alternates direction at each level
+* Custom reverse function used for in-place reversal
+* Clean level-by-level processing
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree → return `[]`
+* Single node → `[[node]]`
+* Skewed tree → behaves like normal level order
+
+---
+
+### 🏁 Conclusion
+
+This BFS-based approach efficiently performs zigzag traversal by reversing alternate levels, maintaining optimal **O(n)** time complexity while keeping the implementation simple and intuitive.
+
+
+---
+
+
+## 4️⃣ Average of Levels in Binary Tree (BFS / Level Order Traversal)
+
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return the **average value of the nodes on each level** in the form of an array.
+
+👉 Each level’s average should be calculated independently.
+
+---
+
+### 🚀 Approach: Breadth-First Search (BFS)
+
+We use **level order traversal (BFS)** to process the tree level by level:
+
+* Traverse each level using a queue
+* Collect node values for that level
+* Compute the average and store it
+
+---
+
+### 🧠 Algorithm
+
+1. If `root` is `None` → return empty list
+
+2. Initialize:
+
+   * Queue with root node
+   * Result list `res = []`
+
+3. While queue is not empty:
+
+   * Get number of nodes in current level `n`
+   * Initialize empty list `level`
+
+4. Process current level:
+
+   * Pop nodes from queue
+   * Add their values to `level`
+   * Push their children into queue
+
+5. Compute average:
+
+   * `average = sum(level) / n`
+
+6. Append average to result
+
+7. Return `res`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [3,9,20,null,null,15,7]  
+Output: [3.0, 14.5, 11.0]
+```
+
+```text id="ex2"
+Input: root = [1,2,3,4,5]  
+Output: [1.0, 2.5, 4.5]
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Tree:
+    3
+   / \
+  9   20
+     /  \
+    15   7
+
+Level 1 → [3] → avg = 3.0  
+Level 2 → [9,20] → avg = 14.5  
+Level 3 → [15,7] → avg = 11.0  
+
+Result → [3.0, 14.5, 11.0]
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **BFS traversal**
+* Processes nodes **level by level**
+* Computes average using `sum / count`
+* Straightforward and efficient
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree → return `[]`
+* Single node → `[node.val]`
+* Skewed tree → one node per level
+
+---
+
+### 🏁 Conclusion
+
+This BFS-based approach efficiently computes the average of each level in a binary tree by processing nodes level-wise and calculating their mean, achieving optimal **O(n)** time complexity.
+
+
+---
+
+
+## 5️⃣ Minimum Depth of Binary Tree (BFS / Level Order Traversal)
+
+
+### 📌 Problem Statement
+
+Given the root of a binary tree, return its **minimum depth**.
+
+👉 The **minimum depth** is the number of nodes along the shortest path from the root node down to the nearest **leaf node**.
+
+> ⚠️ A leaf node is a node with **no left and no right children**.
+
+---
+
+### 🚀 Approach: Breadth-First Search (BFS)
+
+We use **BFS (level order traversal)** because it naturally explores the tree level by level.
+
+#### 💡 Key Idea:
+
+* The **first leaf node** encountered during BFS gives the **minimum depth**
+* No need to traverse the entire tree → early stopping
+
+---
+
+### 🧠 Algorithm
+
+1. If `root` is `None` → return `0`
+
+2. Initialize queue:
+
+   * Store `(node, depth)` → starting with `(root, 1)`
+
+3. While queue is not empty:
+
+   * Pop `(node, depth)`
+
+4. Check if it is a leaf node:
+
+   * If yes → return `depth`
+
+5. Otherwise:
+
+   * Add left child with `depth + 1`
+   * Add right child with `depth + 1`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity          |
+| ---------------- | ------------------- |
+| Time Complexity  | O(n) *(worst case)* |
+| Space Complexity | O(n)                |
+
+---
+
+### 📎 Examples
+
+```text id="ex1"
+Input: root = [3,9,20,null,null,15,7]  
+Output: 2  
+Explanation: Shortest path is 3 → 9
+```
+
+```text id="ex2"
+Input: root = [2,null,3,null,4,null,5,null,6]  
+Output: 5
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Queue: [(1,1)]
+
+Level 1:
+(1,1) → not leaf → add children
+
+Level 2:
+(2,2) → leaf ✔️ → return 2
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **BFS traversal**
+* Stops at **first leaf node**
+* More efficient than DFS for this problem
+* No unnecessary traversal
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree → depth = 0
+* Single node → depth = 1
+* Skewed tree → depth = n
+
+---
+
+## 🏁 Conclusion
+
+This BFS-based approach efficiently finds the minimum depth by exploring the tree level by level and stopping at the first leaf node, ensuring optimal performance with early termination.
+
+
+---
