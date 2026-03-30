@@ -10,7 +10,7 @@ class Solution:
             return 0
         res = []
         queue = deque([root])
-
+        
         while queue:
             level = []
             n = len(queue)

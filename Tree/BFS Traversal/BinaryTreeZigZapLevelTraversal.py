@@ -12,7 +12,7 @@ class Solution:
         q.append(root)
         count = 1
         res = []
-
+        
         def rev(arr):
             l=0
             r=len(arr)-1
