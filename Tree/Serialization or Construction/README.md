@@ -250,11 +250,7 @@ This approach efficiently flattens a binary tree into a linked list by leveragin
 ---
 
 
-## Here’s a clean and professional **README.md** for your **Populating Next Right Pointers in Each Node (BFS)** solution 👇
-
----
-
-## Populating Next Right Pointers in Each Node (BFS)
+## 3️⃣ Populating Next Right Pointers in Each Node (BFS)
 
 ### 📌 Problem Statement
 
