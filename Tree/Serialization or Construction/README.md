@@ -248,3 +248,125 @@ This approach efficiently flattens a binary tree into a linked list by leveragin
 
 
 ---
+
+
+## Here’s a clean and professional **README.md** for your **Populating Next Right Pointers in Each Node (BFS)** solution 👇
+
+---
+
+## Populating Next Right Pointers in Each Node (BFS)
+
+### 📌 Problem Statement
+
+Given a binary tree, populate each node’s `next` pointer to point to its **next right node**. If there is no next right node, the `next` pointer should be set to `None`.
+
+👉 The connection should be done **level by level**.
+
+---
+
+### 🚀 Approach: Breadth-First Search (Level Order Traversal)
+
+This problem is efficiently solved using **BFS (queue-based level order traversal)**.
+
+#### 🔹 Key Idea
+
+* Traverse the tree **level by level**
+* Maintain a pointer `prev` to track the previous node in the same level
+* Connect:
+
+  ```
+  prev.next → current node
+  ```
+
+---
+
+### 🧠 Algorithm
+
+1. **Base Case**:
+
+   * If `root` is `None`, return `None`
+
+2. **Initialize**:
+
+   * Queue with root node
+
+3. **Level Order Traversal**:
+
+   * For each level:
+
+     * Initialize `prev = None`
+     * Traverse all nodes in the level:
+
+       * Pop node from queue
+       * Add its children to queue
+       * If `prev` exists:
+
+         * Set `prev.next = node`
+       * Update `prev = node`
+
+4. Return root
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+👉 `n` = number of nodes
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input Tree:
+        1
+      /   \
+     2     3
+    / \     \
+   4   5     7
+
+Output (Next Pointers):
+1 → None  
+2 → 3 → None  
+4 → 5 → 7 → None
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Level 1: 1 → None  
+Level 2: 2 → 3 → None  
+Level 3: 4 → 5 → 7 → None
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **BFS (level order traversal)**
+* Connects nodes **within the same level**
+* Maintains a `prev` pointer for linking
+* Works for **any binary tree (not just perfect trees)**
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree (`root = None`)
+* Single node tree
+* Skewed tree (left or right heavy)
+
+---
+
+### 🏁 Conclusion
+
+This BFS-based approach efficiently connects nodes at the same level using a queue and a simple pointer mechanism, achieving optimal **O(n)** time complexity while maintaining clarity and simplicity.
+
+
+---
