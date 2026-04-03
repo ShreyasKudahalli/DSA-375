@@ -366,3 +366,282 @@ This BFS-based approach efficiently connects nodes at the same level using a que
 
 
 ---
+
+
+## 4️⃣ Serialize and Deserialize Binary Tree (BFS / Level Order)
+
+
+### 📌 Problem Statement
+
+Design an algorithm to **serialize** and **deserialize** a binary tree.
+
+* **Serialization**: Convert a binary tree into a string representation
+* **Deserialization**: Reconstruct the binary tree from the string
+
+👉 The goal is to preserve the **exact structure** of the tree.
+
+---
+
+### 🚀 Approach: Breadth-First Search (Level Order Traversal)
+
+This solution uses **BFS (queue-based traversal)** to encode and decode the tree.
+
+#### 🔹 Key Idea
+
+* Use **level order traversal**
+* Represent `null` nodes using a special marker (`'#'`)
+* Store values in a comma-separated string
+
+---
+
+### 🧠 Algorithm
+
+#### 🔸 Serialization
+
+1. If root is `None`, return empty string
+2. Initialize queue with root
+3. Traverse using BFS:
+
+   * If node exists:
+
+     * Append value
+     * Add left & right children to queue
+   * If node is `None`:
+
+     * Append `'#'`
+4. Join list into string using commas
+
+---
+
+#### 🔸 Deserialization
+
+1. If data is empty, return `None`
+2. Split string into list
+3. Create root node from first value
+4. Use queue to rebuild tree:
+
+   * Assign left child
+   * Assign right child
+   * Skip `'#'` values
+5. Continue until all nodes are processed
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+👉 `n` = number of nodes
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input Tree:
+      1
+     / \
+    2   3
+       / \
+      4   5
+
+Serialized:
+"1,2,3,#,#,4,5,#,#,#,#"
+
+Deserialized:
+Reconstructed same tree structure
+```
+
+---
+
+### 🔍 Dry Run (Serialization)
+
+```text id="dryrun1"
+Queue: [1]
+
+Process:
+1 → add 2,3  
+2 → add #,#  
+3 → add 4,5  
+
+Final:
+1,2,3,#,#,4,5,#,#,#,#
+```
+
+---
+
+### 🔍 Dry Run (Deserialization)
+
+```text id="dryrun2"
+nodes = ["1","2","3","#","#","4","5",...]
+
+Rebuild:
+1 → left=2, right=3  
+2 → null children  
+3 → left=4, right=5  
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **BFS for both serialization and deserialization**
+* Preserves full tree structure using `'#'`
+* Works for **any binary tree**
+* Simple and widely used approach
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree (`""`)
+* Single node tree
+* Skewed trees
+* Trees with missing children
+
+---
+
+### 🏁 Conclusion
+
+This BFS-based approach efficiently converts a binary tree into a string and reconstructs it back while preserving structure, achieving optimal **O(n)** time and space complexity.
+
+
+---
+
+
+## 5️⃣ Construct Binary Tree from Preorder & Inorder Traversal
+
+### 📌 Problem Statement
+
+Given two integer arrays:
+
+* `preorder` → preorder traversal of a binary tree (**Root → Left → Right**)
+* `inorder` → inorder traversal of the same tree (**Left → Root → Right**)
+
+👉 Construct and return the **binary tree**.
+
+---
+
+### 🚀 Approach: DFS + Divide & Conquer
+
+#### 🔹 Key Idea
+
+* The **first element in preorder** is always the **root**
+* Use **inorder traversal** to:
+
+  * Find root position
+  * Split tree into left and right subtrees
+
+---
+
+### 🧠 Algorithm
+
+#### Step 1: Build a HashMap
+
+* Store indices of inorder elements for **O(1) lookup**
+
+```
+mpp[value] = index
+```
+
+---
+
+#### Step 2: Recursive Construction
+
+For each recursive call:
+
+1. **Pick Root**:
+
+   * `root_val = preorder[pstart]`
+
+2. **Find Root Index in Inorder**:
+
+   * `inRoot = mpp[root_val]`
+
+3. **Calculate Left Subtree Size**:
+
+   * `numsLeft = inRoot - istart`
+
+4. **Build Left Subtree**:
+
+   * Preorder → next `numsLeft` elements
+   * Inorder → left portion
+
+5. **Build Right Subtree**:
+
+   * Remaining elements
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+👉 `n` = number of nodes
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+preorder = [3,9,20,15,7]
+inorder  = [9,3,15,20,7]
+
+Output Tree:
+        3
+       / \
+      9   20
+         /  \
+        15   7
+```
+
+---
+
+### 🔍 Dry Run (Brief)
+
+```text id="dryrun"
+Root = 3
+
+Inorder split:
+Left → [9]
+Right → [15,20,7]
+
+Preorder split:
+Left → [9]
+Right → [20,15,7]
+
+Recursively build subtrees
+```
+
+---
+
+### ✅ Key Points
+
+* Preorder gives **root**
+* Inorder helps **split subtrees**
+* HashMap avoids repeated search → improves efficiency
+* Classic **Divide & Conquer** problem
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty arrays
+* Single node tree
+* Skewed tree
+* Invalid input (if traversals don’t match)
+
+---
+
+### 🏁 Conclusion
+
+This DFS + divide-and-conquer approach efficiently reconstructs the binary tree by leveraging traversal properties and hash-based indexing, achieving optimal **O(n)** time complexity.
+
+---
