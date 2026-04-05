@@ -365,4 +365,123 @@ Hence not a valid BST
 
 This DFS-based approach ensures correctness by maintaining valid value ranges for each node, making it a robust and optimal solution with **O(n)** time complexity.
 
+
+---
+
+
+## 4️⃣ Convert Sorted Array to Binary Search Tree (Balanced BST)
+
+
+### 📌 Problem Statement
+
+Given a **sorted (ascending order) array**, convert it into a **height-balanced Binary Search Tree (BST)**.
+
+👉 A height-balanced BST is defined as a tree where the depth of the two subtrees of every node never differs by more than one.
+
+---
+
+### 🚀 Approach: Divide & Conquer (DFS)
+
+#### 🔹 Key Idea
+
+* The **middle element** of the array becomes the root
+* Left half → left subtree
+* Right half → right subtree
+
+👉 This ensures the tree remains **balanced**.
+
+---
+
+### 🧠 Algorithm
+
+1. Define a recursive function:
+
+   ```
+   build(left, right)
+   ```
+
+2. **Base Case**:
+
+   * If `left > right` → return `None`
+
+3. **Choose Middle Element**:
+
+   * `mid = (left + right) // 2`
+   * Create root node with `nums[mid]`
+
+4. **Build Subtrees**:
+
+   * Left subtree → `build(left, mid - 1)`
+   * Right subtree → `build(mid + 1, right)`
+
+5. Return root
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(log n)   |
+
+👉 `n` = number of elements
+👉 Recursion depth = height of balanced BST
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [-10, -3, 0, 5, 9]
+
+Output (One Possible BST):
+        0
+       / \
+     -3   9
+     /   /
+   -10  5
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [-10, -3, 0, 5, 9]
+
+mid = 2 → root = 0
+
+Left:
+[-10, -3] → root = -3 → left = -10
+
+Right:
+[5, 9] → root = 9 → left = 5
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **Divide & Conquer**
+* Always picks **middle element** → ensures balance
+* Result is a **height-balanced BST**
+* Efficient construction in linear time
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty array → return `None`
+* Single element → single node tree
+* Even number of elements → multiple valid BSTs
+
+---
+
+### 🏁 Conclusion
+
+This approach constructs a balanced BST efficiently by recursively selecting the middle element, ensuring optimal height and performance with **O(n)** time complexity.
+
+
 ---
