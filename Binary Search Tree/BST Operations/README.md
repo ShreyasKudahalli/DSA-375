@@ -485,3 +485,131 @@ This approach constructs a balanced BST efficiently by recursively selecting the
 
 
 ---
+
+
+## 5️⃣ Delete Node in a Binary Search Tree (BST)
+
+### 📌 Problem Statement
+
+Given the root of a **Binary Search Tree (BST)** and a key, delete the node with the given key and return the updated root.
+
+👉 The deletion must maintain the **BST property**.
+
+---
+
+### 🚀 Approach: Recursive BST Deletion
+
+#### 🔹 Key Idea
+
+Deletion in a BST has **3 main cases**:
+
+1. **Node not found** → return `None`
+2. **Node has 0 or 1 child** → replace node with its child
+3. **Node has 2 children** →
+
+   * Find **inorder successor** (smallest in right subtree)
+   * Replace node value
+   * Delete successor node
+
+---
+
+### 🧠 Algorithm
+
+1. Traverse the tree:
+
+   * If `key < root.val` → go left
+   * If `key > root.val` → go right
+
+2. When node is found:
+
+   ### Case 1: No Left Child
+
+   * Return `root.right`
+
+   ### Case 2: No Right Child
+
+   * Return `root.left`
+
+   ### Case 3: Two Children
+
+   * Find **minimum node in right subtree**
+   * Replace current node value with successor value
+   * Delete successor recursively
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(h)       |
+| Space Complexity | O(h)       |
+
+👉 `h` = height of the tree
+
+* Balanced BST → **O(log n)**
+* Skewed BST → **O(n)**
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+        5
+       / \
+      3   6
+     / \   \
+    2   4   7
+
+key = 3
+
+Output:
+        5
+       / \
+      4   6
+     /     \
+    2       7
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Delete node = 3
+
+Node 3 has two children:
+→ Find successor = 4  
+→ Replace 3 with 4  
+→ Delete original 4 node  
+
+Final tree maintains BST property ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Maintains **BST ordering property**
+* Handles all **3 deletion cases**
+* Uses **inorder successor** for replacement
+* Recursive and clean implementation
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty tree (`root = None`)
+* Deleting root node
+* Node not present
+* Skewed BST
+
+---
+
+### 🏁 Conclusion
+
+This recursive approach efficiently deletes a node from a BST by handling all structural cases and preserving the tree’s properties, achieving optimal **O(h)** time complexity.
+
+
+---
