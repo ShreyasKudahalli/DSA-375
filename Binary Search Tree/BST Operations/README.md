@@ -613,3 +613,128 @@ This recursive approach efficiently deletes a node from a BST by handling all st
 
 
 ---
+
+
+## 6️⃣ Recover Binary Search Tree (Fix Swapped Nodes)
+
+### 📌 Problem Statement
+
+You are given the root of a **Binary Search Tree (BST)** where exactly **two nodes have been swapped by mistake**.
+
+👉 Restore the tree without changing its structure.
+
+---
+
+### 🚀 Approach: Inorder Traversal (DFS)
+
+#### 🔹 Key Idea
+
+* Inorder traversal of a BST should produce a **sorted sequence**
+* If two nodes are swapped, this order will be violated
+
+👉 Detect these violations and fix them by swapping the values back
+
+---
+
+### 🧠 Algorithm
+
+1. Perform **inorder traversal**
+
+2. Track:
+
+   * `prev` → previously visited node
+   * `first` → first incorrect node
+   * `second` → second incorrect node
+
+3. During traversal:
+
+   * If `prev.val > current.val`:
+
+     * First violation:
+
+       * `first = prev`
+     * Always update:
+
+       * `second = current`
+
+4. After traversal:
+
+   * Swap values of `first` and `second`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(h)       |
+
+👉 `n` = number of nodes
+👉 `h` = height of the tree (recursion stack)
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+       3
+      / \
+     1   4
+        /
+       2
+
+Output:
+       2
+      / \
+     1   4
+        /
+       3
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Inorder traversal:
+
+Expected: 1,2,3,4  
+Actual:   1,3,2,4 ❌
+
+Violation:
+3 > 2
+
+first = 3  
+second = 2  
+
+Swap → Fixed BST ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Inorder traversal of BST must be **sorted**
+* Detects **violations in sorted order**
+* Only **two nodes are swapped**
+* Fix done by **value swap (not structure change)**
+
+---
+
+### ⚠️ Edge Cases
+
+* Adjacent swapped nodes
+* Non-adjacent swapped nodes
+* Small tree (2 nodes)
+* Already valid BST
+
+---
+
+### 🏁 Conclusion
+
+This inorder traversal approach efficiently detects and fixes swapped nodes in a BST by leveraging its sorted property, achieving optimal **O(n)** time complexity with minimal space usage.
+
+
+---
