@@ -241,3 +241,248 @@ Flood Fill is a classic DFS problem used in image processing and region-based tr
 
 
 ---
+
+
+## 3️⃣ All Paths from Source to Target (DFS + Backtracking)
+
+### 📌 Problem Statement
+
+Given a **Directed Acyclic Graph (DAG)** represented as an adjacency list `graph`, where:
+
+* `graph[i]` contains all nodes you can visit from node `i`
+
+👉 Find **all possible paths** from **node `0` (source)** to **node `n-1` (target)**.
+
+---
+
+### 🚀 Approach: DFS + Backtracking
+
+#### 🔹 Key Idea
+
+* Use **Depth-First Search (DFS)** to explore all possible paths
+* Use **backtracking** to build paths step by step
+
+👉 Since the graph is a DAG, no cycles → safe traversal
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `result` → stores all valid paths
+
+2. Start DFS from node `0`:
+
+   * Maintain current path
+
+3. At each node:
+
+   * If node == target (`n-1`):
+
+     * Add path to result
+     * Return
+
+4. For each neighbor:
+
+   * Add neighbor to path
+   * Recurse
+   * Backtrack (remove last node)
+
+5. Return all collected paths
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(2^n × n) |
+| Space Complexity | O(n)       |
+
+👉 Worst case: exponential number of paths
+👉 Path copying takes `O(n)`
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+graph = [[1,2], [3], [3], []]
+
+Output:
+[
+  [0,1,3],
+  [0,2,3]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start: [0]
+
+Path → 0 → 1 → 3 ✔️  
+Path → 0 → 2 → 3 ✔️  
+
+All paths collected
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS for path exploration**
+* Backtracking ensures correct path formation
+* Works efficiently for DAGs (no cycles)
+* Collects **all possible valid paths**
+
+---
+
+### ⚠️ Edge Cases
+
+* Single node graph
+* No path to target
+* Large DAG (many paths)
+* Linear graph
+
+---
+
+### 🏁 Conclusion
+
+This DFS + backtracking approach systematically explores all possible paths from source to target, ensuring correctness while handling exponential path combinations efficiently.
+
+
+---
+
+
+## 4️⃣ Surrounded Regions – Capture Regions in Board
+
+### 📌 Problem Statement
+
+You are given an `m x n` board containing:
+
+* `'X'` → Blocked cell
+* `'O'` → Open cell
+
+👉 Capture all regions surrounded by `'X'` by flipping `'O'` → `'X'`.
+
+#### ✅ Rule:
+
+* An `'O'` is **NOT captured** if it is:
+
+  * On the boundary, OR
+  * Connected to a boundary `'O'`
+
+---
+
+### 🚀 Approach: DFS (Boundary Traversal)
+
+#### 🔹 Key Idea
+
+* Instead of finding surrounded regions directly:
+  👉 Find **safe regions** (connected to boundary)
+
+* Mark boundary-connected `'O'` as temporary `'T'`
+
+* Convert:
+
+  * Remaining `'O'` → `'X'` (captured)
+  * `'T'` → `'O'` (restore safe cells)
+
+---
+
+### 🧠 Algorithm
+
+1. Traverse boundary cells:
+
+   * If cell is `'O'` → run DFS and mark as `'T'`
+
+2. DFS (mark function):
+
+   * Mark current `'O'` → `'T'`
+   * Visit all 4 directions
+
+3. Traverse entire board:
+
+   * `'O'` → `'X'` (captured)
+   * `'T'` → `'O'` (restore safe region)
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                   |
+| ---------------- | ---------------------------- |
+| Time Complexity  | O(m × n)                     |
+| Space Complexity | O(m × n) *(recursion stack)* |
+
+👉 Each cell is visited at most once
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+[
+  ["X","X","X","X"],
+  ["X","O","O","X"],
+  ["X","X","O","X"],
+  ["X","O","X","X"]
+]
+
+Output:
+[
+  ["X","X","X","X"],
+  ["X","X","X","X"],
+  ["X","X","X","X"],
+  ["X","O","X","X"]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Step 1:
+Mark boundary-connected 'O' → 'T'
+
+Step 2:
+Convert inner 'O' → 'X'
+
+Step 3:
+Restore 'T' → 'O'
+
+Final board ready ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS to mark safe regions**
+* Boundary traversal is crucial
+* Avoids unnecessary checks
+* Efficient and optimal solution
+
+---
+
+### ⚠️ Edge Cases
+
+* All cells are `'O'`
+* No `'O'` present
+* Single row or column
+* Large grid
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates a clever use of DFS by focusing on **boundary-connected regions**, allowing us to efficiently identify and capture only truly surrounded areas in **O(m × n)** time.
+
+---
