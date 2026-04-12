@@ -485,4 +485,128 @@ Final board ready ✔️
 
 This problem demonstrates a clever use of DFS by focusing on **boundary-connected regions**, allowing us to efficiently identify and capture only truly surrounded areas in **O(m × n)** time.
 
+
+---
+
+
+## 5️⃣ Eventual Safe Nodes – Detect Safe States in Graph
+
+### 📌 Problem Statement
+
+You are given a **directed graph** where:
+
+* `graph[i]` contains all nodes reachable from node `i`
+
+👉 A node is called **safe** if **all possible paths starting from it eventually lead to a terminal node** (a node with no outgoing edges).
+
+#### 🎯 Goal:
+
+Return all **eventual safe nodes** in **sorted order**
+
+---
+
+### 🚀 Approach: DFS + Cycle Detection
+
+#### 🔹 Key Idea
+
+* Unsafe nodes are part of **cycles** or lead to cycles
+* Safe nodes eventually reach a **terminal node**
+
+👉 Use DFS to detect cycles and classify nodes
+
+---
+
+### 🧠 State Definition
+
+We maintain a `state` array:
+
+* `0` → Unvisited
+* `1` → Visiting (currently in recursion → cycle detection)
+* `2` → Safe (processed, no cycle found)
+
+---
+
+### 🧠 Algorithm
+
+1. For each node:
+
+   * Run DFS
+
+2. In DFS:
+
+   * If node is `1` → cycle detected → return False
+   * If node is `2` → already safe → return True
+
+3. Mark node as `1` (visiting)
+
+4. Visit all neighbors:
+
+   * If any neighbor is unsafe → current node is unsafe
+
+5. If all neighbors are safe:
+
+   * Mark node as `2` (safe)
+
+6. Collect all safe nodes
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(V + E)   |
+| Space Complexity | O(V)       |
+
+👉 `V` = nodes, `E` = edges
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+graph = [[1,2],[2,3],[5],[0],[5],[],[]]
+
+Output:
+[2,4,5,6]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Node 0 → leads to cycle → unsafe  
+Node 1 → leads to cycle → unsafe  
+Node 2 → leads to terminal → safe  
+Node 5 → terminal → safe  
+
+Final safe nodes = [2,4,5,6] ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS with cycle detection**
+* Efficiently avoids recomputation using states
+* Identifies nodes that do not lead to cycles
+* Works well for directed graphs
+
+---
+
+### ⚠️ Edge Cases
+
+* Graph with no edges
+* All nodes part of cycle
+* Single node graph
+* Fully disconnected graph
+
+---
+
+### 🏁 Conclusion
+
+This problem is a classic application of **DFS with cycle detection**, where identifying cycles helps determine unsafe nodes. By marking safe nodes, we efficiently compute all eventual safe states in linear time.
+
 ---
