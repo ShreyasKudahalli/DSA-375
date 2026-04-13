@@ -610,3 +610,133 @@ Final safe nodes = [2,4,5,6] ✔️
 This problem is a classic application of **DFS with cycle detection**, where identifying cycles helps determine unsafe nodes. By marking safe nodes, we efficiently compute all eventual safe states in linear time.
 
 ---
+
+
+## 6️⃣ Count Complete Components in an Undirected Graph
+
+### 📌 Problem Statement
+
+You are given:
+
+* An integer `n` → number of nodes (0 to n-1)
+* A list of edges representing an **undirected graph**
+
+👉 A **connected component** is called **complete** if:
+
+* Every pair of distinct nodes in the component is connected by an edge
+
+#### 🎯 Goal:
+
+Return the **number of complete connected components**
+
+---
+
+### 🚀 Approach: DFS + Graph Properties
+
+#### 🔹 Key Idea
+
+* Traverse each connected component using **DFS**
+* Count:
+
+  * Number of **nodes** in the component
+  * Number of **edges** in the component
+
+👉 A component is **complete** if:
+
+[
+\text{edges} = \frac{n \times (n - 1)}{2}
+]
+
+---
+
+### 🧠 Algorithm
+
+1. Build adjacency list from edges
+
+2. Maintain a `visited` array
+
+3. For each unvisited node:
+
+   * Run DFS to explore component
+   * Count:
+
+     * `nodes`
+     * `edges` (sum of degrees ÷ 2)
+
+4. Check:
+
+   * If `edges == nodes * (nodes - 1) // 2`
+     → it's a complete component
+
+5. Count such components
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(V + E)   |
+| Space Complexity | O(V + E)   |
+
+👉 `V` = nodes, `E` = edges
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+n = 6
+edges = [[0,1],[0,2],[1,2],[3,4]]
+
+Output: 3
+
+Explanation:
+Component 1: {0,1,2} → complete ✔️  
+Component 2: {3,4} → complete ✔️  
+Component 3: {5} → complete ✔️  
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Component 1:
+Nodes = 3, Edges = 3 → complete
+
+Component 2:
+Nodes = 2, Edges = 1 → complete
+
+Component 3:
+Nodes = 1, Edges = 0 → complete
+
+Total = 3 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS for connected components**
+* Leverages **complete graph formula**
+* Counts edges carefully (divide by 2)
+* Works efficiently for large graphs
+
+---
+
+### ⚠️ Edge Cases
+
+* No edges → all nodes are individual components
+* Fully connected graph
+* Disconnected graph
+* Single node
+
+---
+
+### 🏁 Conclusion
+
+This problem combines **graph traversal (DFS)** with a mathematical property of **complete graphs** to efficiently count valid components in **O(V + E)** time.
+
+---
