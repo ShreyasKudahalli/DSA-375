@@ -740,3 +740,116 @@ Total = 3 ✔️
 This problem combines **graph traversal (DFS)** with a mathematical property of **complete graphs** to efficiently count valid components in **O(V + E)** time.
 
 ---
+
+
+## 7️⃣ Is Graph Bipartite
+
+### 📌 Problem Statement
+
+You are given an undirected graph `graph`, where:
+
+* `graph[i]` contains all nodes connected to node `i`
+
+👉 Determine whether the graph is **bipartite**.
+
+#### ✅ Definition:
+
+A graph is **bipartite** if its nodes can be divided into **two groups** such that:
+
+* No two adjacent nodes are in the same group
+
+---
+
+### 🚀 Approach: DFS + Graph Coloring
+
+#### 🔹 Key Idea
+
+* Try to color the graph using **2 colors (0 and 1)**
+* Adjacent nodes must have **different colors**
+* If a conflict occurs → graph is not bipartite
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `group[] = -1` → uncolored nodes
+
+2. For each unvisited node:
+
+   * Start DFS with color `0`
+
+3. In DFS:
+
+   * Assign current node a color
+   * Visit all neighbors:
+
+     * If uncolored → assign opposite color
+     * If same color → return `False`
+
+4. If all components are valid → return `True`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(V + E)   |
+| Space Complexity | O(V)       |
+
+👉 `V` = nodes, `E` = edges
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+graph = [[1,3],[0,2],[1,3],[0,2]]
+
+Output: true
+
+Explanation:
+Group 0: {0,2}
+Group 1: {1,3} ✔️
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start node 0 → color 0  
+→ neighbors get color 1  
+→ propagate coloring  
+
+No conflicts found → bipartite ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS graph coloring**
+* Ensures adjacent nodes have opposite colors
+* Handles disconnected graphs
+* Detects odd-length cycles
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty graph
+* Single node graph
+* Graph with self-loop → not bipartite
+* Disconnected components
+
+---
+
+### 🏁 Conclusion
+
+This problem uses **DFS-based 2-coloring** to determine whether a graph can be split into two independent sets, efficiently detecting conflicts in **O(V + E)** time.
+
+---
