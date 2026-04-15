@@ -852,4 +852,241 @@ No conflicts found → bipartite ✔️
 
 This problem uses **DFS-based 2-coloring** to determine whether a graph can be split into two independent sets, efficiently detecting conflicts in **O(V + E)** time.
 
+
+---
+
+
+## 7️⃣ Detect Cycle in Directed Graph (DFS + Recursion Stack)
+
+### 📌 Problem Statement
+
+You are given:
+
+* `V` → number of vertices
+* `edges` → list of directed edges
+
+👉 Determine whether the **directed graph contains a cycle**.
+
+---
+
+### 🚀 Approach: DFS + Path Tracking
+
+#### 🔹 Key Idea
+
+* Use **Depth-First Search (DFS)**
+* Track nodes in the **current recursion path**
+
+👉 A cycle exists if we revisit a node that is already in the **current path**
+
+---
+
+#### 🧠 State Arrays
+
+* `visited[]` → marks nodes that are fully processed
+* `pathvisited[]` → marks nodes in the current DFS path
+
+---
+
+### 🧠 Algorithm
+
+1. Build adjacency list from edges
+
+2. For each unvisited node:
+
+   * Run DFS
+
+3. In DFS:
+
+   * Mark node as `visited` and `pathvisited`
+   * Traverse neighbors:
+
+     * If not visited → recurse
+     * If already in `pathvisited` → cycle detected
+
+4. Backtrack:
+
+   * Remove node from `pathvisited`
+
+5. If any DFS detects a cycle → return `True`
+
+6. Else → return `False`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(V + E)   |
+| Space Complexity | O(V)       |
+
+👉 `V` = vertices, `E` = edges
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+V = 4
+edges = [[0,1],[1,2],[2,3],[3,1]]
+
+Output: True
+
+Explanation:
+Cycle exists → 1 → 2 → 3 → 1
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start DFS at node 0  
+→ visit 1 → 2 → 3  
+→ 3 points back to 1 (in current path)  
+
+Cycle detected ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS with recursion stack tracking**
+* Detects **back edges → cycle**
+* Works for directed graphs
+* Efficient for large graphs
+
+---
+
+### ⚠️ Edge Cases
+
+* No edges → no cycle
+* Self-loop → cycle exists
+* Disconnected graph
+* Single node
+
+---
+
+### 🏁 Conclusion
+
+This DFS-based approach efficiently detects cycles in a directed graph by tracking nodes in the current recursion path, ensuring accurate detection in **O(V + E)** time.
+
+
+---
+
+
+## 8️⃣ Detect Cycle in Undirected Graph (DFS + Parent Tracking)
+
+### 📌 Problem Statement
+
+You are given:
+
+* `V` → number of vertices
+* `edges` → list of undirected edges
+
+👉 Determine whether the **undirected graph contains a cycle**.
+
+---
+
+### 🚀 Approach: DFS + Parent Tracking
+
+#### 🔹 Key Idea
+
+* Use **Depth-First Search (DFS)** to traverse the graph
+* Track the **parent node** to avoid false cycle detection
+
+👉 A cycle exists if:
+
+* You visit an already visited node
+* And it is **not the parent** of the current node
+
+---
+
+### 🧠 Algorithm
+
+1. Build adjacency list from edges
+
+2. Maintain a `visited` array
+
+3. For each unvisited node:
+
+   * Run DFS
+
+4. In DFS:
+
+   * Mark node as visited
+   * For each neighbor:
+
+     * If not visited → recurse
+     * If visited and not parent → cycle detected
+
+5. If any DFS finds a cycle → return `True`
+
+6. Else → return `False`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(V + E)   |
+| Space Complexity | O(V + E)   |
+
+👉 `V` = vertices, `E` = edges
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+V = 5
+edges = [[0,1],[1,2],[2,3],[3,4],[4,1]]
+
+Output: True
+
+Explanation:
+Cycle exists → 1 → 2 → 3 → 4 → 1
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start DFS at node 0  
+→ visit 1 → 2 → 3 → 4  
+→ 4 connects back to 1 (not parent)  
+
+Cycle detected ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **DFS traversal**
+* Tracks **parent node to avoid false positives**
+* Works for disconnected graphs
+* Efficient and widely used technique
+
+---
+
+### ⚠️ Edge Cases
+
+* No edges → no cycle
+* Single node
+* Disconnected graph
+* Tree structure → no cycle
+
+---
+
+### 🏁 Conclusion
+
+This DFS-based approach efficiently detects cycles in an undirected graph by ensuring that revisits to nodes are only considered cycles when they are not coming from the parent, achieving optimal performance in **O(V + E)** time.
+
+
 ---
