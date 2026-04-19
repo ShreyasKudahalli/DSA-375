@@ -26,4 +26,5 @@ class Solution:
                 if not visited[neigh]:
                     heapq.heappush(min_heap, (edge_wt, neigh))
         
+        
         return mst_weight
