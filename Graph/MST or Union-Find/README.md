@@ -1,3 +1,6 @@
+# Minimum Spanning Tree (MST) and Union-Find (Disjoint Set)
+Minimum Spanning Tree (MST) and Union-Find (Disjoint Set) are closely connected concepts used in graph optimization and connectivity problems. An MST aims to connect all vertices in a weighted graph with the minimum total edge weight while avoiding cycles, commonly solved using algorithms like Kruskal’s or Prim’s. Union-Find plays a crucial role in these algorithms—especially in Kruskal’s—by efficiently managing connected components, detecting cycles, and merging sets using techniques like path compression and union by rank. Together, they provide a powerful framework for solving problems involving network design, clustering, and connectivity in near-optimal time.
+
 
 
 ## 1️⃣ Kruskal’s Algorithm – Minimum Spanning Tree (MST)
