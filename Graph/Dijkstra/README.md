@@ -271,3 +271,132 @@ Stops constraint satisfied ✔️
 This approach combines BFS traversal with cost optimization to efficiently find the cheapest route under stop constraints, making it ideal for real-world routing problems like flight planning.
 
 ---
+
+
+## 3️⃣ Network Delay Time – Shortest Signal Propagation
+
+### 📌 Problem Statement
+
+You are given:
+
+* `times` → list of directed edges `[u, v, w]`
+
+  * `u` → source node
+  * `v` → destination node
+  * `w` → time taken
+* `n` → number of nodes
+* `k` → starting node (signal source)
+
+👉 Determine the **minimum time required** for all nodes to receive the signal
+👉 If not all nodes can be reached → return `-1`
+
+---
+
+### 🚀 Approach: Dijkstra’s Algorithm (Min Heap)
+
+#### 🔹 Key Idea
+
+* Use a **min heap (priority queue)** to always process the node with the **smallest time**
+* Track visited nodes to avoid reprocessing
+
+👉 The maximum time taken to reach any node = final answer
+
+---
+
+### 🧠 Algorithm
+
+1. Build adjacency list from `times`
+
+2. Initialize:
+
+   * Min heap → `(time, node)` starting with `(0, k)`
+   * `visited` set
+   * `t = 0` → stores max delay
+
+3. While heap is not empty:
+
+   * Pop `(time, node)`
+   * If already visited → skip
+   * Update `t = max(t, time)`
+   * Mark node as visited
+
+4. Push neighbors:
+
+   * `(current_time + edge_weight, neighbor)`
+
+5. Final check:
+
+   * If all nodes visited → return `t`
+   * Else → return `-1`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity       |
+| ---------------- | ---------------- |
+| Time Complexity  | O((V + E) log V) |
+| Space Complexity | O(V + E)         |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+times = [[2,1,1],[2,3,1],[3,4,1]]
+n = 4, k = 2
+
+Output: 2
+
+Explanation:
+2 → 1 (1)
+2 → 3 (1)
+3 → 4 (2)
+
+All nodes reached in 2 units ✔️
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start at node 2:
+Heap = [(0,2)]
+
+→ Visit 2 → push (1,1), (1,3)
+
+→ Visit 1 → no new nodes
+→ Visit 3 → push (2,4)
+
+→ Visit 4
+
+Max time = 2 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **Dijkstra’s Algorithm**
+* Tracks maximum delay among shortest paths
+* Efficient for weighted directed graphs
+* Uses **visited set instead of dist array**
+
+---
+
+### ⚠️ Edge Cases
+
+* Disconnected graph → return `-1`
+* Single node
+* Multiple paths with different weights
+* Large graphs
+
+---
+
+### 🏁 Conclusion
+
+This problem is a classic application of **Dijkstra’s Algorithm**, where the goal is not just shortest paths but the **maximum shortest time** needed to reach all nodes, making it ideal for network propagation problems.
+
+---
