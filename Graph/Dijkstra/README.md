@@ -399,4 +399,127 @@ Max time = 2 ✔️
 
 This problem is a classic application of **Dijkstra’s Algorithm**, where the goal is not just shortest paths but the **maximum shortest time** needed to reach all nodes, making it ideal for network propagation problems.
 
+
+---
+
+
+## 4️⃣ Path With Minimum Effort – Grid Shortest Path
+
+### 📌 Problem Statement
+
+You are given a 2D grid `heights` where:
+
+* `heights[r][c]` represents the height of a cell
+
+👉 You start from `(0, 0)` and want to reach `(rows-1, cols-1)`
+
+#### 🎯 Goal:
+
+Minimize the **maximum absolute difference** in heights between consecutive cells along the path
+
+---
+
+### 🚀 Approach: Dijkstra’s Algorithm (Minimize Maximum Effort)
+
+#### 🔹 Key Idea
+
+* Instead of minimizing sum, we minimize the **maximum edge weight** along the path
+* Use **Dijkstra’s algorithm with a modified cost function**
+
+👉 Cost = `max(previous effort, current height difference)`
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * Min heap → `(effort, row, col)`
+   * `dist[][] = ∞`
+   * `dist[0][0] = 0`
+
+2. While heap is not empty:
+
+   * Pop cell with smallest effort
+   * If destination reached → return effort
+
+3. Explore 4 directions:
+
+   * Compute:
+
+     ```
+     new_effort = max(current_effort, abs(height difference))
+     ```
+   * If smaller than `dist[nr][nc]`:
+
+     * Update and push to heap
+
+4. Return result
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity            |
+| ---------------- | --------------------- |
+| Time Complexity  | O((R × C) log(R × C)) |
+| Space Complexity | O(R × C)              |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+heights = [
+ [1,2,2],
+ [3,8,2],
+ [5,3,5]
+]
+
+Output: 2
+
+Explanation:
+Path chosen minimizes the maximum difference = 2 ✔️
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start at (0,0)
+
+Move → (0,1) diff = 1  
+Move → (0,2) diff = 0  
+Move → (1,2) diff = 0  
+Move → (2,2) diff = 3  
+
+Better path exists with max effort = 2 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Modified **Dijkstra’s Algorithm**
+* Minimizes **maximum edge cost**, not sum
+* Works on grid traversal problems
+* Uses priority queue for efficiency
+
+---
+
+### ⚠️ Edge Cases
+
+* Single cell → effort = 0
+* Large grid
+* All equal heights → effort = 0
+* Steep differences
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates a powerful variation of Dijkstra’s algorithm where the objective is to minimize the **maximum cost along a path**, making it highly useful for terrain navigation and optimization problems.
+
 ---
