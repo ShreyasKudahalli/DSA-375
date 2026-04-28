@@ -264,3 +264,142 @@ This approach efficiently generates all unique subsets by combining backtracking
 
 
 ---
+
+
+## 3️⃣ Combination Sum 
+
+### 📌 Problem Statement
+
+You are given:
+
+* `candidates` → a list of **distinct integers**
+* `target` → a target sum
+
+👉 Find all **unique combinations** where the chosen numbers sum to `target`
+
+#### 🎯 Constraints:
+
+* You can use the **same number multiple times**
+* Combinations must be **unique**
+* Order of elements inside a combination does not matter
+
+---
+
+### 🚀 Approach: Backtracking (Choice-Based)
+
+#### 🔹 Key Idea
+
+* At each index, you can:
+
+  * Pick the element (stay at same index → reuse allowed)
+  * Move forward to explore other elements
+
+👉 Stop when:
+
+* Sum equals target → valid combination
+* Sum exceeds target → prune branch
+
+---
+
+### 🧠 Algorithm
+
+1. Start from index `0` with:
+
+   * `current_sum = 0`
+   * `combination = []`
+
+2. For each index:
+
+   * Add element to combination
+   * Recurse with same index (allow reuse)
+   * Backtrack (remove element)
+
+3. Base Cases:
+
+   * If `sum == target` → store result
+   * If `sum > target` → stop
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity             |
+| ---------------- | ---------------------- |
+| Time Complexity  | O(2^T) (exponential)   |
+| Space Complexity | O(T) (recursion depth) |
+
+> `T` = target value (approximate bound)
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+candidates = [2,3,6,7]
+target = 7
+
+Output:
+[
+ [2,2,3],
+ [7]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start:
+[]
+
+→ Pick 2 → [2]
+→ Pick 2 → [2,2]
+→ Pick 3 → [2,2,3] ✔️
+
+Backtrack
+
+→ Pick 7 → [7] ✔️
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+            []
+        /    |    \
+      [2]   [3]   [6]
+     /  \
+ [2,2]  [2,3]
+   |
+[2,2,3] ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **backtracking + recursion**
+* Allows **repetition of elements**
+* Uses **pruning for efficiency**
+* Explores combinations, not permutations
+
+---
+
+### ⚠️ Edge Cases
+
+* No combination possible → return `[]`
+* Single element equals target
+* Large target → deep recursion
+* Candidates contain large values
+
+---
+
+### 🏁 Conclusion
+
+Combination Sum is a foundational backtracking problem that demonstrates how to explore combinations with repetition while efficiently pruning invalid paths.
+
+
+---
