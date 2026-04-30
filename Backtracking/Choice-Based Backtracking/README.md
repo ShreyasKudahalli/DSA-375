@@ -542,3 +542,287 @@ Combination Sum is a foundational backtracking problem that demonstrates how to 
 
 
 ---
+
+
+## 5️⃣ Permutations
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → a list of **distinct integers**
+
+👉 Return **all possible permutations**
+
+#### 🎯 Constraints:
+
+* Each element must appear **exactly once** in each permutation
+* Order **matters**
+* All permutations must be **unique**
+
+---
+
+### 🚀 Approach: Backtracking with Visited Set
+
+#### 🔹 Key Idea
+
+* Build permutations step by step
+* At each step, pick an element that is **not already used**
+
+👉 Use a `visited` set to track used elements
+
+---
+
+### 🧠 Algorithm
+
+1. Start with:
+
+   * Empty combination `[]`
+   * Empty `visited` set
+
+2. For each element in `nums`:
+
+   * If not visited:
+
+     * Add to combination
+     * Mark as visited
+     * Recurse
+
+3. When combination size == `n`:
+
+   * Add to result
+
+4. Backtrack:
+
+   * Remove element
+   * Mark as unvisited
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n! × n)  |
+| Space Complexity | O(n)       |
+
+---
+
+#### 📎 Example
+
+```text id="example"
+Input:
+nums = [1,2,3]
+
+Output:
+[
+ [1,2,3],
+ [1,3,2],
+ [2,1,3],
+ [2,3,1],
+ [3,1,2],
+ [3,2,1]
+]
+```
+
+---
+
+#### 🔍 Dry Run
+
+```text id="dryrun"
+Start:
+[]
+
+Pick 1 → [1]
+Pick 2 → [1,2]
+Pick 3 → [1,2,3] ✔️
+
+Backtrack:
+Try other combinations ✔️
+```
+
+---
+
+#### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+          []
+     /     |     \
+   [1]    [2]    [3]
+   / \    / \    / \
+[1,2]... etc...
+```
+
+---
+
+### ✅ Key Points
+
+* Generates **all permutations**
+* Uses **visited set to avoid reuse**
+* Order matters → different permutations
+* Classic **backtracking problem**
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty input → `[]`
+* Single element → one permutation
+* Large input → factorial growth
+
+---
+
+### 🏁 Conclusion
+
+This approach systematically explores all possible arrangements using backtracking, making it a fundamental technique for permutation-based problems.
+
+
+---
+
+
+## 6️⃣ Permutations II 
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → a list of integers (may contain duplicates)
+
+👉 Return **all unique permutations**
+
+#### 🎯 Constraints:
+
+* Each element must be used **exactly once**
+* Result must **not contain duplicate permutations**
+
+---
+
+### 🚀 Approach: Backtracking + Sorting + Visited Array
+
+#### 🔹 Key Idea
+
+* Sort the array to group duplicates
+* Use a `visited` array to track used elements
+* Skip duplicates intelligently
+
+👉 Avoid duplicates using:
+
+```python
+if i > 0 and nums[i] == nums[i-1] and not visited[i-1]:
+    continue
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Sort `nums`
+
+2. Initialize:
+
+   * `visited[] = False` for all indices
+   * empty `combination`
+
+3. For each index:
+
+   * Skip if already visited
+   * Skip duplicates if previous identical element was not used
+
+4. Choose element:
+
+   * Add to combination
+   * Mark visited
+   * Recurse
+
+5. Backtrack:
+
+   * Remove element
+   * Mark unvisited
+
+6. When combination length == `n`:
+
+   * Add to result
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n! × n)  |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [1,1,2]
+
+Output:
+[
+ [1,1,2],
+ [1,2,1],
+ [2,1,1]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Sorted nums = [1,1,2]
+
+Start:
+[]
+
+Pick first 1 → [1]
+Pick second 1 → [1,1]
+Pick 2 → [1,1,2] ✔️
+
+Backtrack:
+Skip duplicate when previous identical not used ✔️
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+            []
+        /     |     
+      [1]    [2]
+     /   \
+ [1,1]  [1,2]
+   |       |
+[1,1,2]  [1,2,1]
+```
+
+---
+
+### ✅ Key Points
+
+* Sorting helps **identify duplicates**
+* `visited[]` ensures elements are used once
+* Skip condition prevents duplicate permutations
+* Classic **backtracking with pruning**
+
+---
+
+### ⚠️ Edge Cases
+
+* All elements same → only one permutation
+* Empty array
+* Large input → factorial growth
+
+---
+
+### 🏁 Conclusion
+
+This solution efficiently generates all unique permutations by combining backtracking with careful duplicate handling, making it a standard pattern for permutation problems with repeated elements.
+
+
+
+---
