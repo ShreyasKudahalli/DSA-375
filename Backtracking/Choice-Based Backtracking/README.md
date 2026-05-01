@@ -826,3 +826,269 @@ This solution efficiently generates all unique permutations by combining backtra
 
 
 ---
+
+
+## 7️⃣ Next Permutation
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → an array of integers
+
+👉 Rearrange numbers into the **next lexicographically greater permutation**
+
+#### 🎯 Rules:
+
+* If such arrangement is not possible → rearrange into **lowest (sorted ascending) order**
+* Must be done **in-place**
+* Use **constant extra memory**
+
+---
+
+### 🚀 Approach: Greedy + Two Pointers
+
+#### 🔹 Key Idea
+
+To find the next permutation:
+
+1. Find the **first decreasing element from the right**
+2. Swap it with the **next greater element**
+3. Reverse the suffix to get the smallest order
+
+---
+
+### 🧠 Algorithm
+
+1. Find index `i` such that:
+
+   ```
+   nums[i] < nums[i+1]
+   ```
+
+   (Traverse from right)
+
+2. If found:
+
+   * Find index `j` such that:
+
+     ```
+     nums[j] > nums[i]
+     ```
+   * Swap `nums[i]` and `nums[j]`
+
+3. Reverse the subarray from `i+1` to end
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [1,2,3]
+
+Output:
+[1,3,2]
+
+Explanation:
+Next permutation after [1,2,3] is [1,3,2]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [1,3,2]
+
+Step 1:
+Find i → index 0 (1 < 3)
+
+Step 2:
+Find j → index 2 (2 > 1)
+
+Swap:
+[2,3,1]
+
+Step 3:
+Reverse suffix:
+[2,1,3] ✔️
+```
+
+---
+
+### 🔁 Edge Case
+
+```text id="edgecase"
+Input:
+[3,2,1]
+
+Output:
+[1,2,3]
+
+Explanation:
+No larger permutation exists → return smallest
+```
+
+---
+
+### ✅ Key Points
+
+* Finds **next lexicographical permutation**
+* Uses **greedy + reverse technique**
+* Works **in-place**
+* Handles descending order edge case
+
+---
+
+### ⚠️ Edge Cases
+
+* Already largest permutation
+* Single element
+* Duplicate elements
+* Strictly decreasing array
+
+---
+
+### 🏁 Conclusion
+
+This algorithm efficiently computes the next permutation in linear time by identifying the pivot, swapping intelligently, and reversing the suffix—making it optimal for permutation-based problems.
+
+
+---
+
+
+## 8️⃣ Generate Parentheses – Backtracking Approach
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → number of pairs of parentheses
+
+👉 Generate **all combinations of well-formed (valid) parentheses**
+
+---
+
+### 🚀 Approach: Backtracking (Constraint-Based)
+
+#### 🔹 Key Idea
+
+* Build the string step by step
+* Ensure validity at every step
+
+👉 Rules:
+
+* Add `'('` if `open < n`
+* Add `')'` only if `close < open`
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `openN = 0`, `closeN = 0`
+   * empty stack
+
+2. Recursively build:
+
+   * If `openN < n` → add `'('`
+   * If `closeN < openN` → add `')'`
+
+3. Base case:
+
+   * If `openN == closeN == n` → valid combination
+
+4. Backtrack after each choice
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity                  |
+| ---------------- | --------------------------- |
+| Time Complexity  | O(4ⁿ / √n) (Catalan number) |
+| Space Complexity | O(n) (recursion stack)      |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+n = 3
+
+Output:
+[
+ "((()))",
+ "(()())",
+ "(())()",
+ "()(())",
+ "()()()"
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start:
+""
+
+Add '(' → "("
+Add '(' → "(("
+Add ')' → "(()"
+...
+
+Continue until valid combinations ✔️
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+            ""
+         /     
+       "("     
+     /     \   
+   "(("    "()"
+   ...
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **backtracking with constraints**
+* Ensures **valid parentheses at every step**
+* Avoids invalid sequences early (pruning)
+* Based on **Catalan numbers**
+
+---
+
+### ⚠️ Edge Cases
+
+* `n = 0` → `[""]`
+* `n = 1` → `["()"]`
+* Larger `n` → exponential growth
+
+---
+
+### 🏁 Conclusion
+
+This problem showcases constraint-based backtracking where only valid sequences are generated, making it efficient despite exponential possibilities.
+
+
+---
