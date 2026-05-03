@@ -1092,3 +1092,142 @@ This problem showcases constraint-based backtracking where only valid sequences 
 
 
 ---
+
+
+## 9️⃣ Restore IP Addresses
+
+### 📌 Problem Statement
+
+You are given:
+
+* `s` → a string containing only digits
+
+👉 Return all possible **valid IP address combinations**
+
+---
+
+### 🎯 IP Address Rules
+
+A valid IP address consists of **4 parts**:
+
+1. Each part is between **0 and 255**
+2. No leading zeros
+
+   * ✅ `"0"` is valid
+   * ❌ `"01"`, `"00"` are invalid
+3. Exactly **4 segments separated by dots**
+
+---
+
+### 🚀 Approach: Backtracking
+
+#### 🔹 Key Idea
+
+* Try placing **dots** to split the string into 4 parts
+* Each part must be **valid (0–255 and no leading zero)**
+
+👉 Maximum length of string = 12 (since 4 parts × 3 digits)
+
+---
+
+### 🧠 Algorithm
+
+1. If length > 12 → return empty
+
+2. Use backtracking:
+
+   * Track:
+
+     * current index `i`
+     * number of segments (`dots`)
+     * current string
+
+3. For each position:
+
+   * Try substring of length 1 to 3
+   * Check:
+
+     * value < 256
+     * no leading zeros
+
+4. Base case:
+
+   * If 4 segments and end reached → valid IP
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity           |
+| ---------------- | -------------------- |
+| Time Complexity  | O(1) (bounded by 3⁴) |
+| Space Complexity | O(1)                 |
+
+> The search space is limited since max length is 12
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+s = "25525511135"
+
+Output:
+[
+ "255.255.11.135",
+ "255.255.111.35"
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Start:
+"25525511135"
+
+Try splits:
+255 | 255 | 11 | 135 ✔️
+255 | 255 | 111 | 35 ✔️
+
+Other splits invalid ❌
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+          ""
+     /     |     \
+   "2"    "25"   "255"
+   ...
+```
+
+---
+
+### ✅ Key Points
+
+* Backtracking with **string partitioning**
+* Validate each segment carefully
+* Use **pruning** for invalid cases
+* Limited search space → efficient
+
+---
+
+### ⚠️ Edge Cases
+
+* Length < 4 → no valid IP
+* Length > 12 → no valid IP
+* Leading zeros
+* All zeros → `"0.0.0.0"`
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how backtracking can be used to generate valid structured strings by applying constraints at each step, ensuring only valid IP combinations are formed.
+
+---
