@@ -271,3 +271,158 @@ This problem demonstrates how BFS can be effectively applied to grid-based movem
 
 
 ---
+
+
+## 3️⃣ N-Queens – Backtracking with Constraints
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → size of the chessboard (n × n)
+
+👉 Place `n` queens on the board such that:
+
+#### 🎯 Constraints:
+
+* No two queens attack each other
+* A queen can attack:
+
+  * Same **row**
+  * Same **column**
+  * Same **diagonal**
+
+👉 Return **all valid board configurations**
+
+---
+
+### 🚀 Approach: Constraint-Based Backtracking
+
+#### 🔹 Key Idea
+
+* Place one queen per row
+* Try all columns in that row
+* Ensure no conflicts using:
+
+  * `cols` → occupied columns
+  * `diag1 (r - c)` → main diagonal
+  * `diag2 (r + c)` → anti-diagonal
+
+👉 Skip invalid placements early (pruning)
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * Empty board filled with `'.'`
+   * Sets for columns and diagonals
+
+2. For each row:
+
+   * Try placing queen in every column
+
+3. Check:
+
+   * Column not used
+   * Diagonals not occupied
+
+4. If valid:
+
+   * Place queen
+   * Mark sets
+   * Recurse to next row
+
+5. Backtrack:
+
+   * Remove queen
+   * Unmark sets
+
+6. If all rows filled:
+
+   * Store solution
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(N!)      |
+| Space Complexity | O(N)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+n = 4
+
+Output:
+[
+ [".Q..",
+  "...Q",
+  "Q...",
+  "..Q."],
+
+ ["..Q.",
+  "Q...",
+  "...Q",
+  ".Q.."]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Row 0 → Place Q at column 1  
+Row 1 → Place Q at column 3  
+Row 2 → Place Q at column 0  
+Row 3 → Place Q at column 2  
+
+Valid configuration ✔️
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+Row0
+ ├── Col0 ❌
+ ├── Col1 ✔️
+ │    ├── Row1 choices...
+ │
+ ├── Col2 ✔️
+ └── Col3 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **constraint-based backtracking problem**
+* Uses **sets for O(1) conflict checking**
+* Efficient pruning reduces search space
+* One queen per row strategy
+
+---
+
+### ⚠️ Edge Cases
+
+* `n = 1` → `[["Q"]]`
+* `n = 2 or 3` → no solution
+* Larger `n` → exponential growth
+
+---
+
+### 🏁 Conclusion
+
+The N-Queens problem is a classic example of constraint-based backtracking, where invalid configurations are pruned early, allowing efficient exploration of valid solutions.
+
+
+---
