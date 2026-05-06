@@ -426,3 +426,140 @@ The N-Queens problem is a classic example of constraint-based backtracking, wher
 
 
 ---
+
+
+## 4️⃣ Partition to K Equal Sum Subsets – Backtracking
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → an array of integers
+* `k` → number of subsets
+
+👉 Determine if it is possible to divide the array into **k non-empty subsets** such that:
+
+#### 🎯 Constraint:
+
+* Each subset has **equal sum**
+
+---
+
+### 🚀 Approach: Backtracking with Pruning
+
+#### 🔹 Key Idea
+
+* Total sum must be divisible by `k`
+* Each subset must have sum = `target = total // k`
+* Use backtracking to build subsets one by one
+
+---
+
+### 🧠 Algorithm
+
+1. Compute total sum:
+
+   * If `total % k != 0` → return `False`
+
+2. Sort array in **descending order**
+
+   * Helps prune faster
+
+3. Use `used[]` array to track selected elements
+
+4. Backtracking:
+
+   * Try to fill one subset at a time
+   * If current subset sum == target:
+
+     * Move to next subset (`k - 1`)
+
+5. Base case:
+
+   * If `k == 1` → return `True`
+
+6. Pruning:
+
+   * Skip used elements
+   * Skip if sum exceeds target
+   * Avoid duplicate work
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity             |
+| ---------------- | ---------------------- |
+| Time Complexity  | O(k × 2ⁿ) (worst case) |
+| Space Complexity | O(n)                   |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [4,3,2,3,5,2,1]
+k = 4
+
+Output:
+True
+
+Explanation:
+Subsets = [5], [1,4], [2,3], [2,3]
+Each subset sum = 5
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Sorted nums = [5,4,3,3,2,2,1]
+Target = 5
+
+Subset1 → [5] ✔️  
+Subset2 → [4,1] ✔️  
+Subset3 → [3,2] ✔️  
+Subset4 → [3,2] ✔️  
+
+All subsets formed ✔️
+```
+
+---
+
+### 🌳 Recursion Tree (Simplified)
+
+```text id="tree"
+Start
+ ├── Pick 5 → Subset1 ✔️
+ ├── Pick 4 → Try combinations
+ │    └── +1 → Subset2 ✔️
+ └── Continue...
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **subset partition + backtracking**
+* Uses **greedy sorting for pruning**
+* Efficient pruning reduces exponential paths
+* Builds subsets one by one
+
+---
+
+### ⚠️ Edge Cases
+
+* Sum not divisible by `k` → `False`
+* `k = 1` → always `True`
+* Large elements → early pruning
+* Duplicate numbers handled carefully
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates advanced backtracking with strong pruning techniques to efficiently partition an array into equal-sum subsets, a common pattern in combinatorial optimization problems.
+
+---
