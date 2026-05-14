@@ -131,3 +131,526 @@ Merged:
 This problem demonstrates how sorting combined with greedy merging can efficiently combine overlapping intervals into a minimal set of non-overlapping ranges.
 
 ---
+
+
+## 2️⃣ Insert Interval 
+
+### 📌 Problem Statement
+
+You are given:
+
+* `intervals` → a list of non-overlapping intervals sorted by start time
+* `newInterval` → a new interval to insert
+
+👉 Insert the new interval into the list and merge overlapping intervals if necessary.
+
+---
+
+### 🚀 Approach: Greedy Interval Processing
+
+#### 🔹 Key Idea
+
+Process intervals in **3 phases**:
+
+1. Add all intervals completely before `newInterval`
+2. Merge all overlapping intervals
+3. Add remaining intervals after merging
+
+---
+
+### 🧠 Algorithm
+
+1. Traverse intervals:
+
+   * If current interval ends before `newInterval` starts:
+
+     * Add directly to result
+
+2. Merge overlaps:
+
+   * If intervals overlap:
+
+     * Update start and end of `newInterval`
+
+3. Add merged interval to result
+
+4. Append remaining intervals
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+intervals = [[1,3],[6,9]]
+newInterval = [2,5]
+
+Output:
+[[1,5],[6,9]]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+intervals = [[1,3],[6,9]]
+newInterval = [2,5]
+
+[1,3] overlaps with [2,5]
+Merge → [1,5]
+
+Append remaining:
+[6,9]
+
+Result:
+[[1,5],[6,9]]
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Existing:
+[1---3]   [6---9]
+
+New:
+   [2---5]
+
+Merged:
+[1-------5]   [6---9]
+```
+
+---
+
+### ✅ Key Points
+
+* Efficient linear traversal
+* No need to re-sort intervals
+* Greedy merging handles overlaps naturally
+* Works because input intervals are already sorted
+
+---
+
+### ⚠️ Edge Cases
+
+* Insert at beginning
+* Insert at end
+* Fully overlapping intervals
+* No overlap at all
+* Empty intervals list
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how interval insertion and merging can be efficiently handled using greedy traversal by separating non-overlapping, overlapping, and remaining intervals into distinct phases.
+
+---
+
+
+## 3️⃣ Non-overlapping Intervals
+
+### 📌 Problem Statement
+
+You are given:
+
+* `intervals` → a list of intervals `[start, end]`
+
+👉 Return the **minimum number of intervals to remove** so that the remaining intervals are non-overlapping.
+
+---
+
+### 🚀 Approach: Greedy by Ending Time
+
+#### 🔹 Key Idea
+
+To keep the maximum number of non-overlapping intervals:
+
+* Always select the interval with the **smallest ending time**
+
+👉 This leaves more room for future intervals.
+
+---
+
+### 🧠 Algorithm
+
+1. Sort intervals based on ending time
+
+2. Initialize:
+
+   * `count = 1`
+   * `last = end time of first interval`
+
+3. Traverse remaining intervals:
+
+   * If current interval starts after or at `last`
+
+     * Keep it
+     * Update `last`
+     * Increment `count`
+
+4. Answer:
+
+   * `total intervals - non-overlapping intervals kept`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n log n) |
+| Space Complexity | O(1)       |
+
+> Sorting dominates the runtime.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+intervals = [[1,2],[2,3],[3,4],[1,3]]
+
+Output:
+1
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Sorted by end:
+[[1,2],[2,3],[1,3],[3,4]]
+
+Pick [1,2]
+Pick [2,3]
+Skip [1,3] ❌ (overlap)
+Pick [3,4]
+
+Kept = 3
+Removed = 4 - 3 = 1
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Intervals:
+[1---2]
+    [2---3]
+ [1-------3] ❌
+         [3---4]
+
+Remove:
+[1---3]
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **interval scheduling greedy problem**
+* Sorting by end time gives optimal solution
+* Maximizes number of intervals kept
+* Minimum removals = total − kept intervals
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty interval list
+* Single interval
+* Fully overlapping intervals
+* Already non-overlapping intervals
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates the greedy interval scheduling strategy where selecting intervals with the earliest finishing time ensures the maximum number of non-overlapping intervals can be retained.
+
+---
+
+
+## 4️⃣ Minimum Number of Arrows to Burst Balloons
+
+### 📌 Problem Statement
+
+You are given:
+
+* `points` → a list of balloon intervals `[start, end]`
+
+Each balloon spans a horizontal interval.
+
+👉 An arrow shot at position `x` bursts all balloons where:
+
+```text id="cond"
+start <= x <= end
+```
+
+👉 Return the **minimum number of arrows** required to burst all balloons.
+
+---
+
+### 🚀 Approach: Greedy by Ending Coordinate
+
+#### 🔹 Key Idea
+
+* Sort balloons based on their ending position
+* Shoot arrows at the earliest possible ending point
+
+👉 This allows one arrow to burst the maximum overlapping balloons.
+
+---
+
+### 🧠 Algorithm
+
+1. Sort balloons by ending coordinate
+
+2. Initialize:
+
+   * `count = 1`
+   * `last = end of first balloon`
+
+3. Traverse remaining balloons:
+
+   * If current balloon starts after `last`
+
+     * Need a new arrow
+     * Increment count
+     * Update `last`
+
+4. Return total arrows used
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n log n) |
+| Space Complexity | O(1)       |
+
+> Sorting dominates the runtime.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+points = [[10,16],[2,8],[1,6],[7,12]]
+
+Output:
+2
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Sorted by end:
+[[1,6],[2,8],[7,12],[10,16]]
+
+Arrow 1 at x = 6
+Bursts:
+[1,6], [2,8]
+
+Arrow 2 at x = 12
+Bursts:
+[7,12], [10,16]
+
+Total arrows = 2
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+[1------6]
+   [2--------8]
+
+        [7---------12]
+             [10---------16]
+
+Arrow1 → x = 6
+Arrow2 → x = 12
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **greedy interval coverage problem**
+* Sorting by end position gives optimal solution
+* One arrow can cover overlapping intervals
+* Similar to activity selection scheduling
+
+---
+
+### ⚠️ Edge Cases
+
+* Single balloon
+* Fully overlapping balloons
+* Non-overlapping balloons
+* Large coordinate ranges
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy interval scheduling can minimize resources by always choosing the earliest finishing interval to maximize overlap coverage.
+
+---
+
+
+ 
+## 5️⃣ Car Pooling
+
+### 📌 Problem Statement
+
+You are given:
+
+* `trips[i] = [numPassengers, from, to]`
+* `capacity` → maximum passenger capacity of the vehicle
+
+👉 Determine whether it is possible to complete all trips without exceeding the vehicle capacity at any point.
+
+---
+
+### 🚀 Approach: Sweep Line / Event Simulation
+
+#### 🔹 Key Idea
+
+Instead of checking every location individually:
+
+* Treat each trip as:
+
+  * Pickup event → `+passengers`
+  * Drop event → `-passengers`
+
+👉 Process events in sorted order to simulate passenger changes over time.
+
+---
+
+### 🧠 Algorithm
+
+1. Create events list:
+
+   * `(start, +numPassengers)`
+   * `(end, -numPassengers)`
+
+2. Sort events by location
+
+3. Traverse events:
+
+   * Update current passengers
+   * If passengers exceed capacity:
+
+     * Return `False`
+
+4. If all events processed successfully:
+
+   * Return `True`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n log n) |
+| Space Complexity | O(n)       |
+
+> Sorting events dominates the runtime.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+trips = [[2,1,5],[3,3,7]]
+capacity = 4
+
+Output:
+False
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Trips:
+[2,1,5]
+[3,3,7]
+
+Events:
+(1,+2)
+(3,+3)
+(5,-2)
+(7,-3)
+
+Passengers:
+0 → 2
+2 → 5 ❌ exceeds capacity
+
+Return False
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Location:
+1      3      5      7
+
++2 → passengers = 2
++3 → passengers = 5 ❌
+-2
+-3
+```
+
+---
+
+### ✅ Key Points
+
+* Uses **sweep line / event processing**
+* Efficiently tracks interval overlaps
+* Similar to meeting room scheduling problems
+* Avoids checking every point individually
+
+---
+
+### ⚠️ Edge Cases
+
+* Exact capacity match
+* Fully overlapping trips
+* Non-overlapping trips
+* Multiple pickups/drop-offs at same location
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how interval events and sweep line techniques can efficiently simulate overlapping ranges and capacity constraints in scheduling and transportation problems.
+
+---
