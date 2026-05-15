@@ -654,3 +654,131 @@ Location:
 This problem demonstrates how interval events and sweep line techniques can efficiently simulate overlapping ranges and capacity constraints in scheduling and transportation problems.
 
 ---
+
+
+## 6️⃣ Jump Game 
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → an array where `nums[i]` represents the maximum jump length from index `i`
+
+👉 Determine whether you can reach the **last index** starting from the first index.
+
+---
+
+### 🚀 Approach: Greedy Reach Tracking
+
+#### 🔹 Key Idea
+
+* Keep track of the **farthest reachable index**
+* At every position:
+
+  * Update the maximum reach possible
+
+👉 If current index becomes unreachable:
+
+* Return `False`
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `jump = 0` → farthest reachable index
+
+2. Traverse array:
+
+   * If current index `i > jump`
+
+     * Cannot reach this position
+     * Return `False`
+
+3. Update:
+
+   * `jump = max(jump, i + nums[i])`
+
+4. If traversal completes:
+
+   * Return `True`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [2,3,1,1,4]
+
+Output:
+True
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [2,3,1,1,4]
+
+i = 0
+jump = max(0, 0+2) = 2
+
+i = 1
+jump = max(2, 1+3) = 4
+
+i = 2
+reachable ✔️
+
+i = 4
+Reached end ✔️
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Index:  0  1  2  3  4
+Nums : [2, 3, 1, 1, 4]
+
+0 → can reach up to 2
+1 → can reach up to 4 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **greedy reachability problem**
+* Track farthest reachable index dynamically
+* Single-pass efficient solution
+* No recursion or DP required
+
+---
+
+### ⚠️ Edge Cases
+
+* Single element array
+* Array starting with `0`
+* Unreachable gap in middle
+* Large jumps skipping many indices
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy techniques can efficiently solve reachability problems by continuously maintaining the farthest reachable position while traversing the array.
+
+---
