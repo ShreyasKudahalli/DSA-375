@@ -782,3 +782,263 @@ Nums : [2, 3, 1, 1, 4]
 This problem demonstrates how greedy techniques can efficiently solve reachability problems by continuously maintaining the farthest reachable position while traversing the array.
 
 ---
+
+
+## 7️⃣ Jump Game II 
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums` → an array where `nums[i]` represents the maximum jump length from index `i`
+
+👉 Return the **minimum number of jumps** required to reach the last index.
+
+---
+
+### 🚀 Approach: Greedy Level Expansion
+
+#### 🔹 Key Idea
+
+Treat the array like BFS levels:
+
+* `[l, r]` represents the current jump range
+* Explore all positions in the current range
+* Compute the farthest reachable position for the next jump
+
+👉 Each range expansion corresponds to one jump.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   * `l = 0`
+   * `r = 0`
+   * `res = 0`
+
+2. While end not reached:
+
+   * Compute farthest reachable index from current range
+   * Move to next range
+   * Increment jump count
+
+3. Return total jumps
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+nums = [2,3,1,1,4]
+
+Output:
+2
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [2,3,1,1,4]
+
+Range [0,0]
+Reach = 2
+Jumps = 1
+
+Range [1,2]
+Reach = 4
+Jumps = 2
+
+Reached end ✔️
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Index:  0  1  2  3  4
+Nums : [2, 3, 1, 1, 4]
+
+Jump 1:
+0 → [1,2]
+
+Jump 2:
+[1,2] → 4 ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Greedy + BFS-level traversal pattern
+* Expands reachable range layer by layer
+* Each layer represents one jump
+* Optimized linear-time solution
+
+---
+
+### ⚠️ Edge Cases
+
+* Single element array → 0 jumps
+* Large jumps skipping indices
+* Already reachable in one jump
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy range expansion can efficiently compute the minimum number of jumps by exploring reachable positions level by level, similar to BFS on an implicit graph.
+
+---
+
+## 8️⃣ Minimum Number of Taps to Open to Water a Garden
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → length of the garden `[0...n]`
+* `ranges[i]` → watering range of tap `i`
+
+A tap at position `i` can water:
+
+```text id="range"
+[i - ranges[i], i + ranges[i]]
+```
+
+👉 Return the minimum number of taps needed to water the entire garden.
+
+👉 If impossible, return `-1`.
+
+---
+
+### 🚀 Approach: Greedy Reach Expansion
+
+#### 🔹 Key Idea
+
+Convert each tap into an interval:
+
+```text id="interval"
+[left, right]
+```
+
+Then solve it like a **minimum interval coverage / jump game** problem.
+
+👉 Track:
+
+* current coverage
+* farthest reachable point
+
+---
+
+### 🧠 Algorithm
+
+1. Create an array `arr`
+
+   * `arr[left] = farthest right coverage`
+
+2. For every tap:
+
+   * Compute:
+
+     * `left = max(0, i - ranges[i])`
+     * `right = min(n, i + ranges[i])`
+
+3. Traverse garden from `0 → n`:
+
+   * Update farthest reachable point
+   * If current index exceeds reachable range:
+
+     * return `-1`
+
+4. When reaching current coverage boundary:
+
+   * Open a new tap
+   * Extend coverage
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+n = 5
+ranges = [3,4,1,1,0,0]
+
+Output:
+1
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Tap 1 covers:
+[0,5]
+
+Garden fully covered using 1 tap ✔️
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Garden:
+0 ----------- 5
+
+Tap at position 1:
+[0----------------5]
+
+Coverage complete ✔️
+```
+
+---
+
+### ✅ Key Points
+
+* Converts watering ranges into interval coverage
+* Similar to **Jump Game II**
+* Greedy expansion minimizes taps
+* Efficient linear traversal
+
+---
+
+### ⚠️ Edge Cases
+
+* Impossible coverage → return `-1`
+* Single tap covers entire garden
+* Multiple overlapping ranges
+* Sparse coverage gaps
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how interval coverage and greedy reach expansion can efficiently solve minimum coverage problems by always extending the farthest reachable boundary.
+
+---
