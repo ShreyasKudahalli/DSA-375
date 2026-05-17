@@ -1,4 +1,5 @@
 # Interval and reach
+
 Interval and reach problems focus on processing ranges, overlaps, and coverage efficiently to determine how far a condition, connection, or influence can extend within a sequence or timeline. These problems often involve sorting intervals, merging overlaps, tracking active ranges, or expanding reachable boundaries using greedy techniques, sweeping algorithms, or graph traversal concepts. They are commonly used in scheduling, range merging, meeting rooms, coverage analysis, and path expansion problems where managing continuous segments and their reachability is essential.
 
 
