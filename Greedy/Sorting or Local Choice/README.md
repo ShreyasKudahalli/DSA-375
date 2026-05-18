@@ -260,3 +260,258 @@ This problem demonstrates how custom comparator-based greedy sorting can optimiz
 
 
 ---
+
+
+## 3️⃣ Partition Labels
+
+### 📌 Problem Statement
+
+You are given:
+
+* `s` → a string of lowercase English letters
+
+👉 Partition the string into as many parts as possible such that:
+
+* Each letter appears in **at most one partition**
+
+👉 Return a list containing the size of each partition.
+
+---
+
+### 🚀 Approach: Greedy Character Range Tracking
+
+#### 🔹 Key Idea
+
+Each character has a:
+
+* first occurrence
+* last occurrence
+
+👉 A partition must extend until the **last occurrence** of every character included in it.
+
+---
+
+### 🧠 Algorithm
+
+1. Store the last occurrence of every character
+
+2. Traverse the string:
+
+   * Continuously update current partition end
+
+3. If current index reaches partition end:
+
+   * Partition complete
+   * Store partition length
+   * Start new partition
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+> Only 26 lowercase characters are stored.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+s = "ababcbacadefegdehijhklij"
+
+Output:
+[9,7,8]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+String:
+"ababcbacadefegdehijhklij"
+
+Track last occurrences.
+
+Partition 1:
+"ababcbaca"
+Ends at index 8
+Length = 9
+
+Partition 2:
+"defegde"
+Length = 7
+
+Partition 3:
+"hijhklij"
+Length = 8
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+ababcbaca | defegde | hijhklij
+---------   -------   --------
+    9          7          8
+```
+
+---
+
+### ✅ Key Points
+
+* Greedy interval expansion problem
+* Partition extends to include all occurrences of characters
+* Single-pass efficient solution
+* Similar to interval merging concepts
+
+---
+
+### ⚠️ Edge Cases
+
+* Single character string
+* All same characters
+* All unique characters
+* Entire string forms one partition
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy range tracking can partition a sequence optimally by expanding intervals until all dependent characters are fully contained within a segment.
+
+---
+
+
+## 4️⃣ Minimum Cost of Ropes – Greedy Heap Approach
+
+### 📌 Problem Statement
+
+You are given:
+
+* `arr` → lengths of ropes
+
+👉 Connect all ropes into one rope.
+
+#### Cost Rule:
+
+* Connecting two ropes of lengths `a` and `b` costs:
+
+```text id="cost"
+a + b
+```
+
+👉 Return the **minimum total cost** required.
+
+---
+
+### 🚀 Approach: Min Heap Greedy Strategy
+
+#### 🔹 Key Idea
+
+To minimize total cost:
+
+* Always connect the **two smallest ropes first**
+
+👉 This prevents large costs from accumulating repeatedly.
+
+---
+
+### 🧠 Algorithm
+
+1. Insert all rope lengths into a min heap
+
+2. While more than one rope exists:
+
+   * Remove two smallest ropes
+   * Compute connection cost
+   * Add cost to total
+   * Push merged rope back into heap
+
+3. Return total cost
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n log n) |
+| Space Complexity | O(n)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+arr = [4,3,2,6]
+
+Output:
+29
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Heap:
+[2,3,4,6]
+
+Take 2 + 3 = 5
+Total = 5
+Heap → [4,5,6]
+
+Take 4 + 5 = 9
+Total = 14
+Heap → [6,9]
+
+Take 6 + 9 = 15
+Total = 29
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+2 + 3 = 5
+4 + 5 = 9
+6 + 9 = 15
+
+Total:
+5 + 9 + 15 = 29
+```
+
+---
+
+### ✅ Key Points
+
+* Classic **greedy + min heap problem**
+* Similar to Huffman Coding strategy
+* Always combine smallest elements first
+* Heap guarantees efficient minimum extraction
+
+---
+
+### ⚠️ Edge Cases
+
+* Single rope → cost = 0
+* Two ropes only
+* Large rope values
+* Duplicate lengths
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy selection with a min heap minimizes cumulative merge costs by always combining the smallest available elements first.
+
+---
