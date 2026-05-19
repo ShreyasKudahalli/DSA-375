@@ -386,6 +386,7 @@ ababcbaca | defegde | hijhklij
 
 This problem demonstrates how greedy range tracking can partition a sequence optimally by expanding intervals until all dependent characters are fully contained within a segment.
 
+
 ---
 
 
@@ -513,5 +514,141 @@ Total:
 ### 🏁 Conclusion
 
 This problem demonstrates how greedy selection with a min heap minimizes cumulative merge costs by always combining the smallest available elements first.
+
+
+---
+
+
+## 5️⃣ Task Scheduler
+
+### 📌 Problem Statement
+
+You are given:
+
+* `tasks` → list of CPU tasks represented by characters
+* `n` → cooldown interval between two identical tasks
+
+👉 Each CPU interval can either:
+
+* execute one task, or
+* remain idle
+
+👉 Return the **minimum number of CPU intervals** required to complete all tasks.
+
+---
+
+### 🚀 Approach: Greedy Frequency Analysis
+
+#### 🔹 Key Idea
+
+The most frequent task determines the scheduling structure.
+
+Arrange the highest-frequency tasks first:
+
+```text id="pattern"
+A _ _ A _ _ A
+```
+
+Each gap must contain:
+
+* other tasks, or
+* idle slots
+
+---
+
+### 🧠 Formula
+
+Let:
+
+* `maxFreq` → highest task frequency
+* `maxCount` → number of tasks having `maxFreq`
+
+Minimum intervals required:
+
+```text id="formula"
+(maxFreq - 1) * (n + 1) + maxCount
+```
+
+Final answer:
+
+```text id="answer"
+max(total_tasks, formula)
+```
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+> Only 26 uppercase English letters.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+tasks = ["A","A","A","B","B","B"]
+n = 2
+
+Output:
+8
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Tasks:
+A A A
+B B B
+
+Arrange:
+A B idle A B idle A B
+
+Total intervals = 8
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+A _ _ A _ _ A
+  B      B    B
+
+Result:
+A B idle A B idle A B
+```
+
+---
+
+### ✅ Key Points
+
+* Greedy scheduling based on highest frequency
+* Most frequent task determines structure
+* Idle slots appear only when necessary
+* Formula-based optimization avoids simulation
+
+---
+
+### ⚠️ Edge Cases
+
+* `n = 0` → no cooldown
+* All tasks identical
+* Multiple tasks with same highest frequency
+* Enough tasks available to fill idle slots
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how greedy frequency analysis can optimize CPU scheduling by organizing the most constrained tasks first and minimizing idle intervals mathematically.
+
 
 ---
