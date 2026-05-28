@@ -283,3 +283,305 @@ b b b b
 ### 🏁 Conclusion
 
 This problem demonstrates how dynamic programming and sequence transformation can solve palindrome optimization problems efficiently by reducing them to the Longest Common Subsequence problem.
+
+
+---
+
+
+## 3️⃣ Edit Distance
+
+### 📌 Problem Statement
+
+You are given:
+
+* `word1`
+* `word2`
+
+👉 Return the minimum number of operations required to convert `word1` into `word2`.
+
+Allowed operations:
+
+1. Insert a character
+2. Delete a character
+3. Replace a character
+
+---
+
+### 🚀 Approach: Dynamic Programming
+
+#### 🔹 Key Idea
+
+For every pair of indices `(i, j)`:
+
+* If characters match:
+
+  * No operation needed
+
+* Otherwise:
+
+  * Perform one of:
+
+    * Insert
+    * Delete
+    * Replace
+
+So:
+
+```text id="relation"
+If word1[i-1] == word2[j-1]:
+
+dp[i][j] = dp[i-1][j-1]
+
+Else:
+
+dp[i][j] = 1 + min(
+    dp[i-1][j-1],   # Replace
+    dp[i-1][j],     # Delete
+    dp[i][j-1]      # Insert
+)
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Create DP table:
+
+   * `dp[i][j]` → minimum operations to convert:
+
+     * first `i` characters of `word1`
+     * into first `j` characters of `word2`
+
+2. Initialize base cases:
+
+   * Empty string conversions
+
+3. Traverse both strings
+
+4. If characters match:
+
+   * Copy diagonal value
+
+5. Otherwise:
+
+   * Take minimum among insert, delete, replace
+
+6. Return `dp[n][m]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n × m)   |
+| Space Complexity | O(n × m)   |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+word1 = "horse"
+word2 = "ros"
+
+Output:
+3
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+horse → rorse   (replace h → r)
+rorse → rose    (remove r)
+rose  → ros     (remove e)
+
+Total Operations = 3
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+word1 = horse
+word2 = ros
+
+Operations:
+h → r
+remove r
+remove e
+```
+
+---
+
+### ✅ Key Points
+
+* Classic string DP problem
+* Uses insert/delete/replace transitions
+* DP table stores minimum edit operations
+* Foundation for spell check and text correction systems
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty strings
+* Identical strings
+* Completely different strings
+* Large input lengths
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how dynamic programming efficiently computes minimum transformation operations between strings by exploring all possible edit choices and reusing optimal subproblem solutions.
+
+
+---
+
+
+## 4️⃣ Delete Operation for Two Strings
+
+### 📌 Problem Statement
+
+You are given:
+
+* `word1`
+* `word2`
+
+👉 Return the minimum number of deletions required to make both strings equal.
+
+Allowed operation:
+
+1. Delete a character from either string
+
+---
+
+### 🚀 Approach: Dynamic Programming
+
+#### 🔹 Key Idea
+
+For every pair of indices `(i, j)`:
+
+* If characters match:
+
+  * No deletion needed
+
+* Otherwise:
+
+  * Delete one character from either string
+
+So:
+
+```text id="relation"
+If word1[i-1] == word2[j-1]:
+
+dp[i][j] = dp[i-1][j-1]
+
+Else:
+
+dp[i][j] = 1 + min(
+    dp[i-1][j],   # Delete from word1
+    dp[i][j-1]    # Delete from word2
+)
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Create DP table:
+
+   * `dp[i][j]` → minimum deletions needed for:
+
+     * first `i` characters of `word1`
+     * first `j` characters of `word2`
+
+2. Initialize base cases:
+
+   * Empty string conversions
+
+3. Traverse both strings
+
+4. If characters match:
+
+   * Carry forward diagonal value
+
+5. Otherwise:
+
+   * Delete from one of the strings
+
+6. Return `dp[n][m]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n × m)   |
+| Space Complexity | O(n × m)   |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+word1 = "sea"
+word2 = "eat"
+
+Output:
+2
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+sea → ea    (delete 's')
+eat → ea    (delete 't')
+
+Total deletions = 2
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+word1 = s e a
+word2 = e a t
+
+Common Remaining String:
+e a
+```
+
+---
+
+### ✅ Key Points
+
+* String DP based on deletions only
+* Similar to Edit Distance problem
+* Matching characters require no operation
+* DP explores optimal deletion choices
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty strings
+* Identical strings
+* No common characters
+* Large strings
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how dynamic programming efficiently minimizes deletion operations between two strings by building optimal solutions for smaller string prefixes and reusing computed results.
