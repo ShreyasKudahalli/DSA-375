@@ -585,3 +585,143 @@ e a
 ### 🏁 Conclusion
 
 This problem demonstrates how dynamic programming efficiently minimizes deletion operations between two strings by building optimal solutions for smaller string prefixes and reusing computed results.
+
+
+---
+
+
+## 5️⃣ Minimum Insertions to Make a String Palindrome
+
+### 📌 Problem Statement
+
+You are given:
+
+* `s` → a string
+
+👉 Return the minimum number of insertions required to make the string a palindrome.
+
+You may insert characters at any position.
+
+---
+
+### 🚀 Approach: Longest Palindromic Subsequence + Dynamic Programming
+
+#### 🔹 Key Idea
+
+If we know the:
+
+```text id="idea"
+Longest Palindromic Subsequence (LPS)
+```
+
+then the remaining characters must be inserted to form a palindrome.
+
+So:
+
+```text id="relation"
+Minimum Insertions =
+Length of String - Length of LPS
+```
+
+The LPS is computed using:
+
+```text id="lcs"
+LCS(s, reverse(s))
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Reverse the string:
+
+   * `rev = s[::-1]`
+
+2. Compute Longest Common Subsequence:
+
+   * Between `s` and `rev`
+
+3. The resulting LCS length equals:
+
+   * Longest Palindromic Subsequence
+
+4. Compute answer:
+
+   * `len(s) - LPS`
+
+5. Return result
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n²)      |
+| Space Complexity | O(n²)      |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+s = "mbadm"
+
+Output:
+2
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+s = "mbadm"
+
+reverse = "mdabm"
+
+LPS = "mam"
+Length = 3
+
+Minimum Insertions =
+5 - 3 = 2
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Original:
+m b a d m
+
+Palindrome After Insertions:
+m d a b a d m
+
+Insertions Needed = 2
+```
+
+---
+
+### ✅ Key Points
+
+* Converts palindrome problem into LCS problem
+* Uses Longest Palindromic Subsequence
+* Remaining characters require insertion
+* Efficient DP-based string optimization
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty string
+* Single character
+* Already palindrome
+* Strings with all distinct characters
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates how dynamic programming and sequence transformation techniques can efficiently solve palindrome construction problems by leveraging the Longest Common Subsequence between a string and its reverse.
