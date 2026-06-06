@@ -637,3 +637,332 @@ Total Profit = 3
 ### 🏁 Conclusion
 
 This problem extends stock trading dynamic programming by introducing a cooldown constraint. By adjusting the sell transition to skip the next day, DP efficiently models trading decisions and computes the maximum achievable profit while respecting cooldown periods.
+
+
+---
+
+
+## 5️⃣ Best Time to Buy and Sell Stock III
+
+### 📌 Problem Statement
+
+You are given:
+
+* `prices` → an array where `prices[i]` represents the stock price on day `i`
+
+👉 You may complete at most **two transactions**.
+
+Rules:
+
+* You can buy and sell multiple times.
+* You must sell before buying again.
+* A transaction consists of one buy and one sell.
+
+👉 Return the maximum profit that can be achieved.
+
+---
+
+### 🚀 Approach: Dynamic Programming
+
+#### 🔹 Key Idea
+
+Unlike unlimited transactions, we now have a transaction limit.
+
+We define three DP states:
+
+* `i` → current day
+* `buy` → whether we can buy (`1`) or must sell (`0`)
+* `count` → remaining transactions
+
+State transitions:
+
+```text id="relation"
+Buy State:
+
+max(
+    -prices[i] + dp[i+1][0][count],
+    dp[i+1][1][count]
+)
+
+Sell State:
+
+max(
+    prices[i] + dp[i+1][1][count-1],
+    dp[i+1][0][count]
+)
+```
+
+Whenever we sell a stock, one transaction is completed, so the transaction count decreases.
+
+---
+
+### 🧠 Algorithm
+
+1. Create a 3D DP table:
+
+   * `dp[i][buy][count]`
+
+2. Traverse days from right to left.
+
+3. For each day:
+
+   * Compute buy state profit.
+   * Compute sell state profit.
+
+4. Reduce transaction count only when selling.
+
+5. Return:
+
+   * `dp[0][1][2]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity          |
+| ---------------- | ------------------- |
+| Time Complexity  | O(n × 2 × 2) ≈ O(n) |
+| Space Complexity | O(n × 2 × 3) ≈ O(n) |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+prices = [3,3,5,0,0,3,1,4]
+
+Output:
+6
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Transaction 1:
+
+Buy at 0
+Sell at 3
+
+Profit = 3
+
+Transaction 2:
+
+Buy at 1
+Sell at 4
+
+Profit = 3
+
+Total Profit = 6
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Prices:
+
+3  3  5  0  0  3  1  4
+         ↑     ↑
+        Buy  Sell
+
+               ↑     ↑
+              Buy  Sell
+
+Profit:
+3 + 3 = 6
+```
+
+---
+
+### ✅ Key Points
+
+* At most two transactions allowed
+* DP state includes remaining transaction count
+* Transaction count decreases only on selling
+* Extension of the classic stock DP pattern
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty prices array
+* Single day price
+* No profitable transactions
+* Strictly decreasing prices
+
+---
+
+### 🏁 Conclusion
+
+This problem extends stock trading dynamic programming by introducing a transaction limit. By tracking the day, buy/sell state, and remaining transactions, DP efficiently explores all valid trading decisions and computes the maximum achievable profit with at most two transactions.
+
+
+---
+
+
+## 6️⃣ Best Time to Buy and Sell Stock IV
+
+### 📌 Problem Statement
+
+You are given:
+
+* `prices` → an array where `prices[i]` represents the stock price on day `i`
+* `k` → maximum number of transactions allowed
+
+👉 You may complete at most `k` transactions.
+
+Rules:
+
+* You must sell before buying again.
+* A transaction consists of one buy and one sell.
+
+👉 Return the maximum profit that can be achieved.
+
+---
+
+### 🚀 Approach: Dynamic Programming
+
+#### 🔹 Key Idea
+
+To make optimal trading decisions, we track:
+
+* `i` → current day
+* `buy` → whether we can buy (`1`) or need to sell (`0`)
+* `count` → remaining transactions
+
+For each state, we have two choices:
+
+* Perform the action (buy/sell)
+* Skip the current day
+
+State transitions:
+
+```text id="relation"
+Buy State:
+
+max(
+    -prices[i] + dp[i+1][0][count],
+    dp[i+1][1][count]
+)
+
+Sell State:
+
+max(
+    prices[i] + dp[i+1][1][count-1],
+    dp[i+1][0][count]
+)
+```
+
+A transaction is considered completed only when a stock is sold, so the transaction count decreases during the sell operation.
+
+---
+
+### 🧠 Algorithm
+
+1. Create a DP table:
+
+   * `dp[i][buy][count]`
+   * Represents maximum profit starting from day `i`.
+
+2. Initialize base cases:
+
+   * Profit is `0` when no days remain.
+   * Profit is `0` when no transactions remain.
+
+3. Traverse days from right to left.
+
+4. For each day:
+
+   * Evaluate buy state.
+   * Evaluate sell state.
+
+5. Return:
+
+   * `dp[0][1][k]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n × k)   |
+| Space Complexity | O(n × k)   |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+k = 2
+prices = [2,4,1]
+
+Output:
+2
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Day 0:
+Buy at 2
+
+Day 1:
+Sell at 4
+
+Profit = 2
+
+Transactions Used = 1
+
+Maximum Profit = 2
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Prices:
+
+2   4   1
+↑   ↑
+Buy Sell
+
+Profit = 4 - 2 = 2
+```
+
+---
+
+### ✅ Key Points
+
+* Generalization of Stock III
+* Supports any transaction limit `k`
+* Transaction count decreases only when selling
+* Uses 3D DP state:
+
+  * Day
+  * Buy/Sell state
+  * Remaining transactions
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty price array
+* `k = 0`
+* Single day price
+* Strictly decreasing prices
+* Very large values of `k`
+
+---
+
+### 🏁 Conclusion
+
+This problem demonstrates a powerful stock trading dynamic programming pattern where the state is extended with the number of remaining transactions. By tracking the day, trading state, and transaction count, DP efficiently computes the maximum achievable profit under a transaction limit.
