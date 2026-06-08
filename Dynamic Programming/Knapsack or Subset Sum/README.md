@@ -179,3 +179,179 @@ Maximum = 3
 ### 🏁 Conclusion
 
 The 0/1 Knapsack problem is one of the most important dynamic programming problems. By evaluating the choice of including or excluding each item and storing intermediate results, DP efficiently finds the maximum achievable value within the given capacity constraint.
+
+
+---
+
+
+## 2️⃣ Coin Change
+
+### 📌 Problem Statement
+
+You are given:
+
+* `coins[]` → available coin denominations
+* `amount` → target amount
+
+👉 You may use each coin denomination **unlimited times**.
+
+👉 Return the minimum number of coins required to make up the given amount.
+
+👉 If it is impossible to form the amount, return `-1`.
+
+---
+
+### 🚀 Approach: Dynamic Programming (Unbounded Knapsack)
+
+#### 🔹 Key Idea
+
+For each coin, we have two choices:
+
+* **Exclude** the current coin
+* **Include** the current coin and stay on the same row because the coin can be used again
+
+State definition:
+
+```text id="relation"
+dp[i][t]
+=
+Minimum coins needed
+to form target t
+using coins[0...i]
+```
+
+Transition:
+
+```text id="formula"
+Exclude:
+
+dp[i-1][t]
+
+Include:
+
+1 + dp[i][t - coins[i]]
+
+dp[i][t] =
+min(include, exclude)
+```
+
+Since coins can be reused, the include transition remains on the same index `i`.
+
+---
+
+### 🧠 Algorithm
+
+1. Create a DP table:
+
+   * `dp[i][t]` stores the minimum coins needed.
+
+2. Initialize the first row:
+
+   * If target `t` is divisible by the first coin:
+
+     * `dp[0][t] = t / coins[0]`
+   * Otherwise:
+
+     * `∞`
+
+3. Process each remaining coin.
+
+4. For every target:
+
+   * Compute include choice.
+   * Compute exclude choice.
+   * Store minimum.
+
+5. If final answer is infinity:
+
+   * Return `-1`
+
+6. Otherwise:
+
+   * Return minimum coins.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity    |
+| ---------------- | ------------- |
+| Time Complexity  | O(n × amount) |
+| Space Complexity | O(n × amount) |
+
+Where:
+
+* `n` = number of coin denominations
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+coins = [1,2,5]
+amount = 11
+
+Output:
+3
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Target = 11
+
+Using coin 5:
+
+11 = 5 + 5 + 1
+
+Coins used = 3
+
+No solution exists with fewer coins.
+
+Answer = 3
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Amount = 11
+
+Coins:
+[1, 2, 5]
+
+Best Combination:
+
+5 + 5 + 1
+
+Total Coins = 3
+```
+
+---
+
+### ✅ Key Points
+
+* Classic Unbounded Knapsack problem
+* Each coin can be reused infinitely many times
+* DP stores minimum coins for every target value
+* Include transition stays on the same coin index
+
+---
+
+### ⚠️ Edge Cases
+
+* Amount = 0
+* Single coin denomination
+* Impossible target amount
+* Large amount values
+
+---
+
+### 🏁 Conclusion
+
+The Coin Change problem demonstrates the Unbounded Knapsack DP pattern, where each denomination can be used multiple times. By evaluating include and exclude choices for every target amount, dynamic programming efficiently finds the minimum number of coins needed to reach the desired sum.
