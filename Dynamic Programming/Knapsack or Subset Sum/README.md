@@ -355,3 +355,179 @@ Total Coins = 3
 ### 🏁 Conclusion
 
 The Coin Change problem demonstrates the Unbounded Knapsack DP pattern, where each denomination can be used multiple times. By evaluating include and exclude choices for every target amount, dynamic programming efficiently finds the minimum number of coins needed to reach the desired sum.
+
+
+---
+
+
+## 3️⃣ Coin Change II
+
+### 📌 Problem Statement
+
+You are given:
+
+* `coins[]` → available coin denominations
+* `amount` → target amount
+
+👉 Each coin denomination can be used **unlimited times**.
+
+👉 Return the number of distinct combinations that can make up the given amount.
+
+👉 The order of coins does **not** matter.
+
+---
+
+### 🚀 Approach: Dynamic Programming (Unbounded Knapsack Counting)
+
+#### 🔹 Key Idea
+
+Instead of finding the minimum number of coins, we count the number of valid combinations.
+
+For every coin, we have two choices:
+
+* **Don't take** the current coin
+* **Take** the current coin and stay on the same coin because it can be reused
+
+State definition:
+
+```text id="relation"
+dp[i][t]
+=
+Number of ways
+to form target t
+using coins[0...i]
+```
+
+Transition:
+
+```text id="formula"
+Not Take:
+
+dp[i-1][t]
+
+Take:
+
+dp[i][t-coins[i]]
+
+dp[i][t] =
+notTake + take
+```
+
+The include transition remains on the same coin index because coins are available infinitely many times.
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize base case using the first coin:
+
+   * If target is divisible by the first coin:
+
+     * Ways = 1
+   * Otherwise:
+
+     * Ways = 0
+
+2. Process each remaining coin.
+
+3. For every target amount:
+
+   * Count ways excluding the coin.
+   * Count ways including the coin.
+   * Add both counts.
+
+4. Use space optimization with two arrays.
+
+5. Return ways to form the target amount.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity    |
+| ---------------- | ------------- |
+| Time Complexity  | O(n × amount) |
+| Space Complexity | O(amount)     |
+
+Where:
+
+* `n` = number of coin denominations
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+amount = 5
+coins = [1,2,5]
+
+Output:
+4
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Target = 5
+
+Possible combinations:
+
+1+1+1+1+1
+1+1+1+2
+1+2+2
+5
+
+Total Ways = 4
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Amount = 5
+
+Coins:
+[1, 2, 5]
+
+Ways:
+
+5 × 1
+
+3 × 1 + 1 × 2
+
+1 × 1 + 2 × 2
+
+1 × 5
+
+Total = 4 Ways
+```
+
+---
+
+### ✅ Key Points
+
+* Unbounded Knapsack counting problem
+* Coins can be reused unlimited times
+* Order does not matter
+* DP stores number of combinations instead of minimum coins
+* Space optimized to O(amount)
+
+---
+
+### ⚠️ Edge Cases
+
+* Amount = 0
+* Single coin denomination
+* No possible combination
+* Large target amounts
+
+---
+
+### 🏁 Conclusion
+
+Coin Change II is a classic counting variant of the Unbounded Knapsack problem. By considering both taking and not taking each coin and accumulating the number of valid ways, dynamic programming efficiently computes all unique combinations that form the target amount.
