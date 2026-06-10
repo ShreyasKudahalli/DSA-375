@@ -531,3 +531,389 @@ Total = 4 Ways
 ### 🏁 Conclusion
 
 Coin Change II is a classic counting variant of the Unbounded Knapsack problem. By considering both taking and not taking each coin and accumulating the number of valid ways, dynamic programming efficiently computes all unique combinations that form the target amount.
+
+
+---
+
+
+## 4️⃣ Partition Equal Subset Sum
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums[]` → an array of positive integers
+
+👉 Determine whether the array can be divided into **two subsets with equal sum**.
+
+👉 Return `True` if such a partition exists, otherwise return `False`.
+
+---
+
+### 🚀 Approach: Dynamic Programming (Subset Sum)
+
+#### 🔹 Key Idea
+
+If the total sum of the array is odd, it is impossible to split it into two equal subsets.
+
+So first compute:
+
+```text id="condition"
+total = sum(nums)
+
+If total is odd:
+    return False
+```
+
+If the total sum is even, the problem reduces to:
+
+```text id="target"
+Find a subset whose sum equals
+
+target = total / 2
+```
+
+If such a subset exists, the remaining elements automatically form the other subset with the same sum.
+
+State definition:
+
+```text id="relation"
+dp[i][t]
+=
+Can we form target sum t
+using elements from 0...i ?
+```
+
+Transition:
+
+```text id="formula"
+Not Take:
+
+dp[i-1][t]
+
+Take:
+
+dp[i-1][t-nums[i]]
+
+dp[i][t] =
+take OR notTake
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Compute the total sum.
+2. If total sum is odd:
+
+   * Return `False`.
+3. Set:
+
+   * `target = total // 2`
+4. Create DP table:
+
+   * `dp[i][t]`
+5. Initialize:
+
+   * Sum `0` is always possible.
+   * First element forms its own sum.
+6. Fill DP table using take/not-take transitions.
+7. Return:
+
+   * `dp[n-1][target]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity    |
+| ---------------- | ------------- |
+| Time Complexity  | O(n × target) |
+| Space Complexity | O(n × target) |
+
+Where:
+
+* `n` = number of elements
+* `target = totalSum / 2`
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+nums = [1,5,11,5]
+
+Output:
+True
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [1,5,11,5]
+
+Total Sum = 22
+
+Target = 11
+
+Subset 1:
+[11]
+
+Subset 2:
+[1,5,5]
+
+Both sums = 11
+
+Answer = True
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Array:
+
+[1, 5, 11, 5]
+
+          Total = 22
+
+       /            \
+   Sum = 11      Sum = 11
+
+    [11]       [1,5,5]
+```
+
+---
+
+### ✅ Key Points
+
+* Classic Subset Sum DP problem
+* Convert partition problem into target sum search
+* Uses take/not-take decisions
+* If target sum can be formed, equal partition exists
+
+---
+
+### ⚠️ Edge Cases
+
+* Odd total sum
+* Single element array
+* All elements equal
+* Large target values
+
+---
+
+### 🏁 Conclusion
+
+Partition Equal Subset Sum is a classic application of the Subset Sum dynamic programming pattern. By reducing the problem to finding a subset with sum equal to half of the total array sum, DP efficiently determines whether the array can be divided into two subsets having equal sums.
+
+
+---
+
+
+## 5️⃣ Target Sum
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums[]` → an array of integers
+* `target` → desired target value
+
+👉 Assign either:
+
+* `'+'` sign
+* `'-'` sign
+
+to every element in the array.
+
+👉 Return the number of different expressions that evaluate to the given target.
+
+---
+
+### 🚀 Approach: Dynamic Programming (Subset Sum Transformation)
+
+#### 🔹 Key Idea
+
+Let:
+
+```text id="equations"
+P = sum of numbers assigned '+'
+
+N = sum of numbers assigned '-'
+```
+
+Then:
+
+```text
+P - N = target
+
+P + N = totalSum
+```
+
+Adding both equations:
+
+```text
+2P = totalSum + target
+
+P = (totalSum + target) / 2
+```
+
+Thus, the problem becomes:
+
+👉 Count the number of subsets whose sum equals:
+
+```text id="target"
+k = (totalSum + target) / 2
+```
+
+If:
+
+```text
+(totalSum + target) < 0
+```
+
+or
+
+```text
+(totalSum + target) is odd
+```
+
+then no valid solution exists.
+
+---
+
+### 🧠 Algorithm
+
+1. Compute:
+
+   * `total = sum(nums)`
+
+2. Check validity:
+
+   * If `(total + target)` is negative or odd:
+
+     * Return `0`
+
+3. Convert problem:
+
+   * `k = (total + target) // 2`
+
+4. Create DP table:
+
+   * `dp[i][t]`
+   * Number of ways to form sum `t`
+
+5. Initialize base cases:
+
+   * Handle `0` carefully because:
+
+     * `+0` and `-0` are distinct choices
+
+6. Fill DP table using:
+
+   * Take
+   * Not Take
+
+7. Return:
+
+   * `dp[n-1][k]`
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n × k)   |
+| Space Complexity | O(n × k)   |
+
+Where:
+
+* `n` = number of elements
+* `k = (total + target)/2`
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+nums = [1,1,1,1,1]
+target = 3
+
+Output:
+5
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [1,1,1,1,1]
+
+total = 5
+
+k = (5 + 3) / 2
+  = 4
+
+Count subsets with sum 4
+
+Possible subsets:
+
+Choose any four 1's
+
+Number of ways = 5
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Target = 3
+
++1 +1 +1 +1 -1 = 3
+
++1 +1 +1 -1 +1 = 3
+
++1 +1 -1 +1 +1 = 3
+
++1 -1 +1 +1 +1 = 3
+
+-1 +1 +1 +1 +1 = 3
+
+Total Ways = 5
+```
+
+---
+
+### ✅ Key Points
+
+* Classic reduction from Target Sum to Subset Sum Count
+* Converts sign assignment problem into counting subsets
+* Special handling required for zeros
+* Uses Take / Not-Take DP transitions
+
+---
+
+### ⚠️ Edge Cases
+
+* All elements are zero
+* Target larger than total sum
+* Negative target values
+* Single element array
+* No valid expressions
+
+---
+
+### 🏁 Conclusion
+
+Target Sum is a powerful application of the Subset Sum Counting pattern. By transforming the sign assignment equation into a subset sum problem, dynamic programming efficiently counts all possible expressions that evaluate to the desired target while correctly handling duplicate values and zeros.
