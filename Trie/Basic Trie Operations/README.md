@@ -381,3 +381,186 @@ Trie:
 ### 🏁 Conclusion
 
 This problem combines the efficiency of a Trie with DFS backtracking to support wildcard searches. While normal searches follow a single path, the `'.'` character branches into multiple possibilities, making recursive exploration the natural solution. The resulting data structure supports fast insertion and flexible pattern matching.
+
+
+---
+
+
+## 3️⃣ Search Suggestions System
+
+### 📌 Problem Statement
+
+You are given:
+
+* `products[]` → a list of product names
+* `searchWord` → the word being typed by the user
+
+For every prefix of `searchWord`:
+
+👉 Return at most **3 lexicographically smallest products** that start with that prefix.
+
+If no matching products exist, return an empty list for that prefix.
+
+---
+
+### 🚀 Approach: Trie + Prefix Suggestions
+
+#### 🔹 Key Idea
+
+To efficiently provide suggestions for every typed character:
+
+1. Sort all products lexicographically.
+2. Build a Trie.
+3. At each Trie node, store up to the first **3 smallest products** passing through that prefix.
+4. While typing the search word:
+
+   * Traverse the Trie.
+   * Retrieve stored suggestions from the corresponding node.
+
+Since products are inserted in sorted order, the first three products reaching a node automatically become the required suggestions.
+
+---
+
+### 🧠 Algorithm
+
+1. Sort the products array.
+2. Create a Trie.
+3. Insert every product:
+
+   * Create nodes as needed.
+   * Store up to 3 suggestions at every prefix node.
+4. Traverse the Trie using the search word.
+5. For each character:
+
+   * If the prefix exists:
+
+     * Append stored suggestions.
+   * Otherwise:
+
+     * Append empty lists for remaining prefixes.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type              | Complexity |
+| ----------------- | ---------- |
+| Sorting           | O(n log n) |
+| Trie Construction | O(T)       |
+| Search            | O(m)       |
+| Space Complexity  | O(T)       |
+
+Where:
+
+* `n` = number of products
+* `T` = total characters across all products
+* `m` = length of `searchWord`
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+products =
+["mobile","mouse","moneypot","monitor","mousepad"]
+
+searchWord = "mouse"
+```
+
+Output:
+
+```text id="output"
+[
+ ["mobile","moneypot","monitor"],
+ ["mobile","moneypot","monitor"],
+ ["mouse","mousepad"],
+ ["mouse","mousepad"],
+ ["mouse","mousepad"]
+]
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Sorted Products:
+
+mobile
+moneypot
+monitor
+mouse
+mousepad
+
+Typing:
+
+"m"
+→ [mobile,moneypot,monitor]
+
+"mo"
+→ [mobile,moneypot,monitor]
+
+"mou"
+→ [mouse,mousepad]
+
+"mous"
+→ [mouse,mousepad]
+
+"mouse"
+→ [mouse,mousepad]
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+(root)
+  |
+  m
+  |
+  o
+  |
+  ├── b → mobile
+  ├── n → moneypot, monitor
+  └── u
+       └── s
+            └── e
+                 ├── mouse
+                 └── mousepad
+```
+
+Each node stores:
+
+```text id="suggestions"
+Top 3 lexicographically smallest products
+for that prefix
+```
+
+---
+
+### ✅ Key Points
+
+* Trie efficiently handles prefix searches.
+* Products are sorted before insertion.
+* Each node stores only 3 suggestions.
+* Query time is proportional to the search word length.
+* Ideal for autocomplete and search recommendation systems.
+
+---
+
+### ⚠️ Edge Cases
+
+* No matching prefix
+* Single product
+* Duplicate prefixes
+* Search word longer than all products
+* Empty products list
+
+---
+
+### 🏁 Conclusion
+
+The Search Suggestions System combines sorting with a Trie to efficiently provide autocomplete recommendations. By storing the top three lexicographically smallest products at every prefix node, each search query can retrieve suggestions in constant time per character, making the solution highly scalable for large product catalogs.
