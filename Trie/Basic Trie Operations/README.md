@@ -564,3 +564,335 @@ for that prefix
 ### 🏁 Conclusion
 
 The Search Suggestions System combines sorting with a Trie to efficiently provide autocomplete recommendations. By storing the top three lexicographically smallest products at every prefix node, each search query can retrieve suggestions in constant time per character, making the solution highly scalable for large product catalogs.
+
+
+---
+
+
+## 4️⃣ Longest Common Prefix
+
+### 📌 Problem Statement
+
+You are given:
+
+* `strs[]` → an array of strings
+
+👉 Return the **longest common prefix** shared among all strings.
+
+If there is no common prefix, return an empty string `""`.
+
+---
+
+### 🚀 Approach: Trie Traversal
+
+#### 🔹 Key Idea
+
+A **Trie (Prefix Tree)** naturally groups strings by their common prefixes.
+
+After inserting all words into the Trie:
+
+* Continue traversing as long as:
+
+  * The current node has exactly **one child**
+  * The current node is **not the end of a word**
+
+The traversed characters form the longest common prefix.
+
+---
+
+### 🧠 Algorithm
+
+1. Create an empty Trie.
+2. Insert all strings into the Trie.
+3. Start traversal from the root.
+4. While:
+
+   * Current node has exactly one child.
+   * Current node is not the end of a word.
+5. Append the character to the answer.
+6. Move to the child node.
+7. Return the constructed prefix.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type              | Complexity |
+| ----------------- | ---------- |
+| Trie Construction | O(T)       |
+| Trie Traversal    | O(LCP)     |
+| Space Complexity  | O(T)       |
+
+Where:
+
+* `T` = total number of characters in all strings
+* `LCP` = length of the longest common prefix
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+strs = ["flower","flow","flight"]
+
+Output:
+"fl"
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Insert:
+
+flower
+flow
+flight
+
+Trie:
+
+root
+ └── f
+      └── l
+           ├── o
+           └── i
+
+Traversal:
+
+root → f → l
+
+At node 'l':
+Multiple children found
+
+Stop.
+
+Answer = "fl"
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+(root)
+  |
+  f
+  |
+  l
+ / \
+o   i
+|   |
+w   g
+|
+e
+|
+r
+```
+
+Common path:
+
+```text id="prefix"
+f → l
+```
+
+Longest Common Prefix:
+
+```text id="answer"
+"fl"
+```
+
+---
+
+### ✅ Key Points
+
+* Trie efficiently captures shared prefixes.
+* Traversal stops when:
+
+  * Multiple branches appear.
+  * A word ends.
+* Common prefix corresponds to the shared Trie path.
+* Particularly useful for prefix-based string problems.
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty array of strings
+* Single string input
+* No common prefix
+* One string is a prefix of another
+* All strings identical
+
+---
+
+### 🏁 Conclusion
+
+The Trie-based solution efficiently identifies the longest common prefix by leveraging the hierarchical structure of shared characters. By traversing the Trie until a branch or word termination is encountered, we can directly extract the longest prefix common to all strings.
+
+
+---
+
+
+## 5️⃣ Longest Word in Dictionary
+
+### 📌 Problem Statement
+
+You are given:
+
+* `words[]` → a list of strings
+
+👉 Return the **longest word** in the dictionary that can be built one character at a time by other words in the dictionary.
+
+A word is valid only if **every prefix** of that word also exists in the dictionary.
+
+If multiple answers exist:
+
+👉 Return the **lexicographically smallest** word.
+
+---
+
+### 🚀 Approach: Trie + DFS
+
+#### 🔹 Key Idea
+
+Insert all words into a Trie.
+
+While traversing the Trie:
+
+* We can move to a child node **only if that node marks the end of a valid word**.
+* This guarantees that every prefix of the current word exists in the dictionary.
+
+During DFS:
+
+* Update the answer if:
+
+  * A longer word is found.
+  * Words have equal length but current word is lexicographically smaller.
+
+---
+
+### 🧠 Algorithm
+
+1. Build a Trie from all words.
+2. Mark the end of each word.
+3. Start DFS from the root.
+4. Traverse only through nodes where:
+
+   * `child.end == True`
+5. Construct words during traversal.
+6. Update answer based on:
+
+   * Maximum length
+   * Lexicographical order
+7. Return the final answer.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type              | Complexity |
+| ----------------- | ---------- |
+| Trie Construction | O(T)       |
+| DFS Traversal     | O(T)       |
+| Space Complexity  | O(T)       |
+
+Where:
+
+* `T` = total number of characters across all words.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+words =
+["w","wo","wor","worl","world"]
+
+Output:
+"world"
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+Inserted Words:
+
+w
+wo
+wor
+worl
+world
+
+DFS Traversal:
+
+w ✓
+wo ✓
+wor ✓
+worl ✓
+world ✓
+
+All prefixes exist.
+
+Answer = "world"
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+(root)
+  |
+  w*
+  |
+  o*
+  |
+  r*
+  |
+  l*
+  |
+  d*
+
+* = End of Word
+```
+
+Valid word construction:
+
+```text id="build"
+w → wo → wor → worl → world
+```
+
+---
+
+### ✅ Key Points
+
+* Trie naturally stores prefixes.
+* DFS ensures prefix validation.
+* Traverse only through valid word endings.
+* Lexicographical ordering resolves ties.
+* Efficient for dictionary and prefix problems.
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty dictionary
+* Single word input
+* Multiple words with same length
+* Missing intermediate prefixes
+* Duplicate words
+
+---
+
+### 🏁 Conclusion
+
+This problem combines Trie traversal with DFS to efficiently find the longest buildable word in a dictionary. By restricting traversal to nodes representing complete words, the algorithm guarantees that every prefix exists, while lexicographical ordering ensures the correct answer when multiple candidates are possible.
+
+
