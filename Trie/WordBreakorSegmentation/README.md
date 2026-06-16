@@ -160,3 +160,166 @@ battery → bat
 ### 🏁 Conclusion
 
 The Replace Words problem is a classic application of Tries for prefix searching. By storing dictionary roots in a Trie and stopping at the earliest valid prefix, the algorithm efficiently replaces words with their shortest matching roots while maintaining linear performance with respect to the input size.
+
+
+---
+
+
+## 2️⃣ Word Break
+
+### 📌 Problem Statement
+
+You are given:
+
+* `s` → a string
+* `wordDict[]` → a dictionary of valid words
+
+👉 Determine whether the string can be segmented into a sequence of one or more dictionary words.
+
+👉 A dictionary word may be reused multiple times.
+
+👉 Return `True` if segmentation is possible, otherwise return `False`.
+
+---
+
+### 🚀 Approach: Trie + DFS + Memoization
+
+#### 🔹 Key Idea
+
+The problem asks whether the string can be partitioned into valid dictionary words.
+
+To optimize prefix searching:
+
+* Store all dictionary words in a **Trie**.
+
+To avoid recomputing states:
+
+* Use **memoization** on the starting index.
+
+At every position:
+
+* Traverse the Trie character by character.
+* Whenever a valid word ends:
+
+  * Recursively check the remaining substring.
+
+---
+
+### 🧠 Algorithm
+
+1. Build a Trie from all dictionary words.
+2. Define `dfs(start)`:
+
+   * Determines whether `s[start:]` can be segmented.
+3. If `start == n`:
+
+   * Entire string is segmented successfully.
+4. Traverse the Trie starting from index `start`.
+5. Whenever a word ending is reached:
+
+   * Recursively solve the remaining substring.
+6. Store results in memoization map.
+7. Return `dfs(0)`.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type              | Complexity |
+| ----------------- | ---------- |
+| Trie Construction | O(T)       |
+| DFS + Memoization | O(n²)      |
+| Space Complexity  | O(T + n)   |
+
+Where:
+
+* `T` = total characters in dictionary words
+* `n` = length of string `s`
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+s = "leetcode"
+
+wordDict = ["leet","code"]
+
+Output:
+True
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+String:
+
+leetcode
+
+Start at index 0:
+
+"leet" ✓
+
+Remaining:
+
+"code"
+
+"code" ✓
+
+Reached end of string.
+
+Answer = True
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+leetcode
+
+leet | code
+  ✓      ✓
+
+Entire string segmented successfully.
+```
+
+Trie structure:
+
+```text id="trie"
+(root)
+ ├── l → e → e → t*
+ └── c → o → d → e*
+
+* = End of Word
+```
+
+---
+
+### ✅ Key Points
+
+* Trie enables efficient prefix matching.
+* DFS explores possible segmentations.
+* Memoization avoids repeated computations.
+* Dictionary words can be reused multiple times.
+
+---
+
+### ⚠️ Edge Cases
+
+* Empty string
+* Empty dictionary
+* No valid segmentation
+* Repeated word usage
+* Overlapping prefixes
+
+---
+
+### 🏁 Conclusion
+
+The Word Break problem combines Trie-based prefix searching with DFS and memoization to efficiently determine whether a string can be segmented into valid dictionary words. This approach avoids redundant work while enabling fast prefix checks, making it highly effective for large dictionaries and long strings.
+
