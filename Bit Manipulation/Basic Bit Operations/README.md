@@ -319,3 +319,544 @@ Count of 1s:
 ### 🏁 Conclusion
 
 The Hamming Weight problem is a classic bit manipulation task. By repeatedly checking the least significant bit and shifting the number to the right, we can efficiently count the number of set bits in binary representation using O(log n) time and O(1) space.
+
+
+---
+
+
+## 3️⃣ Binary Number with Alternating Bits
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → a positive integer
+
+👉 Return `True` if its binary representation has alternating bits.
+
+👉 Two adjacent bits must always be different.
+
+Otherwise, return `False`.
+
+---
+
+### 🚀 Approach: Bit Manipulation (XOR Trick)
+
+#### 🔹 Key Idea
+
+For a number with alternating bits:
+
+```text id="examplebits"
+1010
+0101
+101
+```
+
+If we XOR the number with itself shifted right by one position:
+
+```text id="relation"
+x = n ^ (n >> 1)
+```
+
+The result becomes a sequence of all `1`s.
+
+Example:
+
+```text id="xor"
+n       = 1010
+n >> 1  = 0101
+----------------
+x       = 1111
+```
+
+A number consisting entirely of `1`s satisfies:
+
+```text id="property"
+x & (x + 1) == 0
+```
+
+because:
+
+```text id="proof"
+1111
++
+0001
+-----
+10000
+
+1111 & 10000 = 0
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Compute:
+
+   ```text
+   x = n ^ (n >> 1)
+   ```
+
+2. Check whether `x` is composed entirely of `1`s:
+
+   ```text
+   x & (x + 1) == 0
+   ```
+
+3. Return the result.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(1)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+n = 10
+```
+
+Binary:
+
+```text id="binary"
+1010
+```
+
+Output:
+
+```text id="output"
+True
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+n = 10
+
+Binary:
+1010
+
+n >> 1:
+0101
+
+XOR:
+1010
+^0101
+-----
+1111
+
+x = 15
+
+Check:
+
+1111 & 10000
+= 0
+
+Answer = True
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Alternating Bits:
+
+1 0 1 0
+
+Shift Right:
+
+0 1 0 1
+
+XOR:
+
+1 1 1 1
+```
+
+All bits become `1`, confirming the alternating pattern.
+
+---
+
+### ✅ Key Points
+
+* Uses a clever XOR observation.
+* Alternating bits become all `1`s after XOR with the shifted version.
+* `x & (x + 1) == 0` efficiently checks whether a number contains only `1`s.
+* Constant time and space solution.
+
+---
+
+### ⚠️ Edge Cases
+
+* Single-bit numbers
+* Powers of two
+* Consecutive equal bits (`110`, `1001`)
+* Very large integers
+
+---
+
+### 🏁 Conclusion
+
+This solution leverages a powerful bit manipulation trick: XORing a number with its right-shifted version transforms alternating-bit patterns into a sequence of all `1`s. A simple bitwise check then verifies this property, yielding an elegant O(1) time and O(1) space solution.
+
+
+---
+
+
+## 4️⃣ Power of Two
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → an integer
+
+👉 Return `True` if `n` is a power of two.
+
+👉 Otherwise, return `False`.
+
+A number is a power of two if there exists an integer `x` such that:
+
+```text id="definition"
+n = 2^x
+```
+
+---
+
+### 🚀 Approach: Bit Manipulation
+
+#### 🔹 Key Idea
+
+A power of two has exactly **one set bit** in its binary representation.
+
+Examples:
+
+```text id="powers"
+1  = 0001
+2  = 0010
+4  = 0100
+8  = 1000
+16 = 10000
+```
+
+If we subtract `1` from a power of two:
+
+```text id="subtract"
+8  = 1000
+7  = 0111
+```
+
+Performing:
+
+```text id="and"
+1000
+&
+0111
+----
+0000
+```
+
+Therefore, for every positive power of two:
+
+```text id="property"
+n & (n - 1) == 0
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Check if `n` is positive.
+
+   * Powers of two must be greater than `0`.
+
+2. Compute:
+
+   ```text
+   n & (n - 1)
+   ```
+
+3. If the result is `0`:
+
+   * Exactly one bit was set.
+   * Return `True`.
+
+4. Otherwise:
+
+   * Return `False`.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(1)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+n = 16
+```
+
+Output:
+
+```text id="output"
+True
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+n = 16
+
+Binary:
+
+10000
+
+n - 1:
+
+01111
+
+AND:
+
+10000
+&
+01111
+-----
+00000
+
+Result = 0
+
+Answer = True
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Power of Two:
+
+100000
+
+Subtract 1:
+
+011111
+
+AND:
+
+100000
+&
+011111
+------
+000000
+```
+
+Only powers of two produce zero after this operation.
+
+---
+
+### ✅ Key Points
+
+* A power of two contains exactly one set bit.
+* `n & (n - 1)` removes the lowest set bit.
+* Result becomes zero only when there is a single set bit.
+* Must explicitly check `n > 0`.
+
+---
+
+### ⚠️ Edge Cases
+
+* `n = 1`
+* `n = 0`
+* Negative numbers
+* Large powers of two
+* Numbers with multiple set bits
+
+---
+
+### 🏁 Conclusion
+
+The Power of Two problem can be solved elegantly using bit manipulation. Since powers of two contain exactly one set bit, the expression `n & (n - 1)` removes that bit and produces zero. Combined with a positivity check, this yields an optimal O(1) time and O(1) space solution.
+
+
+---
+
+
+## 5️⃣ Single Number
+
+### 📌 Problem Statement
+
+You are given:
+
+* `nums[]` → a non-empty array of integers
+
+👉 Every element appears exactly **twice** except for one element.
+
+👉 Find and return that single element.
+
+You must solve it using:
+
+* Linear runtime
+* Constant extra space
+
+---
+
+### 🚀 Approach: Bit Manipulation (XOR)
+
+#### 🔹 Key Idea
+
+The XOR operator (`^`) has the following properties:
+
+```text id="properties"
+a ^ a = 0
+a ^ 0 = a
+a ^ b = b ^ a
+```
+
+Since every number except one appears twice:
+
+* Duplicate numbers cancel each other out.
+* The unique number remains.
+
+So:
+
+```text id="relation"
+x ^ x = 0
+
+0 ^ unique = unique
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Initialize:
+
+   ```text
+   ans = 0
+   ```
+
+2. Traverse the array.
+
+3. XOR every element with `ans`.
+
+4. Duplicate values cancel out.
+
+5. Return the remaining value.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(1)       |
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+nums = [2,2,1]
+```
+
+Output:
+
+```text id="output"
+1
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+nums = [2,2,1]
+
+ans = 0
+
+ans ^= 2
+= 2
+
+ans ^= 2
+= 0
+
+ans ^= 1
+= 1
+
+Final Answer = 1
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+Array:
+
+2   2   1
+
+XOR Process:
+
+0 ^ 2 = 2
+2 ^ 2 = 0
+0 ^ 1 = 1
+
+Result:
+
+1
+```
+
+Duplicate elements cancel each other:
+
+```text id="cancel"
+2 ^ 2 = 0
+```
+
+Leaving only the unique number.
+
+---
+
+### ✅ Key Points
+
+* XOR cancels identical values.
+* Order of XOR operations does not matter.
+* No extra data structures required.
+* One-pass solution.
+
+---
+
+### ⚠️ Edge Cases
+
+* Array contains only one element.
+* Unique element is negative.
+* Unique element appears at the beginning or end.
+* Large input size.
+
+---
+
+### 🏁 Conclusion
+
+The Single Number problem is a classic application of XOR. By leveraging the property that identical numbers cancel each other out, we can isolate the unique element in a single traversal using O(n) time and O(1) space, making it the most efficient solution.
