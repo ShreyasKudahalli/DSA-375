@@ -860,3 +860,217 @@ Leaving only the unique number.
 ### 🏁 Conclusion
 
 The Single Number problem is a classic application of XOR. By leveraging the property that identical numbers cancel each other out, we can isolate the unique element in a single traversal using O(n) time and O(1) space, making it the most efficient solution.
+
+
+---
+
+
+## 6️⃣ Find K-th Bit in N-th Binary String
+
+### 📌 Problem Statement
+
+You are given:
+
+* `n` → the string number
+* `k` → the position to find
+
+The binary strings are defined recursively:
+
+```text id="definition"
+S1 = "0"
+
+Si = Si-1 + "1" + reverse(invert(Si-1))
+```
+
+👉 Return the `kᵗʰ` bit in `Sn`.
+
+---
+
+### 🚀 Approach: Recursive Divide & Conquer
+
+#### 🔹 Key Idea
+
+Instead of constructing the entire string (which grows exponentially), observe the structure:
+
+```text id="structure"
+Sn = Left + Middle + Right
+
+Left   = Sn-1
+Middle = "1"
+Right  = reverse(invert(Sn-1))
+```
+
+Length of `Sn`:
+
+```text id="length"
+2^n - 1
+```
+
+Middle position:
+
+```text id="middle"
+mid = (length // 2) + 1
+```
+
+For any position `k`:
+
+* If `k == mid` → answer is `"1"`
+* If `k < mid` → search in the left half (`Sn-1`)
+* If `k > mid` → map to the mirrored position in the left half and invert the result
+
+Mirror position:
+
+```text id="mirror"
+mirror = length - k + 1
+```
+
+---
+
+### 🧠 Algorithm
+
+1. Base case:
+
+   * `S1 = "0"`
+
+2. Compute:
+
+   * `length = 2^n - 1`
+   * `mid = length // 2 + 1`
+
+3. If `k == mid`:
+
+   * Return `"1"`
+
+4. If `k < mid`:
+
+   * Recurse on `Sn-1`
+
+5. Otherwise:
+
+   * Find mirrored position
+   * Recurse on `Sn-1`
+   * Invert the returned bit
+
+6. Return the result.
+
+---
+
+### 📊 Complexity Analysis
+
+| Type             | Complexity |
+| ---------------- | ---------- |
+| Time Complexity  | O(n)       |
+| Space Complexity | O(n)       |
+
+The recursion depth is at most `n`.
+
+---
+
+### 📎 Example
+
+```text id="example"
+Input:
+
+n = 3
+k = 5
+```
+
+Output:
+
+```text id="output"
+0
+```
+
+---
+
+### 🔍 Dry Run
+
+```text id="dryrun"
+S1 = 0
+
+S2 = 011
+
+S3 = 0111001
+
+Find k = 5
+
+Length = 7
+Mid = 4
+
+k > mid
+
+Mirror Position:
+
+7 - 5 + 1 = 3
+
+Find bit at position 3 in S2
+
+S2 = 011
+
+Position 3 = 1
+
+Invert:
+
+1 → 0
+
+Answer = 0
+```
+
+---
+
+### 🌳 Visualization
+
+```text id="visual"
+S3 = 0111001
+
+        |
+        1
+      mid=4
+
+Left:
+011
+
+Right:
+001
+(reverse(invert(011)))
+```
+
+Finding:
+
+```text id="mirrorvis"
+k = 5
+
+Mirror:
+
+5 ↔ 3
+
+Bit(3) = 1
+
+Invert → 0
+```
+
+---
+
+### ✅ Key Points
+
+* No need to build the entire string.
+* Uses the recursive structure of `Sn`.
+* Right half is the reverse-inverted version of the left half.
+* Mirror mapping reduces the problem size by one level each recursion.
+* Efficient divide-and-conquer solution.
+
+---
+
+### ⚠️ Edge Cases
+
+* `n = 1`
+* `k` at the middle position
+* `k` in the left half
+* `k` in the right half
+* Large values of `n`
+
+---
+
+### 🏁 Conclusion
+
+This problem leverages the recursive symmetry of the generated binary strings. By identifying whether the target position lies in the left half, middle, or right half and using mirror mapping with inversion, we can find the k-th bit in O(n) time without ever constructing the exponentially large string.
